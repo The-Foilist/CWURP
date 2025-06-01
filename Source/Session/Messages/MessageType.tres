@@ -1,0 +1,6 @@
+[gd_resource type="RichTextEffect" load_steps=2 format=3 uid="uid://bakqufq0bf6hb"]
+
+[ext_resource type="Script" uid="uid://bjjqqkuwrahm3" path="res://Source/Session/Messages/Type.gd" id="1_lqo3j"]
+
+[resource]
+script = ExtResource("1_lqo3j")

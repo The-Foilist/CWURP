@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://vxa4pugp48u7"]
+
+[ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_bw4sc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+
+[node name="Test Unit" type="StaticBody2D"]
+input_pickable = true
+script = ExtResource("1_bw4sc")
+metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.544974, 0.544974, 0.544974, 1)

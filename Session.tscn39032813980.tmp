@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwfhc76xjv57u"]
+
+[ext_resource type="Script" uid="uid://2krsxwgnldka" path="res://LocalPlayer.gd" id="1_wc5r7"]
+[ext_resource type="PackedScene" uid="uid://d4agehp3labnq" path="res://ui.tscn" id="2_s0imo"]
+[ext_resource type="Script" uid="uid://nipeuxlrpgq8" path="res://Player.gd" id="3_cj8br"]
+[ext_resource type="Script" uid="uid://cijascus7t84f" path="res://World.gd" id="3_l4gok"]
+[ext_resource type="Script" uid="uid://d1vs5wnlp5rbl" path="res://Camera.gd" id="4_78e1k"]
+[ext_resource type="PackedScene" uid="uid://vxa4pugp48u7" path="res://test_object.tscn" id="5_nygel"]
+
+[node name="Session" type="Node"]
+
+[node name="LocalController" type="Node" parent="." node_paths=PackedStringArray("player", "cam", "world")]
+script = ExtResource("1_wc5r7")
+player = NodePath("../Player1")
+cam = NodePath("../World/Camera")
+world = NodePath("../World")
+metadata/_custom_type_script = "uid://2krsxwgnldka"
+
+[node name="UI" parent="LocalController" instance=ExtResource("2_s0imo")]
+
+[node name="Player1" type="Node" parent="."]
+script = ExtResource("3_cj8br")
+color = Color(0, 0, 1, 1)
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Player2" type="Node" parent="."]
+script = ExtResource("3_cj8br")
+color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("3_l4gok")
+
+[node name="Background" type="ColorRect" parent="World"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4933.0
+offset_top = -4861.0
+offset_right = 5067.0
+offset_bottom = 5139.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.471, 0.667, 1)
+
+[node name="Camera" type="Camera2D" parent="World"]
+script = ExtResource("4_78e1k")
+
+[node name="Test Unit 1" parent="World" instance=ExtResource("5_nygel")]
+input_pickable = false
+
+[node name="Test Unit 2" parent="World" instance=ExtResource("5_nygel")]
+position = Vector2(100, 100)
+rotation = 0.785398

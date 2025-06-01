@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwfhc76xjv57u"]
+
+[ext_resource type="Script" uid="uid://yixxphrj4cs7" path="res://Source/Session/Session.gd" id="1_6pjtp"]
+[ext_resource type="Script" uid="uid://5ut52qqohose" path="res://Source/Session/MessageHandler.gd" id="2_3l4h2"]
+[ext_resource type="Script" uid="uid://2krsxwgnldka" path="res://Source/Session/LocalController.gd" id="3_xca26"]
+[ext_resource type="PackedScene" uid="uid://d4agehp3labnq" path="res://Source/UI/UI.tscn" id="4_1tvra"]
+
+[node name="Session" type="Node"]
+script = ExtResource("1_6pjtp")
+metadata/_custom_type_script = "uid://yixxphrj4cs7"
+
+[node name="MessageHandler" type="Node" parent="."]
+script = ExtResource("2_3l4h2")
+metadata/_custom_type_script = "uid://5ut52qqohose"
+
+[node name="LocalController" type="Node" parent="."]
+process_mode = 4
+script = ExtResource("3_xca26")
+metadata/_custom_type_script = "uid://2krsxwgnldka"
+
+[node name="UI" parent="LocalController" instance=ExtResource("4_1tvra")]
+
+[connection signal="game_start" from="." to="LocalController/UI/HBoxContainer/VBoxContainer/BottomBar/VBoxContainer/HBoxContainer/ChatFilter" method="_on_session_game_start"]
+[connection signal="message" from="MessageHandler" to="LocalController/UI/HBoxContainer/VBoxContainer/BottomBar/VBoxContainer/Messages" method="_add_message"]
+[connection signal="meta_clicked" from="LocalController/UI/HBoxContainer/VBoxContainer/BottomBar/VBoxContainer/Messages" to="LocalController" method="_on_messages_meta_clicked"]
+[connection signal="text_submitted" from="LocalController/UI/HBoxContainer/VBoxContainer/BottomBar/VBoxContainer/LineEdit" to="MessageHandler" method="_on_line_edit_text_submitted"]
+
+[editable path="LocalController/UI"]

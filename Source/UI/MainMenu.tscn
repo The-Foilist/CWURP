@@ -1,0 +1,181 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmw8yfd1qhhhp"]
+
+[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="1_oseua"]
+
+[sub_resource type="GDScript" id="GDScript_kjwba"]
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id="GDScript_oseua"]
+script/source = "extends OptionButton
+
+
+@export var scenarios: Array[String]
+
+
+func _ready() -> void:
+	for i in range(scenarios.size()):
+		add_item(scenarios[i])
+	if !Global.game_scene:
+		_on_item_selected(0)
+
+
+func _on_item_selected(index):
+	Global.game_scene = load(\"res://Assets/Scenes/Scenarios/%s.tscn\" % get_item_text(index))
+"
+
+[sub_resource type="GDScript" id="GDScript_qwi31"]
+script/source = "extends SpinBox
+
+
+func _on_value_changed(value):
+	Global.player_slot = value
+"
+
+[sub_resource type="GDScript" id="GDScript_uud8e"]
+script/source = "extends Button
+
+
+func _pressed():
+	if !Global.game_scene:
+		return
+	get_tree().change_scene_to_file(\"res://Source/Session/Session.tscn\")
+"
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 300.0
+offset_bottom = 264.0
+
+[node name="Label" type="Label" parent="MainMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Carter's Weird Unnamed RTS Project"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu"]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "New Game"
+flat = true
+alignment = 0
+
+[node name="Load" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+disabled = true
+text = "Load"
+flat = true
+alignment = 0
+
+[node name="Options" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Options"
+flat = true
+alignment = 0
+
+[node name="Exit" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+flat = true
+alignment = 0
+script = SubResource("GDScript_kjwba")
+
+[node name="OptionsMenu" parent="." instance=ExtResource("1_oseua")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_bottom = 0.0
+offset_bottom = 0.0
+grow_vertical = 1
+
+[node name="GameSelect" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 31.0
+
+[node name="ScenarioLabel" type="Label" parent="GameSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Select a scenario to play..."
+
+[node name="MapSelect" type="OptionButton" parent="GameSelect"]
+layout_mode = 2
+allow_reselect = true
+script = SubResource("GDScript_oseua")
+scenarios = Array[String](["TestScenario1", "TestScenario2"])
+
+[node name="PlayerSlotLabel" type="Label" parent="GameSelect"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Select which player..."
+
+[node name="PlayerSlotSelect" type="SpinBox" parent="GameSelect"]
+layout_mode = 2
+min_value = 1.0
+max_value = 2.0
+value = 1.0
+rounded = true
+script = SubResource("GDScript_qwi31")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameSelect"]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="GameSelect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="Play" type="Button" parent="GameSelect/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Play"
+script = SubResource("GDScript_uud8e")
+
+[connection signal="pressed" from="MainMenu/NewGame" to="MainMenu" method="set_visible" binds= [false]]
+[connection signal="pressed" from="MainMenu/NewGame" to="GameSelect" method="set_visible" binds= [true]]
+[connection signal="pressed" from="MainMenu/Options" to="MainMenu" method="set_visible" binds= [false]]
+[connection signal="pressed" from="MainMenu/Options" to="OptionsMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="OptionsMenu/HBoxContainer/Back" to="MainMenu" method="set_visible" binds= [true]]
+[connection signal="item_selected" from="GameSelect/MapSelect" to="GameSelect/MapSelect" method="_on_item_selected"]
+[connection signal="value_changed" from="GameSelect/PlayerSlotSelect" to="GameSelect/PlayerSlotSelect" method="_on_value_changed"]
+[connection signal="pressed" from="GameSelect/HBoxContainer/Back" to="MainMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="GameSelect/HBoxContainer/Back" to="GameSelect" method="set_visible" binds= [false]]
+
+[editable path="OptionsMenu"]

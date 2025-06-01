@@ -1,0 +1,301 @@
+[gd_scene load_steps=3 format=3 uid="uid://kn2smar3yxod"]
+
+[sub_resource type="GDScript" id="GDScript_kjwba"]
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id="GDScript_i26rj"]
+script/source = "extends VBoxContainer
+
+
+var config = ConfigFile.new()
+var err = config.load(\"user://settings.ini\")
+
+
+@onready var distance_select = $TabContainer/Units/GridContainer/DistanceSelect
+@onready var range_select = $TabContainer/Units/GridContainer/RangeSelect
+@onready var altitude_select = $TabContainer/Units/GridContainer/AltitudeSelect
+@onready var ship_speed_select = $TabContainer/Units/GridContainer/ShipSpeedSelect
+
+
+func _ready() -> void:
+	distance_select.select()
+
+
+func _on_save_pressed() -> void:
+	config.set_value(\"Units\", \"distance_units\", distance_select.selected)
+	config.set_value(\"Units\", \"range_units\", range_select.selected)
+	config.set_value(\"Units\", \"altitude_units\", altitude_select.selected)
+	config.set_value(\"Units\", \"ship_speed_units\", ship_speed_select.selected)
+	#config.set_value(\"Units\", \"aircraft_speed_units\", aircraft_speed_units)
+	#config.set_value(\"Units\", \"vertical_speed_units\", vertical_speed_units)
+	#config.set_value(\"Units\", \"munition_speed_units\", munition_speed_units)
+	#config.set_value(\"Units\", \"ship_fuel_units\", ship_fuel_units)
+	#config.set_value(\"Units\", \"aircraft_fuel_units\", aircraft_fuel_units)
+	#config.set_value(\"Units\", \"mass_units\", mass_units)
+	
+	config.save(\"user://settings.ini\")
+"
+
+[node name="Home" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -98.5
+offset_right = 300.0
+offset_bottom = 98.5
+grow_vertical = 2
+
+[node name="NewGame" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "New Game"
+flat = true
+alignment = 0
+
+[node name="Load" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Load"
+flat = true
+alignment = 0
+
+[node name="Options" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Options"
+flat = true
+alignment = 0
+
+[node name="Exit" type="Button" parent="MainMenu"]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+flat = true
+alignment = 0
+script = SubResource("GDScript_kjwba")
+
+[node name="OptionsMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 669.0
+offset_bottom = -439.0
+grow_vertical = 2
+script = SubResource("GDScript_i26rj")
+
+[node name="TabContainer" type="TabContainer" parent="OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+
+[node name="Controls" type="GridContainer" parent="OptionsMenu/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Units" type="MarginContainer" parent="OptionsMenu/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+metadata/_tab_index = 1
+
+[node name="GridContainer" type="GridContainer" parent="OptionsMenu/TabContainer/Units"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 2
+
+[node name="Distance" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Distance"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DistanceSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 5
+item_count = 6
+popup/item_0/text = "ft"
+popup/item_0/id = 0
+popup/item_1/text = "yd"
+popup/item_1/id = 1
+popup/item_2/text = "m"
+popup/item_2/id = 2
+popup/item_3/text = "km"
+popup/item_3/id = 3
+popup/item_4/text = "mi"
+popup/item_4/id = 4
+popup/item_5/text = "nm"
+popup/item_5/id = 5
+
+[node name="Range" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Weapon Range"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RangeSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 1
+item_count = 6
+popup/item_0/text = "ft"
+popup/item_0/id = 0
+popup/item_1/text = "yd"
+popup/item_1/id = 1
+popup/item_2/text = "m"
+popup/item_2/id = 2
+popup/item_3/text = "km"
+popup/item_3/id = 3
+popup/item_4/text = "mi"
+popup/item_4/id = 4
+popup/item_5/text = "nm"
+popup/item_5/id = 5
+
+[node name="Altitude" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Altitude"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AltitudeSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 0
+item_count = 2
+popup/item_0/text = "ft"
+popup/item_0/id = 0
+popup/item_1/text = "m"
+popup/item_1/id = 2
+
+[node name="ShipSpeed" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Ship Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ShipSpeedSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 1
+item_count = 5
+popup/item_0/text = "m/s"
+popup/item_0/id = 0
+popup/item_1/text = "kt"
+popup/item_1/id = 1
+popup/item_2/text = "mph"
+popup/item_2/id = 2
+popup/item_3/text = "fps"
+popup/item_3/id = 3
+popup/item_4/text = "kph"
+popup/item_4/id = 4
+
+[node name="AircraftSpeed" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Aircraft Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AircraftSpeedSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 1
+item_count = 5
+popup/item_0/text = "m/s"
+popup/item_0/id = 0
+popup/item_1/text = "kt"
+popup/item_1/id = 1
+popup/item_2/text = "mph"
+popup/item_2/id = 2
+popup/item_3/text = "fps"
+popup/item_3/id = 3
+popup/item_4/text = "kph"
+popup/item_4/id = 4
+
+[node name="VerticalSpeed" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Vertical Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VerticalSpeedSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 3
+item_count = 4
+popup/item_0/text = "m/s"
+popup/item_0/id = 0
+popup/item_1/text = "fps"
+popup/item_1/id = 1
+popup/item_2/text = "m/m"
+popup/item_2/id = 2
+popup/item_3/text = "fpm"
+popup/item_3/id = 3
+
+[node name="MunitionSpeed" type="Label" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+text = "Munition Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MunitionSpeedSelect" type="OptionButton" parent="OptionsMenu/TabContainer/Units/GridContainer"]
+layout_mode = 2
+focus_mode = 0
+selected = 3
+item_count = 5
+popup/item_0/text = "m/s"
+popup/item_0/id = 0
+popup/item_1/text = "kt"
+popup/item_1/id = 1
+popup/item_2/text = "mph"
+popup/item_2/id = 2
+popup/item_3/text = "fps"
+popup/item_3/id = 3
+popup/item_4/text = "kph"
+popup/item_4/id = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="OptionsMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Save"
+
+[node name="Back" type="Button" parent="OptionsMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[connection signal="pressed" from="OptionsMenu/HBoxContainer/Save" to="OptionsMenu" method="_on_save_pressed"]

@@ -1,0 +1,646 @@
+[gd_scene load_steps=28 format=3 uid="uid://d4agehp3labnq"]
+
+[ext_resource type="Script" uid="uid://p2wln175udbe" path="res://Source/UI/v_box_container.gd" id="1_1nbje"]
+[ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/Art/marker.png" id="2_faxib"]
+[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
+[ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/Art/ruler.png" id="3_yq5ji"]
+
+[sub_resource type="GDScript" id="GDScript_ywsxj"]
+script/source = "extends HSplitContainer
+
+
+func _ready():
+	dragging_enabled = PlayerSettings.resizeable_ui
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_xb563"]
+
+[sub_resource type="GDScript" id="GDScript_7dm0k"]
+script/source = "extends Label
+
+
+func _process(delta) -> void:
+	if Global.session.local_controller.targeting:
+		text = str(Global.session.local_controller.targeting.target_text)
+	elif Global.session.local_controller.hovered_object:
+		text = Global.session.local_controller.hovered_object.name
+	else:
+		text = ''
+		#text = '(%+d,%+d)' % [Global.local_controller.mouse_coords.x, Global.local_controller.mouse_coords.y]
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wusub"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="GDScript" id="GDScript_wusub"]
+script/source = "extends RichTextLabel
+
+
+var filter_types = []
+var filter_players = []
+
+func _add_message(content: String) -> void:
+	var type = content.split(']')[0].trim_prefix('[url=')
+	if type in filter_types:
+		return
+	newline()
+	append_text(content)
+
+
+func update() -> void:
+	clear()
+	for message in Global.session.local_controller.player.message_log:
+		_add_message(message)
+
+
+func _on_message_handler_filter(type: int, param: String, on: bool) -> void:
+	if on:
+		filter_types.append(param)
+	else:
+		filter_types.erase(param)
+	update()
+"
+
+[sub_resource type="GDScript" id="GDScript_b3bc3"]
+script/source = "extends LineEdit
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"message\"):
+		focus_mode = Control.FOCUS_ALL
+		edit()
+
+
+func _on_text_submitted(new_text):
+	clear()
+	focus_mode = Control.FOCUS_NONE
+
+
+func _on_editing_toggled(toggled_on):
+	if !toggled_on:
+		focus_mode = Control.FOCUS_NONE
+"
+
+[sub_resource type="GDScript" id="GDScript_1nbje"]
+script/source = "extends MenuButton
+
+
+func setup() -> void:
+	get_popup().clear()
+	for i in range(Global.session.message_handler.MESSAGE_TYPES.size()):
+		get_popup().add_check_item(Global.session.message_handler.MESSAGE_TYPES[i])
+		get_popup().set_item_as_checkable(i, true)
+		get_popup().id_pressed.connect(_on_id_pressed)
+
+
+func _on_session_game_start() -> void:
+	setup()
+
+
+func _on_id_pressed(id: int) -> void:
+	get_popup().set_item_checked(id, !get_popup().is_item_checked(id))
+	Global.session.message_handler.emit_signal('filter', 0, get_popup().get_item_text(id), get_popup().is_item_checked(id))
+"
+
+[sub_resource type="GDScript" id="GDScript_faxib"]
+script/source = "extends MenuButton
+
+
+func setup() -> void:
+	get_popup().clear()
+	for i in range(Global.session.players.size()):
+		get_popup().add_check_item(Global.session.players[i].name)
+		get_popup().set_item_as_checkable(i, true)
+		get_popup().id_pressed.connect(_on_id_pressed)
+
+
+func _on_session_game_start() -> void:
+	setup()
+
+
+func _on_id_pressed(id: int) -> void:
+	get_popup().set_item_checked(id, !get_popup().is_item_checked(id))
+	Global.session.message_handler.emit_signal('filter', 1, get_popup().get_item_text(id), get_popup().is_item_checked(id))
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3bc3"]
+bg_color = Color(0.25098, 0.25098, 0.25098, 1)
+
+[sub_resource type="GDScript" id="GDScript_yq5ji"]
+script/source = "extends TabContainer
+
+
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"tab_units\"):
+		current_tab = 0
+	if event.is_action_pressed(\"tab_selection\"):
+		current_tab = 1
+	if event.is_action_pressed(\"tab_map\"):
+		current_tab = 2
+"
+
+[sub_resource type="GDScript" id="GDScript_3b2b5"]
+script/source = "extends Tree
+
+
+func update() -> void:
+	clear()
+	var root = create_item()
+	for unit in Global.session.local_controller.player.units:
+		var child = create_item(root)
+		child.set_text(0, unit.name)
+		child.set_metadata(0, unit)
+
+
+func _on_item_mouse_selected(mouse_position, mouse_button_index) -> void:
+	Global.session.local_controller.player.select(get_item_at_position(mouse_position).get_metadata(0))
+
+
+func _on_unit_selected(unit: Unit) -> void:
+	var item = get_root().get_first_child()
+	while item != null:
+		if item.get_metadata(0) == unit:
+			item.select(0)
+		else:
+			item.deselect(0)
+		item = item.get_next()
+"
+
+[sub_resource type="GDScript" id="GDScript_lgolh"]
+script/source = "extends GridContainer
+
+
+func clear() -> void:
+	$Name.text = ''
+	$Owner.text = ''
+	$XCoord.text = ''
+	$YCoord.text = ''
+
+
+func _on_unit_selected(unit: Unit) -> void:
+	clear()
+	if !unit:
+		return
+	$Name.text = unit.name
+	$Owner.text = unit.owning_player.name
+	$Owner.add_theme_color_override(\"font_color\", unit.owning_player.color)
+	if unit.owning_player != Global.session.local_controller.player:
+		return
+	$XCoord.text = '( %+d' % unit.position.x
+	$YCoord.text = '%+d )' % unit.position.y
+"
+
+[sub_resource type="GDScript" id="GDScript_ff03q"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.local_controller.target_command(CommandPlaceMarker.new(Global.session.local_controller.player))
+"
+
+[sub_resource type="GDScript" id="GDScript_fnweq"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.local_controller.target_command(CommandDrawRuler.new(Global.session.local_controller.player))
+"
+
+[sub_resource type="GDScript" id="GDScript_xb563"]
+script/source = "extends Label
+
+
+func _process(delta) -> void:
+	text = Global.session.game.current_time
+"
+
+[sub_resource type="GDScript" id="GDScript_fyqef"]
+script/source = "extends Label
+
+
+func _process(delta) -> void:
+	text = \"×\" + str(Global.session.game.time_scale)
+"
+
+[sub_resource type="GDScript" id="GDScript_m6e0p"]
+script/source = "extends Label
+
+
+func _process(delta) -> void:
+	visible = Global.session.game.pause
+"
+
+[sub_resource type="GDScript" id="GDScript_eqdp0"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.game.change_time_scale(0.5)
+"
+
+[sub_resource type="GDScript" id="GDScript_agc84"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.game.toggle_pause(!Global.session.game.pause)
+"
+
+[sub_resource type="GDScript" id="GDScript_i125b"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.game.change_time_scale(2)
+"
+
+[sub_resource type="GDScript" id="GDScript_f33fr"]
+script/source = "extends HotkeyButton
+
+
+func _ready() -> void:
+	add_theme_color_override(\"font_hover_color\", Global.session.local_controller.player.color)
+	add_theme_color_override(\"font_hover_pressed_color\", Global.session.local_controller.player.color)
+
+
+func _pressed() -> void:
+	var idx = Global.session.players.find(Global.session.local_controller.player)
+	Global.session.local_controller.switch_player(3-idx)
+	add_theme_color_override(\"font_hover_color\", Global.session.local_controller.player.color)
+	add_theme_color_override(\"font_hover_pressed_color\", Global.session.local_controller.player.color)
+"
+
+[sub_resource type="GDScript" id="GDScript_h2yge"]
+script/source = "extends CenterContainer
+
+
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"toggle_menu\"):
+		visible = !visible
+"
+
+[sub_resource type="GDScript" id="GDScript_0xm2m"]
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	get_tree().change_scene_to_file(\"res://Source/UI/MainMenu.tscn\")
+"
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+dragging_enabled = false
+dragger_visibility = 2
+script = SubResource("GDScript_ywsxj")
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 0
+dragging_enabled = false
+dragger_visibility = 2
+script = ExtResource("1_1nbje")
+
+[node name="Overlay" type="Control" parent="HSplitContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="CursorTarget" type="Label" parent="HSplitContainer/VSplitContainer/Overlay"]
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_xb563")
+script = SubResource("GDScript_7dm0k")
+
+[node name="BottomBar" type="PanelContainer" parent="HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+theme_override_styles/panel = SubResource("StyleBoxFlat_wusub")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/BottomBar"]
+layout_mode = 2
+
+[node name="Messages" type="RichTextLabel" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+meta_underlined = false
+script = SubResource("GDScript_wusub")
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+caret_blink = true
+caret_blink_interval = 0.5
+script = SubResource("GDScript_b3bc3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="MessageTypeFilter" type="MenuButton" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Message Type Filter"
+switch_on_hover = true
+script = SubResource("GDScript_1nbje")
+
+[node name="PlayerFilter" type="MenuButton" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chat Filter"
+switch_on_hover = true
+script = SubResource("GDScript_faxib")
+
+[node name="Filter3" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "for"
+
+[node name="Filter4" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "message"
+
+[node name="Filter5" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "box
+"
+
+[node name="Filter6" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "can"
+
+[node name="Filter7" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "go
+"
+
+[node name="Filter8" type="Button" parent="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "here"
+
+[node name="SideBar" type="PanelContainer" parent="HSplitContainer"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b3bc3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/SideBar"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 2
+tab_focus_mode = 0
+script = SubResource("GDScript_yq5ji")
+
+[node name="Units" type="Tree" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+focus_mode = 0
+hide_root = true
+script = SubResource("GDScript_3b2b5")
+metadata/_tab_index = 0
+
+[node name="Selection" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+script = SubResource("GDScript_lgolh")
+metadata/_tab_index = 1
+
+[node name="Name" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+horizontal_alignment = 1
+
+[node name="Owner" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+horizontal_alignment = 1
+
+[node name="XCoord" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+horizontal_alignment = 2
+
+[node name="YCoord" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Map" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+layout_mode = 2
+columns = 4
+metadata/_tab_index = 2
+
+[node name="MarkerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+focus_mode = 0
+alignment = 2
+icon_alignment = 1
+expand_icon = true
+script = SubResource("GDScript_ff03q")
+action = "place_marker"
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_faxib")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 15.0
+grow_vertical = 0
+text = "M"
+uppercase = true
+
+[node name="RulerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+focus_mode = 0
+script = SubResource("GDScript_fnweq")
+action = "draw_ruler"
+metadata/_custom_type_script = "uid://7d6y2txex4tg"
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/RulerButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_yq5ji")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/RulerButton"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 15.0
+grow_vertical = 0
+text = "R"
+uppercase = true
+
+[node name="Time" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="WorldTime" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/Time"]
+layout_mode = 2
+text = "00:00:00"
+script = SubResource("GDScript_xb563")
+
+[node name="TimeScale" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/Time"]
+layout_mode = 2
+text = "×1.0"
+script = SubResource("GDScript_fyqef")
+
+[node name="Pause" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/Time"]
+layout_mode = 2
+text = "PAUSED"
+script = SubResource("GDScript_m6e0p")
+
+[node name="TimeControls" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
+layout_mode = 2
+
+[node name="SlowTimeButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TimeControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Slow Down"
+script = SubResource("GDScript_eqdp0")
+action = "time_slow_down"
+
+[node name="PauseButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TimeControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+text = "Pause"
+script = SubResource("GDScript_agc84")
+action = "time_pause"
+
+[node name="SpeedTimeButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TimeControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Speed Up"
+script = SubResource("GDScript_i125b")
+action = "time_speed_up"
+
+[node name="SwitchPlayerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Switch local control between players
+(DEBUG ONLY)"
+script = SubResource("GDScript_f33fr")
+action = "switch_players"
+metadata/_custom_type_script = "uid://7d6y2txex4tg"
+
+[node name="Menu" type="CenterContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = SubResource("GDScript_h2yge")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+text = "Resume"
+
+[node name="OptionsButton" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+focus_mode = 0
+text = "Options"
+
+[node name="SaveButton" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+text = "Save"
+
+[node name="QuitButton" type="Button" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+text = "Quit"
+script = SubResource("GDScript_0xm2m")
+
+[node name="OptionsMenu" parent="Menu" instance=ExtResource("2_ff03q")]
+visible = false
+layout_mode = 2
+
+[connection signal="editing_toggled" from="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/LineEdit" to="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/LineEdit" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/LineEdit" to="HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/LineEdit" method="_on_text_submitted"]
+[connection signal="item_mouse_selected" from="HSplitContainer/SideBar/VBoxContainer/TabContainer/Units" to="HSplitContainer/SideBar/VBoxContainer/TabContainer/Units" method="_on_item_mouse_selected"]
+[connection signal="pressed" from="Menu/VBoxContainer/ResumeButton" to="Menu" method="set_visible" binds= [false]]
+[connection signal="pressed" from="Menu/VBoxContainer/OptionsButton" to="Menu/VBoxContainer" method="set_visible" binds= [false]]
+[connection signal="pressed" from="Menu/VBoxContainer/OptionsButton" to="Menu/OptionsMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="Menu/OptionsMenu/HBoxContainer/Back" to="Menu/VBoxContainer" method="set_visible" binds= [true]]
+
+[editable path="Menu/OptionsMenu"]
