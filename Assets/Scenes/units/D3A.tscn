@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfl3g0yj4xrxc"]
+
+[ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_4gdys"]
+[ext_resource type="Texture2D" uid="uid://gjdqcqs3rits" path="res://Assets/art/airplanes/D3A white.png" id="2_f64ot"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_8pu16"]
+[ext_resource type="PackedScene" uid="uid://dl4vq73074xr4" path="res://Source/UI/World/AirplaneMarker.tscn" id="4_cv2qw"]
+
+[node name="D3A" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+input_pickable = true
+script = ExtResource("1_4gdys")
+metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
+
+[node name="SelectionArea" parent="." node_paths=PackedStringArray("connected_object") instance=ExtResource("3_8pu16")]
+connected_object = NodePath("..")
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+position = Vector2(-561, -101)
+polygon = PackedVector2Array(554, 99, 554, 100, 560, 106, 562, 106, 568, 100, 568, 99, 561, 96)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_f64ot")
+
+[node name="Marker" parent="." instance=ExtResource("4_cv2qw")]
+visible = false
+scale_threshold = 0.1
+
+[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
+connected_object = NodePath("../..")
+
+[editable path="SelectionArea"]
+[editable path="Marker"]
+[editable path="Marker/SelectionArea"]

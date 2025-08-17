@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjs4e5rj0kkwp"]
+
+[ext_resource type="Texture2D" uid="uid://pnebiw01c0xg" path="res://Assets/art/icon_ship.png" id="1_pncfr"]
+[ext_resource type="Script" uid="uid://bmjopfd5mngwo" path="res://Source/UI/World/UnitMarker.gd" id="2_pncfr"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_8g4jt"]
+
+[node name="Marker" type="Sprite2D"]
+z_index = 1000
+texture = ExtResource("1_pncfr")
+script = ExtResource("2_pncfr")
+metadata/_custom_type_script = "uid://bmjopfd5mngwo"
+
+[node name="SelectionArea" parent="." instance=ExtResource("3_8g4jt")]
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+polygon = PackedVector2Array(0, -98, 19, -65, 31, -21, 34, 10, 33, 44, 24, 98, -24, 98, -33, 45, -34, 9, -31, -21, -19, -65)
+
+[editable path="SelectionArea"]

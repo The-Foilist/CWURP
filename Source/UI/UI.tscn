@@ -1,15 +1,22 @@
-[gd_scene load_steps=31 format=3 uid="uid://d4agehp3labnq"]
+[gd_scene load_steps=30 format=3 uid="uid://d4agehp3labnq"]
 
-[ext_resource type="Script" uid="uid://p2wln175udbe" path="res://Source/UI/v_box_container.gd" id="1_1nbje"]
-[ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/Art/marker.png" id="2_faxib"]
+[ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/art/marker.png" id="2_faxib"]
 [ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
 [ext_resource type="RichTextEffect" uid="uid://dwgdfx0e4jnq0" path="res://Source/Session/Messages/MessageSender.tres" id="2_ywsxj"]
-[ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/Art/ruler.png" id="3_yq5ji"]
+[ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/art/ruler.png" id="3_yq5ji"]
 [ext_resource type="RichTextEffect" uid="uid://8mwr7veqf0q2" path="res://Source/Session/Messages/MessageTimestamp.tres" id="3_ywsxj"]
 [ext_resource type="RichTextEffect" uid="uid://bakqufq0bf6hb" path="res://Source/Session/Messages/MessageType.tres" id="4_eqdp0"]
 
 [sub_resource type="GDScript" id="GDScript_ywsxj"]
 script/source = "extends HSplitContainer
+
+
+func _ready():
+	dragging_enabled = PlayerSettings.resizeable_ui
+"
+
+[sub_resource type="GDScript" id="GDScript_f33fr"]
+script/source = "extends VSplitContainer
 
 
 func _ready():
@@ -22,7 +29,7 @@ func _ready():
 script/source = "extends Label
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if Global.session.local_controller.targeting:
 		text = str(Global.session.local_controller.targeting.target_text)
 	elif Global.session.local_controller.hovered_object:
@@ -47,7 +54,7 @@ func _add_message(content: String) -> void:
 	if type in filter_types:
 		return
 	if content.contains('[sender]'):
-		var sender = get_node(content.split('[sender]')[1].split('[url=')[1].split(']')[0]).name
+		var sender = instance_from_id(int(content.split('[sender]')[1].split('[url=')[1].split(']')[0])).name
 		if sender in filter_players:
 			return
 	newline()
@@ -84,7 +91,7 @@ func _unhandled_input(event):
 		edit()
 
 
-func _on_text_submitted(new_text):
+func _on_text_submitted(_new_text):
 	clear()
 	focus_mode = Control.FOCUS_NONE
 
@@ -169,15 +176,17 @@ func update() -> void:
 	var root = create_item()
 	for unit in Global.session.local_controller.player.units:
 		var child = create_item(root)
-		child.set_text(0, unit.name)
+		child.set_text(0, unit.display_name)
 		child.set_metadata(0, unit)
 
 
-func _on_item_mouse_selected(mouse_position, mouse_button_index) -> void:
+func _on_item_mouse_selected(mouse_position, _mouse_button_index) -> void:
 	Global.session.local_controller.player.select(get_item_at_position(mouse_position).get_metadata(0))
 
 
-func _on_unit_selected(unit: Unit) -> void:
+func _on_unit_selected(unit: Node2D) -> void:
+	if !unit:
+		return
 	var item = get_root().get_first_child()
 	while item != null:
 		if item.get_metadata(0) == unit:
@@ -188,27 +197,36 @@ func _on_unit_selected(unit: Unit) -> void:
 "
 
 [sub_resource type="GDScript" id="GDScript_lgolh"]
-script/source = "extends GridContainer
+script/source = "extends VBoxContainer
+
+
+var connected_unit: Unit
 
 
 func clear() -> void:
-	$Name.text = ''
-	$Owner.text = ''
-	$XCoord.text = ''
-	$YCoord.text = ''
+	connected_unit = null
+	$GridContainer/Name.text = ''
+	$GridContainer/Owner.text = ''
+	for child in $ScrollContainer/InspectorsGoHere.get_children():
+		$ScrollContainer/InspectorsGoHere.remove_child(child)
+		child.queue_free()
 
 
-func _on_unit_selected(unit: Unit) -> void:
+func _on_unit_selected(unit: Node2D) -> void:
 	clear()
 	if !unit:
 		return
-	$Name.text = unit.name
-	$Owner.text = unit.owning_player.name
-	$Owner.add_theme_color_override(\"font_color\", unit.owning_player.color)
-	if unit.owning_player != Global.session.local_controller.player:
+	if !(unit is Unit):
 		return
-	$XCoord.text = '( %+d' % unit.position.x
-	$YCoord.text = '%+d )' % unit.position.y
+	connected_unit = unit
+	$GridContainer/Name.text = connected_unit.display_name
+	$GridContainer/Owner.text = connected_unit.owning_player.name
+	$GridContainer/Owner.add_theme_color_override(\"font_color\", connected_unit.owning_player.color)
+	
+	if connected_unit.mover:
+		var new_inspector = load('res://Source/UI/Inspectors/' + connected_unit.mover.inspector + '.tscn').instantiate()
+		new_inspector.linked_mover = connected_unit.mover
+		$ScrollContainer/InspectorsGoHere.add_child(new_inspector)
 "
 
 [sub_resource type="GDScript" id="GDScript_ff03q"]
@@ -231,7 +249,7 @@ func _pressed():
 script/source = "extends Label
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	text = Global.session.game.current_time
 "
 
@@ -239,7 +257,7 @@ func _process(delta) -> void:
 script/source = "extends Label
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	text = \"×\" + str(Global.session.game.time_scale)
 "
 
@@ -247,7 +265,7 @@ func _process(delta) -> void:
 script/source = "extends Label
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	visible = Global.session.game.pause
 "
 
@@ -277,19 +295,6 @@ script/source = "extends HotkeyButton
 
 func _pressed():
 	Global.session.game.change_time_scale(2)
-"
-
-[sub_resource type="GDScript" id="GDScript_f33fr"]
-script/source = "extends HotkeyButton
-
-
-func _pressed() -> void:
-	var idx = Global.session.players.find(Global.session.local_controller.player)
-	Global.session.local_controller.switch_player(3-idx)
-	add_theme_color_override(\"font_color\", Global.session.local_controller.player.color)
-	add_theme_color_override(\"font_hover_color\", Global.session.local_controller.player.color)
-	add_theme_color_override(\"font_hover_pressed_color\", Global.session.players[3-idx].color)
-	add_theme_color_override(\"font_pressed_color\", Global.session.players[3-idx].color)
 "
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
@@ -330,12 +335,28 @@ mouse_filter = 2
 theme_override_constants/separation = 0
 dragging_enabled = false
 dragger_visibility = 2
-script = ExtResource("1_1nbje")
+script = SubResource("GDScript_f33fr")
 
 [node name="Overlay" type="Control" parent="HSplitContainer/VSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HSplitContainer/VSplitContainer/Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="HSplitContainer/VSplitContainer/Overlay/SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(1560, 780)
+render_target_update_mode = 4
 
 [node name="CursorTarget" type="Label" parent="HSplitContainer/VSplitContainer/Overlay"]
 layout_mode = 2
@@ -435,7 +456,7 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 1
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
@@ -447,37 +468,38 @@ hide_root = true
 script = SubResource("GDScript_3b2b5")
 metadata/_tab_index = 0
 
-[node name="Selection" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
+[node name="Selection" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
 layout_mode = 2
-columns = 2
 script = SubResource("GDScript_lgolh")
 metadata/_tab_index = 1
 
-[node name="Name" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+[node name="GridContainer" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+layout_mode = 2
+columns = 2
+
+[node name="Name" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 horizontal_alignment = 1
 
-[node name="Owner" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+[node name="Owner" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 horizontal_alignment = 1
 
-[node name="XCoord" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-horizontal_alignment = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="YCoord" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection"]
+[node name="InspectorsGoHere" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
 
 [node name="Map" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
@@ -527,7 +549,6 @@ layout_mode = 2
 focus_mode = 0
 script = SubResource("GDScript_fnweq")
 action = "draw_ruler"
-metadata/_custom_type_script = "uid://7d6y2txex4tg"
 
 [node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/RulerButton"]
 layout_mode = 1
@@ -603,19 +624,6 @@ focus_mode = 0
 text = "+"
 script = SubResource("GDScript_i125b")
 action = "time_speed_up"
-
-[node name="SwitchPlayerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer"]
-layout_mode = 2
-focus_mode = 0
-theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 1, 1)
-theme_override_colors/font_color = Color(0, 0, 1, 1)
-theme_override_colors/font_pressed_color = Color(1, 0, 0, 1)
-text = "Switch local control between players
-(DEBUG ONLY)"
-script = SubResource("GDScript_f33fr")
-action = "switch_player"
-metadata/_custom_type_script = "uid://7d6y2txex4tg"
 
 [node name="Menu" type="CenterContainer" parent="."]
 visible = false

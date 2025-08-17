@@ -135,7 +135,7 @@ text = "Select a scenario to play..."
 layout_mode = 2
 allow_reselect = true
 script = SubResource("GDScript_oseua")
-scenarios = Array[String](["TestScenario1", "TestScenario2"])
+scenarios = Array[String](["Midway", "TestScenario2"])
 
 [node name="PlayerSlotLabel" type="Label" parent="GameSelect"]
 layout_mode = 2

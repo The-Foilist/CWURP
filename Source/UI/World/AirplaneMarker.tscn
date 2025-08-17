@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl4vq73074xr4"]
+
+[ext_resource type="Texture2D" uid="uid://b5jdj0m2vew8u" path="res://Assets/art/icon_airplane.png" id="1_8wkpo"]
+[ext_resource type="Script" uid="uid://bmjopfd5mngwo" path="res://Source/UI/World/UnitMarker.gd" id="2_g05q6"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_s7hsm"]
+
+[node name="Marker" type="Sprite2D"]
+z_index = 1000
+texture = ExtResource("1_8wkpo")
+script = ExtResource("2_g05q6")
+metadata/_custom_type_script = "uid://bmjopfd5mngwo"
+
+[node name="SelectionArea" parent="." instance=ExtResource("3_s7hsm")]
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+polygon = PackedVector2Array(-3, -73, 3, -73, 10, -65, 14, -33, 100, -33, 100, -9, 13, 1, 7, 47, 32, 52, 32, 69, -32, 69, -32, 53, -7, 47, -13, 1, -100, -8, -100, -33, -14, -33, -10, -65)
+
+[editable path="SelectionArea"]

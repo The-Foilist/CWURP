@@ -33,5 +33,5 @@ func cancel() -> void:
 	controller.targeting = null
 
 
-func process(delta: float) -> void:
+func process(_delta: float) -> void:
 	pass

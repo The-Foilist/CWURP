@@ -5,17 +5,17 @@ script/source = "class_name Ruler
 extends Line2D
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	if points.size() < 2:
 		return
 	var cam = Global.session.local_controller.cam
 	width = 2 / cam.zoom.x
-	var len = get_point_position(0).distance_to(get_point_position(1))
-	var ang = Global.bearing_to(get_point_position(0), get_point_position(1))
+	var length = get_point_position(0).distance_to(get_point_position(1))
+	var angle = Global.bearing_to(get_point_position(0), get_point_position(1))
 	$Label.position = get_point_position(1)
 	$Label.scale = Vector2(PlayerSettings.text_scale/cam.zoom.x, PlayerSettings.text_scale/cam.zoom.y)
 	$Label.rotation = cam.global_rotation
-	$Label.text = '%f %s\\n%.1f °' % [len / Global.DISTANCE_CONVERSION[PlayerSettings.distance_units], PlayerSettings.distance_units, ang]
+	$Label.text = '%f %s\\n%.1f °' % [length / Global.DISTANCE_CONVERSION[PlayerSettings.distance_units], PlayerSettings.distance_units, angle]
 "
 
 [node name="Ruler" type="Line2D"]

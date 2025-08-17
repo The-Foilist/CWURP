@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhc6tw75uk020"]
+
+[ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_xadvo"]
+[ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Objects/UnitComponents/ShipMover.gd" id="3_2k30m"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="4_p4y5d"]
+[ext_resource type="Script" uid="uid://bmdsfrn3kyw71" path="res://Source/Objects/UnitComponents/Hull.gd" id="5_0paox"]
+[ext_resource type="Script" uid="uid://d3ok1irbfcla3" path="res://Source/Objects/UnitComponents/Powerplant.gd" id="7_5r6bg"]
+[ext_resource type="Script" uid="uid://okrvl50ty2qp" path="res://Source/Objects/UnitComponents/Rudder.gd" id="8_qr455"]
+[ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="9_2ki26"]
+
+[node name="Ship" type="StaticBody2D" node_paths=PackedStringArray("mover")]
+collision_layer = 0
+collision_mask = 0
+input_pickable = true
+script = ExtResource("1_xadvo")
+mover = NodePath("ShipMover")
+metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
+
+[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder")]
+script = ExtResource("3_2k30m")
+unit = NodePath("..")
+hull = NodePath("../Hull")
+powerplant = NodePath("../Powerplant")
+rudder = NodePath("../Rudder")
+metadata/_custom_type_script = "uid://bjyfeobmmom26"
+
+[node name="SelectionArea" parent="." node_paths=PackedStringArray("connected_object") instance=ExtResource("4_p4y5d")]
+connected_object = NodePath("..")
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+position = Vector2(-561, -101)
+polygon = PackedVector2Array(551, -22, 551, 227, 571, 227, 571, -22)
+
+[node name="Hull" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("5_0paox")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://bmdsfrn3kyw71"
+
+[node name="Sprite2D" type="Sprite2D" parent="Hull"]
+scale = Vector2(0.365596, 0.365596)
+
+[node name="Powerplant" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("7_5r6bg")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://d3ok1irbfcla3"
+
+[node name="Rudder" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+script = ExtResource("8_qr455")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://okrvl50ty2qp"
+
+[node name="Marker" parent="." instance=ExtResource("9_2ki26")]
+visible = false
+scale_threshold = 1.0
+
+[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
+connected_object = NodePath("../..")
+
+[editable path="SelectionArea"]
+[editable path="Marker"]
+[editable path="Marker/SelectionArea"]

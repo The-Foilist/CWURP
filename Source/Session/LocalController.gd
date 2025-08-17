@@ -25,10 +25,7 @@ func get_object_under_mouse() -> Node2D:
 	return null
 
 
-func switch_player(idx: int) -> void:
-	disconnect('player.selection_updated', $UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units._on_unit_selected)
-	disconnect('player.selection_updated', $UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_unit_selected)
-	
+func setup_player(idx: int) -> void:
 	player = session.players[idx]
 	
 	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units._on_unit_selected)
@@ -76,12 +73,15 @@ func _unhandled_input(event) -> void:
 			targeting.release(cam.get_global_mouse_position())
 		if event.is_action_pressed('cancel_target'):
 			targeting.cancel()
+	elif event.is_action_pressed("select"):
+		if hovered_object:
+			player.select(hovered_object)
 	if event.is_action_pressed('deselect'):
-		print('yo')
 		player.select(null)
 
 
+
 func _on_messages_meta_clicked(meta):
-	var obj = get_node(meta)
+	var obj = instance_from_id(int(meta))
 	if obj is Unit:
 		player.select(obj)

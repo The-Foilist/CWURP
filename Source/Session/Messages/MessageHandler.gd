@@ -11,13 +11,16 @@ const MESSAGE_TYPES = ['welcome', 'chat', 'select', 'map']
 signal message(content: String)
 signal filter(type: int, param: String, on: bool)
 
-
 func wrap_name(object: Node) -> String:
-	var out_string = '[b][url=%s]%s[/url][/b]' % [object.get_path(), object.name]
+	var out_string: String
 	if object is Player:
+		out_string = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.name]
 		out_string = '[color=#%s]%s[/color]' % [object.color.to_html(false), out_string]
 	if object is Unit:
+		out_string = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.display_name]
 		out_string = '[color=#%s]%s[/color]' % [object.owning_player.color.to_html(false), out_string]
+	else:
+		out_string = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.display_name]
 	return out_string
 
 

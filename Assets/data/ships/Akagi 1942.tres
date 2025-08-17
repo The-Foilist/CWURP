@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ShipStats" load_steps=2 format=3 uid="uid://cxljerxeraomp"]
+
+[ext_resource type="Script" uid="uid://wvewlh4b6psl" path="res://Source/Objects/ShipStats.gd" id="1_7vxpf"]
+
+[resource]
+script = ExtResource("1_7vxpf")
+displacement = 38200.0
+draft = 8.71
+hull_drag = 0.0103287
+turn_radius = 1080.0
+powerplant_power_max = 99000.0
+powerplant_ramp_rate = 20.0
+powerplant_fuel_max = 7600.0
+rudder_shift_rate = 0.1
+rudder_drag = 0.0
+display_name = "CV Akagi"
+metadata/_custom_type_script = "uid://wvewlh4b6psl"

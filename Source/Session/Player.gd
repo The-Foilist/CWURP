@@ -5,14 +5,14 @@ extends Node
 @export var color: Color
 @export var controllable: bool
 @export var units: Array[Unit]
-@export var start_location: Node2D
+@export var start_location: StartLocation
 
 @onready var game = get_parent().get_parent()
 
 var message_log: Array[String]
 var selection: Node2D
 var marker_number: int = 1
-var markers: Array[Marker]
+var markers: Array[LocationMarker]
 
 
 signal selection_updated(selection: Node2D)
@@ -29,8 +29,8 @@ func select(target: Node2D) -> void:
 		Global.session.message_handler.send(null, self, 'select', 'You have selected ' + Global.session.message_handler.wrap_name(selection) + '.')
 
 
-func create_marker(pos: Vector2) -> Marker:
-	var new_marker = load("res://Source/UI/World/Marker.tscn").instantiate()
+func create_marker(pos: Vector2) -> LocationMarker:
+	var new_marker = load("res://Source/UI/World/LocationMarker.tscn").instantiate()
 	new_marker.player = self
 	new_marker.global_position = pos
 	new_marker.name = 'Marker ' + str(marker_number)

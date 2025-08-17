@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bgniuhe4g28mx" path="res://Source/UI/World/SelectionArea.gd" id="1_kyq6f"]
 
 [node name="SelectionArea" type="Area2D"]
+collision_mask = 0
 script = ExtResource("1_kyq6f")
 metadata/_custom_type_script = "uid://bgniuhe4g28mx"
 

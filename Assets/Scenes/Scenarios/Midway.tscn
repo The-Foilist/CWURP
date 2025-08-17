@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://dt8w8atfoguob"]
+
+[ext_resource type="Script" uid="uid://c1hicrs7pin5x" path="res://Source/Session/Game.gd" id="1_gg4fa"]
+[ext_resource type="Script" uid="uid://nipeuxlrpgq8" path="res://Source/Session/Player.gd" id="2_wsuic"]
+[ext_resource type="Texture2D" uid="uid://num482qwc6jv" path="res://Assets/art/maps/Midway 10.png" id="3_hgyg1"]
+[ext_resource type="Script" uid="uid://c5u6aql8khc6o" path="res://Source/Session/StartLocation.gd" id="4_7d5tn"]
+[ext_resource type="PackedScene" uid="uid://vxa4pugp48u7" path="res://Assets/scenes/units/MidwayAirbase.tscn" id="5_ftefp"]
+[ext_resource type="PackedScene" uid="uid://d2yfe0farl30s" path="res://Assets/scenes/units/Akagi.tscn" id="6_7d5tn"]
+[ext_resource type="PackedScene" uid="uid://cq5mpuaqnfijf" path="res://Assets/scenes/units/Hiryu.tscn" id="6_wsuic"]
+[ext_resource type="PackedScene" uid="uid://by5g2t2fkcqfm" path="res://Assets/scenes/units/Kaga.tscn" id="7_ftefp"]
+[ext_resource type="PackedScene" uid="uid://d4lf0dv16thjr" path="res://Assets/scenes/units/Soryu.tscn" id="7_hgyg1"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_gg4fa")
+start_time = "1942-06-04T00:00:00"
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Neutral" type="Node" parent="Players"]
+script = ExtResource("2_wsuic")
+color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Kido Butai" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
+script = ExtResource("2_wsuic")
+color = Color(1, 0, 0, 1)
+controllable = true
+units = [NodePath("../../World/Akagi"), NodePath("../../World/Kaga"), NodePath("../../World/Hiryu"), NodePath("../../World/Soryu")]
+start_location = NodePath("../../World/Start Location 2")
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Midway Garrison" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
+script = ExtResource("2_wsuic")
+color = Color(0, 0, 1, 1)
+controllable = true
+units = [NodePath("../../World/Midway Airbase")]
+start_location = NodePath("../../World/Start Location 1")
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Midway Atoll" type="Sprite2D" parent="World"]
+scale = Vector2(10, 10)
+texture = ExtResource("3_hgyg1")
+
+[node name="Start Location 1" type="Node2D" parent="World"]
+position = Vector2(2825, -452)
+script = ExtResource("4_7d5tn")
+starting_zoom_level = 10
+metadata/_custom_type_script = "uid://c5u6aql8khc6o"
+
+[node name="Start Location 2" type="Node2D" parent="World"]
+position = Vector2(-100000, -100000)
+script = ExtResource("4_7d5tn")
+starting_zoom_level = 3
+metadata/_custom_type_script = "uid://c5u6aql8khc6o"
+
+[node name="Midway Airbase" parent="World" node_paths=PackedStringArray("owning_player") instance=ExtResource("5_ftefp")]
+position = Vector2(2825, -452)
+owning_player = NodePath("../../Players/Midway Garrison")
+
+[node name="Akagi" parent="World" node_paths=PackedStringArray("owning_player") instance=ExtResource("6_7d5tn")]
+position = Vector2(-99000, -100000)
+rotation = 2.35619
+owning_player = NodePath("../../Players/Kido Butai")
+
+[node name="Kaga" parent="World" node_paths=PackedStringArray("owning_player") instance=ExtResource("7_ftefp")]
+position = Vector2(-100000, -99000)
+rotation = 2.35619
+owning_player = NodePath("../../Players/Kido Butai")
+
+[node name="Hiryu" parent="World" node_paths=PackedStringArray("owning_player") instance=ExtResource("6_wsuic")]
+position = Vector2(-101000, -100000)
+rotation = 2.35619
+owning_player = NodePath("../../Players/Kido Butai")
+
+[node name="Soryu" parent="World" node_paths=PackedStringArray("owning_player") instance=ExtResource("7_hgyg1")]
+position = Vector2(-100000, -101000)
+rotation = 2.35619
+owning_player = NodePath("../../Players/Kido Butai")
+
+[node name="UILayer" type="Node2D" parent="."]
+z_index = 1000
