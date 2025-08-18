@@ -20,9 +20,11 @@ func get_object_under_mouse() -> Node2D:
 	mouse_intersect_params.position = mouse_coords
 	var result = cam.get_world_2d().direct_space_state.intersect_point(mouse_intersect_params)
 	if result:
-		if result[0].collider is SelectionArea:
+		if result[0].collider is SelectionArea and result[0].collider.input_pickable:
 			return result[0].collider.connected_object
-	return null
+		elif result[0].collider is UnitComponent:
+			return result[0].collider.unit
+	return 
 
 
 func setup_player(idx: int) -> void:

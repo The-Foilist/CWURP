@@ -6,8 +6,12 @@ extends UnitComponent
 
 var pos: float
 var pos_target: float
-
 var shift_mod: float = 1
+
+
+func _init() -> void:
+	collision_layer = 7
+	collision_mask = 6
 
 
 func set_target(val: float) -> void:

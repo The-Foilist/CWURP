@@ -10,6 +10,7 @@ var linked_mover: ShipMover
 @onready var speed_readout = $GridContainer/SpeedReadout
 @onready var rudder_readout = $GridContainer/RudderReadout
 @onready var power_readout = $GridContainer/PowerReadout
+@onready var fuel_readout = $GridContainer/FuelReadout
 
 
 func _process(_delta: float) -> void:
@@ -17,10 +18,11 @@ func _process(_delta: float) -> void:
 		get_parent().remove_child(self)
 		queue_free()
 		return
-	heading_readout.text = \"%03.f °\" % linked_mover.unit.heading
-	speed_readout.text = \"%.1f\" % (linked_mover.speed / Global.SPEED_CONVERSION[PlayerSettings.ship_speed_units]) + PlayerSettings.ship_speed_units
+	heading_readout.text = \"%03.f °\" % linked_mover.heading
+	speed_readout.text = \"%.1f \" % (linked_mover.speed / Global.SPEED_CONVERSION[PlayerSettings.ship_speed_units]) + PlayerSettings.ship_speed_units
 	rudder_readout.value = linked_mover.rudder.pos
 	power_readout.text = \"%.f %%\" % (linked_mover.powerplant.setting * 100)
+	fuel_readout.text = \"%.f \" % (linked_mover.powerplant.fuel * 1000 / Global.MASS_CONVERSION['t']) + 't'
 "
 
 [node name="ShipInspector" type="VBoxContainer"]
@@ -39,6 +41,16 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 4
 
+[node name="SpeedLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Speed: "
+horizontal_alignment = 2
+
+[node name="SpeedReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="HeadingLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -49,13 +61,13 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpeedLabel" type="Label" parent="GridContainer"]
+[node name="PowerLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Speed: "
+text = "Power: "
 horizontal_alignment = 2
 
-[node name="SpeedReadout" type="Label" parent="GridContainer"]
+[node name="PowerReadout" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -68,6 +80,7 @@ horizontal_alignment = 2
 [node name="RudderReadout" type="HSlider" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 0
 min_value = -1.0
 max_value = 1.0
@@ -75,12 +88,10 @@ step = 0.0
 editable = false
 scrollable = false
 
-[node name="PowerLabel" type="Label" parent="GridContainer"]
+[node name="FuelLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Power: "
+text = "Fuel: "
 horizontal_alignment = 2
 
-[node name="PowerReadout" type="Label" parent="GridContainer"]
+[node name="FuelReadout" type="Label" parent="GridContainer"]
 layout_mode = 2
-size_flags_horizontal = 3

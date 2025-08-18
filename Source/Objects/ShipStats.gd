@@ -9,6 +9,9 @@ extends Statblock
 @export var powerplant_power_max: float
 @export var powerplant_ramp_rate: float
 @export var powerplant_fuel_max: float
+@export var powerplant_fuel_burn: float
 
 @export var rudder_shift_rate: float
 @export var rudder_drag: float
+
+@export var vision_height: float

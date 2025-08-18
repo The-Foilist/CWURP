@@ -13,5 +13,6 @@ powerplant_ramp_rate = 20.0
 powerplant_fuel_max = 7600.0
 rudder_shift_rate = 0.1
 rudder_drag = 0.0
-display_name = "CV Akagi"
+vision_height = 31.85
+unit_name = "Akagi 1942"
 metadata/_custom_type_script = "uid://wvewlh4b6psl"

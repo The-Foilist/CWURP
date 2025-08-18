@@ -13,5 +13,6 @@ powerplant_ramp_rate = 20.0
 powerplant_fuel_max = 7620.0
 rudder_shift_rate = 0.1
 rudder_drag = 0.0
-display_name = "CV Kaga"
+vision_height = 28.0
+unit_name = "Kaga 1942"
 metadata/_custom_type_script = "uid://wvewlh4b6psl"

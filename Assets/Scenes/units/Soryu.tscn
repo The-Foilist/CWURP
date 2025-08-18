@@ -1,30 +1,44 @@
-[gd_scene load_steps=10 format=3 uid="uid://d4lf0dv16thjr"]
+[gd_scene load_steps=12 format=3 uid="uid://d4lf0dv16thjr"]
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_u1v3l"]
 [ext_resource type="Resource" uid="uid://tn6r48d5h20w" path="res://Assets/data/ships/Soryu 1942.tres" id="2_upwp1"]
-[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="2_v2hyn"]
+[ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="3_slwlh"]
 [ext_resource type="Texture2D" uid="uid://refr3qn3afpn" path="res://Assets/art/ships/Soryu 1942.png" id="3_u1v3l"]
 [ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="4_v2hyn"]
 [ext_resource type="Script" uid="uid://bmdsfrn3kyw71" path="res://Source/Objects/UnitComponents/Hull.gd" id="5_5jkkg"]
 [ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Objects/UnitComponents/ShipMover.gd" id="5_swe74"]
 [ext_resource type="Script" uid="uid://d3ok1irbfcla3" path="res://Source/Objects/UnitComponents/Powerplant.gd" id="7_swe74"]
 [ext_resource type="Script" uid="uid://okrvl50ty2qp" path="res://Source/Objects/UnitComponents/Rudder.gd" id="8_slwlh"]
+[ext_resource type="Script" uid="uid://biuqiixq718m3" path="res://Source/Objects/UnitComponents/Runway.gd" id="8_swe74"]
+
+[sub_resource type="Gradient" id="Gradient_iby4l"]
+colors = PackedColorArray(1, 1, 1, 0.0431373, 1, 1, 1, 0)
 
 [node name="Soryu" type="StaticBody2D" node_paths=PackedStringArray("mover")]
 collision_layer = 0
 collision_mask = 0
 input_pickable = true
 script = ExtResource("1_u1v3l")
+display_name = "CV Soryu"
 statblock = ExtResource("2_upwp1")
 mover = NodePath("ShipMover")
 metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
 
-[node name="SelectionArea" parent="." node_paths=PackedStringArray("connected_object") instance=ExtResource("2_v2hyn")]
-connected_object = NodePath("..")
-
-[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
-position = Vector2(-561, -101)
-polygon = PackedVector2Array(561, -14, 553, -4, 544, 50, 542, 205, 561, 215, 580, 205, 580, 87, 579, 62, 575, 35, 568, -5)
+[node name="Wake" type="CPUParticles2D" parent="."]
+position = Vector2(0, 113)
+amount = 8000
+texture = ExtResource("3_slwlh")
+lifetime = 200.0
+emission_shape = 3
+emission_rect_extents = Vector2(10, 1)
+direction = Vector2(0, 1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+damping_min = 5.0
+damping_max = 10.0
+color_ramp = SubResource("Gradient_iby4l")
 
 [node name="Marker" parent="." instance=ExtResource("4_v2hyn")]
 visible = false
@@ -38,9 +52,14 @@ script = ExtResource("5_5jkkg")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://bmdsfrn3kyw71"
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hull"]
+position = Vector2(-561, -100)
+polygon = PackedVector2Array(559, -9, 556, 1, 551, 36, 549, 92, 549, 143, 551, 183, 553, 201, 557, 209, 561, 212, 565, 209, 570, 201, 572, 183, 573, 143, 573, 92, 571, 36, 566, 1, 563, -9, 561, -12)
+
 [node name="Sprite2D" type="Sprite2D" parent="Hull"]
 scale = Vector2(0.1534, 0.1534)
 texture = ExtResource("3_u1v3l")
+offset = Vector2(1.5, 0)
 
 [node name="Powerplant" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("7_swe74")
@@ -52,6 +71,16 @@ script = ExtResource("8_slwlh")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://okrvl50ty2qp"
 
+[node name="FlightDeck" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+collision_layer = 3
+collision_mask = 2
+script = ExtResource("8_swe74")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://biuqiixq718m3"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FlightDeck"]
+polygon = PackedVector2Array(10, -55, 10, -51, 12, -49, 16, -42, 16, -41, 12, -41, 12, -30, 15, -30, 15, -27, 13, -25, 13, 105, 9, 110, -9, 110, -13, 105, -12, -49, -7, -104, 7, -104)
+
 [node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder")]
 script = ExtResource("5_swe74")
 unit = NodePath("..")
@@ -60,6 +89,5 @@ powerplant = NodePath("../Powerplant")
 rudder = NodePath("../Rudder")
 metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
-[editable path="SelectionArea"]
 [editable path="Marker"]
 [editable path="Marker/SelectionArea"]

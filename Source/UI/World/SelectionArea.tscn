@@ -9,5 +9,3 @@ metadata/_custom_type_script = "uid://bgniuhe4g28mx"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(2, 5, 22, 91, 147, 60, 86, 11)
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]

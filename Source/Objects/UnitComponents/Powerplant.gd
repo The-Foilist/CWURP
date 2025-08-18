@@ -5,6 +5,7 @@ extends UnitComponent
 @onready var ramp_rate: float = unit.statblock.powerplant_ramp_rate / power_max
 @onready var fuel_max: float = unit.statblock.powerplant_fuel_max
 
+@onready var fuel = fuel_max
 
 var power_mod: float = 1
 var setting_max: float = 1

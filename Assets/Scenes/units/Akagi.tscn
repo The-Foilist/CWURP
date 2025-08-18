@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2yfe0farl30s"]
+[gd_scene load_steps=12 format=3 uid="uid://d2yfe0farl30s"]
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_aqi54"]
-[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="2_anrf5"]
 [ext_resource type="Texture2D" uid="uid://dyr3osmpt8dgj" path="res://Assets/art/ships/Akagi 1942.png" id="2_aqi54"]
 [ext_resource type="Resource" uid="uid://cxljerxeraomp" path="res://Assets/data/ships/Akagi 1942.tres" id="2_tumtv"]
 [ext_resource type="Script" uid="uid://bmdsfrn3kyw71" path="res://Source/Objects/UnitComponents/Hull.gd" id="3_51fus"]
@@ -9,31 +8,53 @@
 [ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Objects/UnitComponents/ShipMover.gd" id="4_b0t50"]
 [ext_resource type="Script" uid="uid://d3ok1irbfcla3" path="res://Source/Objects/UnitComponents/Powerplant.gd" id="5_kdpgu"]
 [ext_resource type="Script" uid="uid://okrvl50ty2qp" path="res://Source/Objects/UnitComponents/Rudder.gd" id="6_08rwt"]
+[ext_resource type="Script" uid="uid://biuqiixq718m3" path="res://Source/Objects/UnitComponents/Runway.gd" id="7_kdpgu"]
+[ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="8_08rwt"]
+
+[sub_resource type="Gradient" id="Gradient_08rwt"]
+colors = PackedColorArray(1, 1, 1, 0.0431373, 1, 1, 1, 0)
 
 [node name="Akagi" type="StaticBody2D" node_paths=PackedStringArray("mover")]
 collision_layer = 0
 collision_mask = 0
 input_pickable = true
 script = ExtResource("1_aqi54")
+display_name = "CV Akagi"
 statblock = ExtResource("2_tumtv")
 mover = NodePath("ShipMover")
 metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
 
-[node name="SelectionArea" parent="." node_paths=PackedStringArray("connected_object") instance=ExtResource("2_anrf5")]
-connected_object = NodePath("..")
-
-[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
-position = Vector2(-561, -101)
-polygon = PackedVector2Array(561, -30, 551, -22, 546, 32, 540, 55, 540, 187, 547, 227, 560, 231, 571, 227, 578, 186, 584, 94, 584, 76, 576, 31, 571, -22)
+[node name="Wake" type="CPUParticles2D" parent="."]
+position = Vector2(0, 130)
+amount = 8000
+texture = ExtResource("8_08rwt")
+lifetime = 200.0
+emission_shape = 3
+emission_rect_extents = Vector2(10, 1)
+direction = Vector2(0, 1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+damping_min = 5.0
+damping_max = 10.0
+color_ramp = SubResource("Gradient_08rwt")
 
 [node name="Hull" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+collision_layer = 7
+collision_mask = 6
 script = ExtResource("3_51fus")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://bmdsfrn3kyw71"
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hull"]
+position = Vector2(-561, -101)
+polygon = PackedVector2Array(561, -30, 557, -22, 551, 3, 546, 49, 544, 82, 544, 157, 548, 195, 553, 216, 558, 227, 561, 231, 564, 227, 569, 216, 574, 195, 577, 157, 577, 82, 575, 49, 570, 3, 565, -22)
+
 [node name="Sprite2D" type="Sprite2D" parent="Hull"]
 scale = Vector2(0.365596, 0.365596)
 texture = ExtResource("2_aqi54")
+offset = Vector2(1, 0)
 
 [node name="Powerplant" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("5_kdpgu")
@@ -44,6 +65,19 @@ metadata/_custom_type_script = "uid://d3ok1irbfcla3"
 script = ExtResource("6_08rwt")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://okrvl50ty2qp"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rudder"]
+polygon = PackedVector2Array(0, 130, 3, 126, 8, 115, 9, 111, -9, 111, -8, 115, -3, 126)
+
+[node name="FlightDeck" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
+collision_layer = 3
+collision_mask = 2
+script = ExtResource("7_kdpgu")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://biuqiixq718m3"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FlightDeck"]
+polygon = PackedVector2Array(-9, -122, 10, -122, 13, -57, 14, -30, 14, -3, 13, -2, 13, 5, 14, 6, 14, 13, 13, 15, 13, 22, 14, 24, 14, 96, 10, 117, 10, 126, -14, 126, -14, 117, -17, 96, -17, 47, -16, 46, -16, 38, -17, 37, -17, 31, -16, 30, -16, 22, -17, 20, -17, 14, -16, 13, -16, 5, -13, 1, -13, -9, -15, -17, -17, -19, -17, -36, -14, -67)
 
 [node name="Marker" parent="." instance=ExtResource("4_51fus")]
 visible = false
@@ -60,6 +94,5 @@ powerplant = NodePath("../Powerplant")
 rudder = NodePath("../Rudder")
 metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
-[editable path="SelectionArea"]
 [editable path="Marker"]
 [editable path="Marker/SelectionArea"]

@@ -2,4 +2,4 @@ class_name Statblock
 extends Resource
 
 
-@export var display_name: String
+@export var unit_name: String

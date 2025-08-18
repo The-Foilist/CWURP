@@ -7,3 +7,7 @@ extends UnitComponent
 @onready var turn_radius: float = unit.statblock.turn_radius
 
 var drag_mod: float = 1.0
+
+func _init() -> void:
+	collision_layer = 7
+	collision_mask = 6
