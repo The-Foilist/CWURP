@@ -1,7 +1,7 @@
 class_name Player
 extends Node
 
-
+@export var display_name: String
 @export var color: Color
 @export var controllable: bool
 @export var units: Array[Unit]

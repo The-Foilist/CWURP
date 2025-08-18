@@ -7,13 +7,13 @@ script/source = "extends VBoxContainer
 var config = ConfigFile.new()
 
 
-@onready var distance_select = $TabContainer/Units/DistanceSelect
-@onready var range_select = $TabContainer/Units/RangeSelect
-@onready var altitude_select = $TabContainer/Units/AltitudeSelect
-@onready var ship_speed_select = $TabContainer/Units/ShipSpeedSelect
-@onready var aircraft_speed_select = $TabContainer/Units/AircraftSpeedSelect
-@onready var vertical_speed_select = $TabContainer/Units/VerticalSpeedSelect
-@onready var munition_speed_select = $TabContainer/Units/MunitionSpeedSelect
+@onready var distance_select = $TabContainer/Measures/DistanceSelect
+@onready var range_select = $TabContainer/Measures/RangeSelect
+@onready var altitude_select = $TabContainer/Measures/AltitudeSelect
+@onready var ship_speed_select = $TabContainer/Measures/ShipSpeedSelect
+@onready var aircraft_speed_select = $TabContainer/Measures/AircraftSpeedSelect
+@onready var vertical_speed_select = $TabContainer/Measures/VerticalSpeedSelect
+@onready var munition_speed_select = $TabContainer/Measures/MunitionSpeedSelect
 
 
 func get_selected_text(option: OptionButton) -> String:
@@ -32,11 +32,11 @@ func _ready() -> void:
 	var err = config.load(\"user://settings.ini\")
 	if err != OK:
 		return
-	$TabContainer/Controls/CameraPanSpeed.value = PlayerSettings.camera_pan_speed
-	$TabContainer/Controls/CameraRotSpeed.value = PlayerSettings.camera_rotation_speed
-	$TabContainer/Controls/TextScale.value = PlayerSettings.text_scale
-	$TabContainer/Controls/MarkerScale.value = PlayerSettings.marker_scale
-	$TabContainer/Controls/ResizeableUI.button_pressed = PlayerSettings.resizeable_ui
+	$TabContainer/Interface/CameraPanSpeed.value = PlayerSettings.camera_pan_speed
+	$TabContainer/Interface/CameraRotSpeed.value = PlayerSettings.camera_rotation_speed
+	$TabContainer/Interface/TextScale.value = PlayerSettings.text_scale
+	$TabContainer/Interface/MarkerScale.value = PlayerSettings.marker_scale
+	$TabContainer/Interface/ResizeableUI.button_pressed = PlayerSettings.resizeable_ui
 	select_from_text(distance_select, PlayerSettings.distance_units)
 	select_from_text(range_select, config.get_value(\"Units\", \"range_units\"))
 	select_from_text(altitude_select, config.get_value(\"Units\", \"altitude_units\"))
@@ -47,11 +47,11 @@ func _ready() -> void:
 
 
 func _on_save_pressed() -> void:
-	PlayerSettings.camera_pan_speed = $TabContainer/Controls/CameraPanSpeed.value
-	PlayerSettings.camera_rotation_speed = $TabContainer/Controls/CameraRotSpeed.value
-	PlayerSettings.text_scale = $TabContainer/Controls/TextScale.value
-	PlayerSettings.marker_scale = $TabContainer/Controls/MarkerScale.value
-	PlayerSettings.resizeable_ui = $TabContainer/Controls/ResizeableUI.button_pressed
+	PlayerSettings.camera_pan_speed = $TabContainer/Interface/CameraPanSpeed.value
+	PlayerSettings.camera_rotation_speed = $TabContainer/Interface/CameraRotSpeed.value
+	PlayerSettings.text_scale = $TabContainer/Interface/TextScale.value
+	PlayerSettings.marker_scale = $TabContainer/Interface/MarkerScale.value
+	PlayerSettings.resizeable_ui = $TabContainer/Interface/ResizeableUI.button_pressed
 	PlayerSettings.distance_units = get_selected_text(distance_select)
 	PlayerSettings.range_units = get_selected_text(range_select)
 	PlayerSettings.altitude_units = get_selected_text(altitude_select)
@@ -77,68 +77,72 @@ size_flags_vertical = 3
 current_tab = 0
 tab_focus_mode = 0
 
-[node name="Controls" type="GridContainer" parent="TabContainer"]
+[node name="Interface" type="GridContainer" parent="TabContainer"]
 layout_mode = 2
 columns = 2
 metadata/_tab_index = 0
 
-[node name="CameraPanSpeedLabel" type="Label" parent="TabContainer/Controls"]
+[node name="CameraPanSpeedLabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
 text = "Camera Pan Speed"
 horizontal_alignment = 2
 
-[node name="CameraPanSpeed" type="SpinBox" parent="TabContainer/Controls"]
+[node name="CameraPanSpeed" type="SpinBox" parent="TabContainer/Interface"]
 layout_mode = 2
+tooltip_text = "Value is pixels per second. Pan speed is based on zoom level."
 min_value = 100.0
 max_value = 2500.0
 value = 500.0
 
-[node name="CameraRotSpeedLabel" type="Label" parent="TabContainer/Controls"]
+[node name="CameraRotSpeedLabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
 text = "Camera Rotation Speed"
 horizontal_alignment = 2
 
-[node name="CameraRotSpeed" type="SpinBox" parent="TabContainer/Controls"]
+[node name="CameraRotSpeed" type="SpinBox" parent="TabContainer/Interface"]
 layout_mode = 2
 min_value = 0.2
 max_value = 5.0
 step = 0.1
 value = 1.0
 
-[node name="TextScaleLabel" type="Label" parent="TabContainer/Controls"]
+[node name="TextScaleLabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
 text = "Text Scale"
 horizontal_alignment = 2
 
-[node name="TextScale" type="SpinBox" parent="TabContainer/Controls"]
+[node name="TextScale" type="SpinBox" parent="TabContainer/Interface"]
 layout_mode = 2
+tooltip_text = "Changes the size of all UI text"
 min_value = 0.5
 max_value = 2.0
 step = 0.1
 value = 1.0
 
-[node name="MarkerScaleLabel" type="Label" parent="TabContainer/Controls"]
+[node name="MarkerScaleLabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
 text = "Marker Scale"
 horizontal_alignment = 2
 
-[node name="MarkerScale" type="SpinBox" parent="TabContainer/Controls"]
+[node name="MarkerScale" type="SpinBox" parent="TabContainer/Interface"]
 layout_mode = 2
+tooltip_text = "Changes the size of location and unit markers"
 min_value = 0.2
 max_value = 5.0
 step = 0.1
 value = 1.0
 
-[node name="ResizeableUILabel" type="Label" parent="TabContainer/Controls"]
+[node name="ResizeableUILabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
 text = "Resizeable UI"
 horizontal_alignment = 2
 
-[node name="ResizeableUI" type="CheckButton" parent="TabContainer/Controls"]
+[node name="ResizeableUI" type="CheckButton" parent="TabContainer/Interface"]
 layout_mode = 2
 size_flags_horizontal = 0
+tooltip_text = "Enables dragging of the side bar and bottom bar to resize them."
 
-[node name="Units" type="GridContainer" parent="TabContainer"]
+[node name="Measures" type="GridContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -148,14 +152,15 @@ theme_override_constants/v_separation = 4
 columns = 2
 metadata/_tab_index = 1
 
-[node name="Distance" type="Label" parent="TabContainer/Units"]
+[node name="Distance" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Distance"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DistanceSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="DistanceSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for general distance measurements"
 focus_mode = 0
 selected = 5
 item_count = 6
@@ -172,14 +177,15 @@ popup/item_4/id = 0
 popup/item_5/text = "nautical miles (nm)"
 popup/item_5/id = 0
 
-[node name="Range" type="Label" parent="TabContainer/Units"]
+[node name="Range" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Weapon Range"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="RangeSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="RangeSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for weapon range measurements"
 focus_mode = 0
 selected = 5
 item_count = 6
@@ -196,14 +202,15 @@ popup/item_4/id = 0
 popup/item_5/text = "nautical miles (nm)"
 popup/item_5/id = 0
 
-[node name="Altitude" type="Label" parent="TabContainer/Units"]
+[node name="Altitude" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Altitude"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="AltitudeSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="AltitudeSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for vertical distance measurements"
 focus_mode = 0
 selected = 0
 item_count = 2
@@ -212,14 +219,15 @@ popup/item_0/id = 0
 popup/item_1/text = "meters (m)"
 popup/item_1/id = 0
 
-[node name="ShipSpeed" type="Label" parent="TabContainer/Units"]
+[node name="ShipSpeed" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Ship Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="ShipSpeedSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="ShipSpeedSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for ship speed measurements"
 focus_mode = 0
 selected = 1
 item_count = 5
@@ -234,14 +242,15 @@ popup/item_3/id = 0
 popup/item_4/text = "kilometers per hour (kph)"
 popup/item_4/id = 0
 
-[node name="AircraftSpeed" type="Label" parent="TabContainer/Units"]
+[node name="AircraftSpeed" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Aircraft Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="AircraftSpeedSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="AircraftSpeedSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for aircraft speed measurements"
 focus_mode = 0
 selected = 1
 item_count = 5
@@ -256,14 +265,15 @@ popup/item_3/id = 0
 popup/item_4/text = "kilometers per hour (kph)"
 popup/item_4/id = 0
 
-[node name="VerticalSpeed" type="Label" parent="TabContainer/Units"]
+[node name="VerticalSpeed" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Vertical Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VerticalSpeedSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="VerticalSpeedSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for aircraft climb/dive rate measurements"
 focus_mode = 0
 selected = 3
 item_count = 4
@@ -276,14 +286,15 @@ popup/item_2/id = 0
 popup/item_3/text = "feet per minute (fpm)"
 popup/item_3/id = 0
 
-[node name="MunitionSpeed" type="Label" parent="TabContainer/Units"]
+[node name="MunitionSpeed" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
 text = "Munition Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MunitionSpeedSelect" type="OptionButton" parent="TabContainer/Units"]
+[node name="MunitionSpeedSelect" type="OptionButton" parent="TabContainer/Measures"]
 layout_mode = 2
+tooltip_text = "Units for flight speed of shells and bombs"
 focus_mode = 0
 selected = 3
 item_count = 5

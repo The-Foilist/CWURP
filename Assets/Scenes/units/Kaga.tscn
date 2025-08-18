@@ -33,14 +33,6 @@ scale_threshold = 1.3
 [node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")
 
-[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder")]
-script = ExtResource("5_utodv")
-unit = NodePath("..")
-hull = NodePath("../Hull")
-powerplant = NodePath("../Powerplant")
-rudder = NodePath("../Rudder")
-metadata/_custom_type_script = "uid://bjyfeobmmom26"
-
 [node name="Hull" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("6_67cuf")
 unit = NodePath("..")
@@ -59,6 +51,14 @@ metadata/_custom_type_script = "uid://d3ok1irbfcla3"
 script = ExtResource("9_x2cd2")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://okrvl50ty2qp"
+
+[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder")]
+script = ExtResource("5_utodv")
+unit = NodePath("..")
+hull = NodePath("../Hull")
+powerplant = NodePath("../Powerplant")
+rudder = NodePath("../Rudder")
+metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
 [editable path="SelectionArea"]
 [editable path="Marker"]

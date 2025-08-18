@@ -8,6 +8,8 @@ var camera_rotation_speed: float = 1
 var text_scale: float = 1
 var marker_scale: float = 1
 var resizeable_ui: bool = true
+var bottom_bar_size: int
+var side_bar_size: int
 
 # Display measurement units
 var distance_units: String = 'nm'

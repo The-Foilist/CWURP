@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_7vxpf")
-displacement = 38200.0
+displacement = 37100.0
 draft = 8.71
 hull_drag = 0.0103287
 turn_radius = 1080.0

@@ -8,10 +8,14 @@ extends Mover
 @export var rudder: Rudder
 
 var speed: float
-var heading: float
+
 
 func _ready():
 	inspector = 'ShipInspector'
+	if unit.speed:
+		speed = unit.speed
+		powerplant.setting = unit.speed**2 * hull.drag * hull.mass / powerplant.power_max
+		powerplant.setting_target = powerplant.setting
 
 
 func move(delta: float) -> void:
@@ -25,4 +29,5 @@ func move(delta: float) -> void:
 	var motion = speed * -unit.transform.y
 	unit.rotate(rotate_amount)
 	unit.translate(motion * delta)
-	heading = fposmod(unit.rotation_degrees, 360)
+	unit.heading = fposmod(unit.rotation_degrees, 360)
+	unit.speed = speed

@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 		get_parent().remove_child(self)
 		queue_free()
 		return
-	heading_readout.text = \"%03.f °\" % linked_mover.heading
+	heading_readout.text = \"%03.f °\" % linked_mover.unit.heading
 	speed_readout.text = \"%.1f\" % (linked_mover.speed / Global.SPEED_CONVERSION[PlayerSettings.ship_speed_units]) + PlayerSettings.ship_speed_units
 	rudder_readout.value = linked_mover.rudder.pos
 	power_readout.text = \"%.f %%\" % (linked_mover.powerplant.setting * 100)

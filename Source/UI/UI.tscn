@@ -33,7 +33,7 @@ func _process(_delta) -> void:
 	if Global.session.local_controller.targeting:
 		text = str(Global.session.local_controller.targeting.target_text)
 	elif Global.session.local_controller.hovered_object:
-		text = Global.session.local_controller.hovered_object.name
+		text = Global.session.local_controller.hovered_object.display_name
 	else:
 		text = ''
 		#text = '(%+d,%+d)' % [Global.local_controller.mouse_coords.x, Global.local_controller.mouse_coords.y]
