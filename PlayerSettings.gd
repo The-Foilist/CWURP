@@ -2,6 +2,9 @@ extends Node
 
 var config = ConfigFile.new()
 
+# Video
+var particle_effects: bool = true
+
 # Controls
 var camera_pan_speed: float = 500
 var camera_rotation_speed: float = 1
@@ -22,6 +25,7 @@ var munition_speed_units: String = 'fps'
 
 
 func save() -> void:
+	config.set_value("Video", "particle_effects", particle_effects)
 	config.set_value("Controls", "camera_pan_speed", camera_pan_speed)
 	config.set_value("Controls", "camera_rotation_speed", camera_rotation_speed)
 	config.set_value("Controls", "text_scale", text_scale)
@@ -41,6 +45,7 @@ func _ready() -> void:
 	var err = config.load("user://settings.ini")
 	if err != OK:
 		return
+	particle_effects = config.get_value("Video", "particle_effects")
 	camera_pan_speed = config.get_value("Controls", "camera_pan_speed")
 	camera_rotation_speed = config.get_value("Controls", "camera_rotation_speed")
 	text_scale = config.get_value("Controls", "text_scale")

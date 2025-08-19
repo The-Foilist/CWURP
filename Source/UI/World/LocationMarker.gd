@@ -12,6 +12,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
+	visible = Global.session.local_controller.show_map_ui
+	$SelectionArea.input_pickable = visible
 	global_rotation = Global.session.local_controller.cam.global_rotation
 	$PanelContainer.scale = Vector2(PlayerSettings.text_scale/PlayerSettings.marker_scale, PlayerSettings.text_scale/PlayerSettings.marker_scale)
 	$PanelContainer.visible = (player.selection == self)

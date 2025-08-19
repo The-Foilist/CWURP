@@ -4,8 +4,8 @@ extends UnitComponent
 @onready var shift_rate: float = unit.statblock.rudder_shift_rate
 @onready var drag: float = unit.statblock.rudder_drag
 
-var pos: float
-var pos_target: float
+var pos: float = 0
+var pos_target: float = 0
 var shift_mod: float = 1
 
 

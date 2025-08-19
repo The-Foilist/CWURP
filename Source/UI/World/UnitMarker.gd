@@ -12,5 +12,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	super(delta)
-	visible = not(global_scale.x < scale_threshold)
-	$SelectionArea.input_pickable = not(global_scale.x < scale_threshold)
+	
+	visible = not(global_scale.x < scale_threshold) && Global.session.local_controller.show_map_ui
+	$SelectionArea.input_pickable = visible
+	

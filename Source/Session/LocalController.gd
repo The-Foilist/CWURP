@@ -11,7 +11,7 @@ var hovered_object: Node2D
 var mouse_intersect_params: PhysicsPointQueryParameters2D
 var targeting: Command
 var marker_number: int = 1
-
+var show_map_ui: bool = true
 
 func get_object_under_mouse() -> Node2D:
 	if !cam:

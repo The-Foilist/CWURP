@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://d4agehp3labnq"]
+[gd_scene load_steps=32 format=3 uid="uid://d4agehp3labnq"]
 
 [ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/art/marker.png" id="2_faxib"]
 [ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/art/ruler.png" id="3_yq5ji"]
 [ext_resource type="RichTextEffect" uid="uid://8mwr7veqf0q2" path="res://Source/Session/Messages/MessageTimestamp.tres" id="3_ywsxj"]
 [ext_resource type="RichTextEffect" uid="uid://bakqufq0bf6hb" path="res://Source/Session/Messages/MessageType.tres" id="4_eqdp0"]
+[ext_resource type="Texture2D" uid="uid://cdu8g2idppsae" path="res://Assets/art/eye.png" id="6_eqdp0"]
 
 [sub_resource type="GDScript" id="GDScript_ywsxj"]
 script/source = "extends HSplitContainer
@@ -245,6 +246,13 @@ func _pressed():
 	Global.session.local_controller.target_command(CommandDrawRuler.new(Global.session.local_controller.player))
 "
 
+[sub_resource type="GDScript" id="GDScript_vrcrk"]
+script/source = "extends HotkeyButton
+
+func _pressed():
+	Global.session.local_controller.show_map_ui = !Global.session.local_controller.show_map_ui
+"
+
 [sub_resource type="GDScript" id="GDScript_xb563"]
 script/source = "extends Label
 
@@ -456,7 +464,7 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 2
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
@@ -469,6 +477,7 @@ script = SubResource("GDScript_3b2b5")
 metadata/_tab_index = 0
 
 [node name="Selection" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_lgolh")
 metadata/_tab_index = 1
@@ -499,7 +508,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Map" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
@@ -576,6 +584,41 @@ offset_top = -23.0
 offset_right = 15.0
 grow_vertical = 0
 text = "R"
+uppercase = true
+
+[node name="ToggleMapUIButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+focus_mode = 0
+script = SubResource("GDScript_vrcrk")
+action = "toggle_map_ui"
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/ToggleMapUIButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("6_eqdp0")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/ToggleMapUIButton"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 15.0
+grow_vertical = 0
+text = "H"
 uppercase = true
 
 [node name="Time" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]

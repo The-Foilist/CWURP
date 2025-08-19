@@ -22,15 +22,6 @@ display_name = "Neutral"
 color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://nipeuxlrpgq8"
 
-[node name="Kido Butai" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
-script = ExtResource("2_wsuic")
-display_name = "Kido Butai"
-color = Color(1, 0, 0, 1)
-controllable = true
-units = [NodePath("../../World/Akagi"), NodePath("../../World/Kaga"), NodePath("../../World/Hiryu"), NodePath("../../World/Soryu")]
-start_location = NodePath("../../World/Start Location 2")
-metadata/_custom_type_script = "uid://nipeuxlrpgq8"
-
 [node name="Midway Garrison" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
 script = ExtResource("2_wsuic")
 display_name = "Midway Garrison"
@@ -38,6 +29,15 @@ color = Color(0, 0, 1, 1)
 controllable = true
 units = [NodePath("../../World/Midway Airbase")]
 start_location = NodePath("../../World/Start Location 1")
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Kido Butai" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
+script = ExtResource("2_wsuic")
+display_name = "Kido Butai"
+color = Color(1, 0, 0, 1)
+controllable = true
+units = [NodePath("../../World/Akagi"), NodePath("../../World/Kaga"), NodePath("../../World/Hiryu"), NodePath("../../World/Soryu")]
+start_location = NodePath("../../World/Start Location 2")
 metadata/_custom_type_script = "uid://nipeuxlrpgq8"
 
 [node name="World" type="Node2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cq5mpuaqnfijf"]
+[gd_scene load_steps=14 format=3 uid="uid://cq5mpuaqnfijf"]
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_6rxyw"]
 [ext_resource type="Resource" uid="uid://derca6bo1u7o0" path="res://Assets/data/ships/Hiryu 1942.tres" id="2_gkxl2"]
@@ -11,8 +11,27 @@
 [ext_resource type="Script" uid="uid://okrvl50ty2qp" path="res://Source/Objects/UnitComponents/Rudder.gd" id="8_7y3fe"]
 [ext_resource type="Script" uid="uid://biuqiixq718m3" path="res://Source/Objects/UnitComponents/Runway.gd" id="8_tameo"]
 
-[sub_resource type="Gradient" id="Gradient_63f2t"]
-colors = PackedColorArray(1, 1, 1, 0.0431373, 1, 1, 1, 0)
+[sub_resource type="Gradient" id="Gradient_oy4w6"]
+colors = PackedColorArray(1, 1, 1, 0.0627451, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_08rwt"]
+gradient = SubResource("Gradient_oy4w6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7y3fe"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 1, 0)
+spread = 10.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+damping_min = 5.0
+damping_max = 8.0
+color_ramp = SubResource("GradientTexture1D_08rwt")
 
 [node name="Hiryu" type="StaticBody2D" node_paths=PackedStringArray("mover")]
 collision_layer = 0
@@ -24,28 +43,14 @@ statblock = ExtResource("2_gkxl2")
 mover = NodePath("ShipMover")
 metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
 
-[node name="Wake" type="CPUParticles2D" parent="."]
-position = Vector2(0, 110)
-amount = 8000
+[node name="Wake" type="GPUParticles2D" parent="."]
+z_index = -1000
+position = Vector2(0, 101)
+amount = 4000
 texture = ExtResource("3_7y3fe")
 lifetime = 200.0
-emission_shape = 3
-emission_rect_extents = Vector2(10, 1)
-direction = Vector2(0, 1)
-spread = 10.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 10.0
-initial_velocity_max = 10.0
-damping_min = 5.0
-damping_max = 10.0
-color_ramp = SubResource("Gradient_63f2t")
-
-[node name="Marker" parent="." instance=ExtResource("4_8ttbx")]
-visible = false
-scale_threshold = 1.0
-
-[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
-connected_object = NodePath("../..")
+visibility_rect = Rect2(-1e+07, -1e+07, 2e+07, 2e+07)
+process_material = SubResource("ParticleProcessMaterial_7y3fe")
 
 [node name="Hull" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("4_c2svc")
@@ -81,12 +86,20 @@ metadata/_custom_type_script = "uid://biuqiixq718m3"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FlightDeck"]
 polygon = PackedVector2Array(-8, -105, 7, -105, 9, -89, 10.4512, -69.7973, 10, -67, 11, -65, 12, -54, 12, -51, 13, -48, 13, -32, 11, -26, 11, 4, 13, 9, 13, 27, 11, 64, 13, 64, 13, 102, 9, 108, -9, 108, -14, 101, -14, 64, -12, 64, -13, 22, -15, 11, -12, 7, -12, 3, -11, 3, -11, -6, -12, -8, -12, -11, -15, -11, -13, -23, -13, -46, -12, -51, -12, -55, -11, -66, -10, -67, -11, -69)
 
-[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder")]
+[node name="Marker" parent="." instance=ExtResource("4_8ttbx")]
+visible = false
+scale_threshold = 1.0
+
+[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
+connected_object = NodePath("../..")
+
+[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder", "wake_anim")]
 script = ExtResource("3_3pxvq")
 unit = NodePath("..")
 hull = NodePath("../Hull")
 powerplant = NodePath("../Powerplant")
 rudder = NodePath("../Rudder")
+wake_anim = NodePath("../Wake")
 metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
 [editable path="Marker"]

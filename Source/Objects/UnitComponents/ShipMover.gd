@@ -6,6 +6,7 @@ extends Mover
 @export var hull: Hull
 @export var powerplant: Powerplant
 @export var rudder: Rudder
+@export var wake_anim: GPUParticles2D
 
 var speed: float
 var heading: float
@@ -32,3 +33,6 @@ func move(delta: float) -> void:
 	unit.translate(motion * delta)
 	heading = fposmod(unit.rotation_degrees, 360)
 	unit.speed = speed
+	
+	wake_anim.amount = 500 * speed
+	wake_anim.process_material.direction.x = rudder.pos

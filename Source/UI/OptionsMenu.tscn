@@ -47,6 +47,7 @@ func _ready() -> void:
 
 
 func _on_save_pressed() -> void:
+	PlayerSettings.particle_effects = $TabContainer/Video/ParticleEffects.button_pressed
 	PlayerSettings.camera_pan_speed = $TabContainer/Interface/CameraPanSpeed.value
 	PlayerSettings.camera_rotation_speed = $TabContainer/Interface/CameraRotSpeed.value
 	PlayerSettings.text_scale = $TabContainer/Interface/TextScale.value
@@ -77,10 +78,25 @@ size_flags_vertical = 3
 current_tab = 0
 tab_focus_mode = 0
 
-[node name="Interface" type="GridContainer" parent="TabContainer"]
+[node name="Video" type="GridContainer" parent="TabContainer"]
 layout_mode = 2
 columns = 2
 metadata/_tab_index = 0
+
+[node name="ParticlesLabel" type="Label" parent="TabContainer/Video"]
+layout_mode = 2
+text = "Particle Effects"
+horizontal_alignment = 2
+
+[node name="ParticleEffects" type="CheckButton" parent="TabContainer/Video"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Interface" type="GridContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+columns = 2
+metadata/_tab_index = 1
 
 [node name="CameraPanSpeedLabel" type="Label" parent="TabContainer/Interface"]
 layout_mode = 2
@@ -150,7 +166,7 @@ size_flags_vertical = 4
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
 columns = 2
-metadata/_tab_index = 1
+metadata/_tab_index = 2
 
 [node name="Distance" type="Label" parent="TabContainer/Measures"]
 layout_mode = 2
