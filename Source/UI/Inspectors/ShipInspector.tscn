@@ -11,6 +11,10 @@ var linked_mover: ShipMover
 @onready var rudder_readout = $GridContainer/RudderReadout
 @onready var power_readout = $GridContainer/PowerReadout
 @onready var fuel_readout = $GridContainer/FuelReadout
+@onready var fuel_max_readout = $GridContainer/FuelMaxReadout
+@onready var fuel_percent_readout = $GridContainer/FuelPercentReadout
+@onready var endurance_readout = $GridContainer/EnduranceReadout
+@onready var range_readout = $GridContainer/RangeReadout
 
 
 func _process(_delta: float) -> void:
@@ -22,7 +26,11 @@ func _process(_delta: float) -> void:
 	speed_readout.text = \"%.1f \" % (linked_mover.speed / Global.SPEED_CONVERSION[PlayerSettings.ship_speed_units]) + PlayerSettings.ship_speed_units
 	rudder_readout.value = linked_mover.rudder.pos
 	power_readout.text = \"%.f %%\" % (linked_mover.powerplant.setting * 100)
-	fuel_readout.text = \"%.f \" % (linked_mover.powerplant.fuel * 1000 / Global.MASS_CONVERSION['t']) + 't'
+	fuel_readout.text = \"%.1f \" % (linked_mover.powerplant.fuel * 1000 / Global.MASS_CONVERSION['t']) + 't'
+	fuel_max_readout.text = \"/ %.1f \" % (linked_mover.powerplant.fuel_max * 1000 / Global.MASS_CONVERSION['t']) + 't'
+	fuel_percent_readout.text = \"(%.f %%)\" % (linked_mover.powerplant.fuel * 100 / linked_mover.powerplant.fuel_max)
+	endurance_readout.text = Global.seconds_to_time_string(linked_mover.endurance)
+	range_readout.text = \"%.1f \" % (linked_mover.range / Global.DISTANCE_CONVERSION[PlayerSettings.distance_units]) + PlayerSettings.distance_units
 "
 
 [node name="ShipInspector" type="VBoxContainer"]
@@ -41,16 +49,6 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 4
 
-[node name="SpeedLabel" type="Label" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Speed: "
-horizontal_alignment = 2
-
-[node name="SpeedReadout" type="Label" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="HeadingLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -61,13 +59,13 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PowerLabel" type="Label" parent="GridContainer"]
+[node name="SpeedLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Power: "
+text = "Speed: "
 horizontal_alignment = 2
 
-[node name="PowerReadout" type="Label" parent="GridContainer"]
+[node name="SpeedReadout" type="Label" parent="GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -88,10 +86,43 @@ step = 0.0
 editable = false
 scrollable = false
 
+[node name="PowerLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Power: "
+horizontal_alignment = 2
+
+[node name="PowerReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EnduranceLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Time: "
+horizontal_alignment = 2
+
+[node name="EnduranceReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+
+[node name="RangeLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Range: "
+horizontal_alignment = 2
+
+[node name="RangeReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+
 [node name="FuelLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "Fuel: "
 horizontal_alignment = 2
 
 [node name="FuelReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="FuelMaxReadout" type="Label" parent="GridContainer"]
+layout_mode = 2
+
+[node name="FuelPercentReadout" type="Label" parent="GridContainer"]
 layout_mode = 2

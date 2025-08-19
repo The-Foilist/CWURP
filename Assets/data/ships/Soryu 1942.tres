@@ -6,11 +6,12 @@
 script = ExtResource("1_m2hvx")
 displacement = 16200.0
 draft = 7.6
-hull_drag = 0.0227997
+hull_drag = 0.0221436
 turn_radius = 1080.0
 powerplant_power_max = 113000.0
 powerplant_ramp_rate = 20.0
 powerplant_fuel_max = 3730.0
+powerplant_fuel_burn = 0.0088422
 rudder_shift_rate = 0.1
 rudder_drag = 0.0
 vision_height = 25.0

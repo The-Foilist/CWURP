@@ -39,3 +39,11 @@ var player_slot: int = 1
 
 func bearing_to(origin: Vector2, target: Vector2) -> float:
 	return fposmod(rad_to_deg(origin.angle_to_point(target)) + 90, 360)
+
+
+func seconds_to_time_string(seconds: float) -> String:
+	var s = int(seconds) % 60
+	var m = int(floor(seconds/60)) % 60
+	var h = int(floor(seconds/3600))
+	return "%d:%02d:%02d" % [h,m,s]
+	print(h)

@@ -11,6 +11,8 @@ extends Mover
 var speed: float
 var heading: float
 
+var range: float
+var endurance: float
 
 func _ready():
 	inspector = 'ShipInspector'
@@ -33,6 +35,9 @@ func move(delta: float) -> void:
 	unit.translate(motion * delta)
 	heading = fposmod(unit.rotation_degrees, 360)
 	unit.speed = speed
+	
+	endurance = powerplant.fuel / (powerplant.fuel_burn)
+	range = speed * endurance
 	
 	wake_anim.amount = 500 * speed
 	wake_anim.process_material.direction.x = rudder.pos

@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource("1_wobw1")
-displacement = 38200.0
+displacement = 38813.0
 draft = 9.48
-hull_drag = 0.0119858
+hull_drag = 0.0117965
 turn_radius = 1080.0
 powerplant_power_max = 95000.0
 powerplant_ramp_rate = 20.0
 powerplant_fuel_max = 7620.0
+powerplant_fuel_burn = 0.0107836
 rudder_shift_rate = 0.1
 rudder_drag = 0.0
 vision_height = 28.0
