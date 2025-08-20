@@ -24,7 +24,7 @@ metadata/_custom_type_script = "uid://2krsxwgnldka"
 [connection signal="message" from="MessageHandler" to="LocalController/UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/Messages" method="_add_message"]
 [connection signal="meta_clicked" from="LocalController/UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/Messages" to="LocalController" method="_on_messages_meta_clicked"]
 [connection signal="text_submitted" from="LocalController/UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/LineEdit" to="MessageHandler" method="_on_line_edit_text_submitted"]
-[connection signal="pressed" from="LocalController/UI/Menu/OptionsMenu/HBoxContainer/Back" to="LocalController/UI/Menu/VBoxContainer" method="set_visible" binds= [true]]
 
 [editable path="LocalController/UI"]
+[editable path="LocalController/UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
 [editable path="LocalController/UI/Menu/OptionsMenu"]
