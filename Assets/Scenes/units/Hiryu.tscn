@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_6rxyw"]
 [ext_resource type="Resource" uid="uid://derca6bo1u7o0" path="res://Assets/data/ships/Hiryu 1942.tres" id="2_gkxl2"]
-[ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Objects/UnitComponents/ShipMover.gd" id="3_3pxvq"]
+[ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Actors/ShipMover.gd" id="3_3pxvq"]
 [ext_resource type="Texture2D" uid="uid://cost0ws5lnbqd" path="res://Assets/art/ships/Hiryu 1942.png" id="3_6rxyw"]
 [ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="3_7y3fe"]
 [ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="4_8ttbx"]

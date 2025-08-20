@@ -13,5 +13,6 @@ extends Statblock
 
 @export var rudder_shift_rate: float
 @export var rudder_drag: float
+@export var rudder_smoothness: float
 
 @export var vision_height: float

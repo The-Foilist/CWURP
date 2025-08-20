@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ShipStats" load_steps=2 format=3 uid="uid://c7u7q444durgt"]
 
-[ext_resource type="Script" uid="uid://wvewlh4b6psl" path="res://Source/Objects/ShipStats.gd" id="1_wobw1"]
+[ext_resource type="Script" uid="uid://wvewlh4b6psl" path="res://Source/Statblocks/ShipStats.gd" id="1_wobw1"]
 
 [resource]
 script = ExtResource("1_wobw1")
@@ -14,6 +14,7 @@ powerplant_fuel_max = 7620.0
 powerplant_fuel_burn = 0.0107836
 rudder_shift_rate = 0.1
 rudder_drag = 0.0
+rudder_smoothness = 10.0
 vision_height = 28.0
 unit_name = "Kaga 1942"
 metadata/_custom_type_script = "uid://wvewlh4b6psl"

@@ -30,14 +30,14 @@ func get_object_under_mouse() -> Node2D:
 func setup_player(idx: int) -> void:
 	player = session.players[idx]
 	
-	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units._on_unit_selected)
-	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_unit_selected)
+	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units._on_object_selected)
+	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_object_selected)
 	
 	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/Messages.update()
 	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units.update()
 	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer/MessageTypeFilter.setup()
 	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer/PlayerFilter.setup()
-	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_unit_selected(player.selection)
+	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_object_selected(player.selection)
 
 
 func target_command(command: Command):
@@ -75,9 +75,19 @@ func _unhandled_input(event) -> void:
 			targeting.release(cam.get_global_mouse_position())
 		if event.is_action_pressed('cancel_target'):
 			targeting.cancel()
+	elif event.is_action_pressed("select_group"):
+		if hovered_object:
+			if hovered_object is Unit:
+				if hovered_object.group:
+					player.select(hovered_object.group)
+				else:
+					player.select(hovered_object)
+			else:
+				player.select(hovered_object)
 	elif event.is_action_pressed("select"):
 		if hovered_object:
 			player.select(hovered_object)
+	
 	if event.is_action_pressed('deselect'):
 		player.select(null)
 

@@ -2,16 +2,11 @@ class_name Command
 extends Object
 
 
-var controller: LocalController
-var player: Player
-var cursor: int
+var controller: LocalController = Global.session.local_controller
+var player: Player = Global.session.local_controller.player
+var cursor: int 
 var cancel_on_fail: bool = true
 var target_text: String = 'null'
-
-
-func _init(player: Player):
-	self.controller = Global.session.local_controller
-	self.player = player
 
 
 func validate(_target) :

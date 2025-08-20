@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_xadvo"]
 [ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="2_c7604"]
-[ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Objects/UnitComponents/ShipMover.gd" id="3_2k30m"]
+[ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Actors/ShipMover.gd" id="3_2k30m"]
 [ext_resource type="Script" uid="uid://bmdsfrn3kyw71" path="res://Source/Objects/UnitComponents/Hull.gd" id="5_0paox"]
 [ext_resource type="Script" uid="uid://d3ok1irbfcla3" path="res://Source/Objects/UnitComponents/Powerplant.gd" id="7_5r6bg"]
 [ext_resource type="Script" uid="uid://okrvl50ty2qp" path="res://Source/Objects/UnitComponents/Rudder.gd" id="8_qr455"]

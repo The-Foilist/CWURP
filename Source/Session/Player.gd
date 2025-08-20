@@ -5,20 +5,21 @@ extends Node
 @export var color: Color
 @export var controllable: bool
 @export var units: Array[Unit]
+@export var unit_groups: Array[Group]
 @export var start_location: StartLocation
 
 @onready var game = get_parent().get_parent()
 
 var message_log: Array[String]
-var selection: Node2D
+var selection: Node
 var marker_number: int = 1
 var markers: Array[LocationMarker]
 
 
-signal selection_updated(selection: Node2D)
+signal selection_updated(selection: Node)
 
 
-func select(target: Node2D) -> void:
+func select(target: Node) -> void:
 	if target == selection:
 		return
 	selection = target

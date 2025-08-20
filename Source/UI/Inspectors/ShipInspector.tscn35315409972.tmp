@@ -58,7 +58,7 @@ script/source = "extends HotkeyButton
 
 
 func _pressed():
-	var actor = get_node(\"../..\").linked_actor
+	var actor = get_node(\"../..\").linked_mover
 	var new_behavior = SetCourse.new(actor, 0, '', 1)
 	
 	Global.session.local_controller.target_command(CommandSetCourse.new(actor, new_behavior))

@@ -2,8 +2,7 @@ class_name CommandPlaceMarker
 extends Command
 
 
-func _init(player: Player):
-	super(player)
+func _init():
 	self.cursor = Input.CURSOR_CROSS
 	self.target_text = "Click to place a marker on the map..."
 

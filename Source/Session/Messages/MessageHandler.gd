@@ -15,15 +15,17 @@ func wrap_name(object: Node) -> String:
 	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.display_name]
 	if object is Player:
 		out_string = '[color=#%s]%s[/color]' % [object.color.to_html(false), out_string]
-	if object is Unit:
+	if (object is Unit) or (object is Group):
 		out_string = '[color=#%s]%s[/color]' % [object.owning_player.color.to_html(false), out_string]
 	return out_string
 
 
 func send(sender: Node, receiver: Node, type: String, content: String) -> void:
 	# Add sender
-	if sender is Player:
+	if (sender is Player) or (sender is Unit):
 		content = '[sender]' + wrap_name(sender) + '[/sender]: ' + content
+	elif sender is UnitActor:
+		content = '[sender]' + wrap_name(sender.unit) + '[/sender]: ' + content
 	# Add timestamp
 	content = '[timestamp][%s][/timestamp] ' % session.game.current_time + content
 	# Add message type

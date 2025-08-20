@@ -1,8 +1,8 @@
 class_name Mover
-extends Node
+extends UnitActor
 
 
-var inspector: String
+var speed_max: float
 
 
 func move(delta: float) -> void:
@@ -12,4 +12,5 @@ func move(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if Global.session.game.pause:
 		return
+	super(delta)
 	move(delta * Global.session.game.time_scale)

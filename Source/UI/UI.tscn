@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://d4agehp3labnq"]
+[gd_scene load_steps=33 format=3 uid="uid://d4agehp3labnq"]
 
 [ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/art/marker.png" id="2_faxib"]
 [ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
 [ext_resource type="RichTextEffect" uid="uid://dwgdfx0e4jnq0" path="res://Source/Session/Messages/MessageSender.tres" id="2_ywsxj"]
 [ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/art/ruler.png" id="3_yq5ji"]
 [ext_resource type="RichTextEffect" uid="uid://8mwr7veqf0q2" path="res://Source/Session/Messages/MessageTimestamp.tres" id="3_ywsxj"]
+[ext_resource type="PackedScene" uid="uid://7c580cxvugqx" path="res://Source/UI/HotkeyButton.tscn" id="4_agc84"]
 [ext_resource type="RichTextEffect" uid="uid://bakqufq0bf6hb" path="res://Source/Session/Messages/MessageType.tres" id="4_eqdp0"]
 [ext_resource type="Texture2D" uid="uid://cdu8g2idppsae" path="res://Assets/art/eye.png" id="6_eqdp0"]
 
@@ -172,40 +173,53 @@ func _unhandled_input(event) -> void:
 script/source = "extends Tree
 
 
+func build_tree(parent_node: Group, parent_tree_item: TreeItem) -> void:
+	var child = create_item(parent_tree_item)
+	child.set_text(0, parent_node.display_name)
+	child.set_metadata(0, parent_node)
+	if parent_node.groups.size() > 0:
+		for n in parent_node.groups:
+			build_tree(n, child)
+	else:
+		for unit in parent_node.units:
+			var child2 = create_item(child)
+			child2.set_text(0, unit.display_name)
+			child2.set_metadata(0, unit)
+
+
+func check_tree(item: TreeItem, object: Node) -> void:
+	if item.get_metadata(0) == object:
+		item.select(0)
+	else:
+		item.deselect(0)
+	for child in item.get_children():
+		check_tree(child, object)
+
+
 func update() -> void:
 	clear()
 	var root = create_item()
-	for unit in Global.session.local_controller.player.units:
-		var child = create_item(root)
-		child.set_text(0, unit.display_name)
-		child.set_metadata(0, unit)
+	for group in Global.session.local_controller.player.unit_groups:
+		build_tree(group, root)
 
 
 func _on_item_mouse_selected(mouse_position, _mouse_button_index) -> void:
 	Global.session.local_controller.player.select(get_item_at_position(mouse_position).get_metadata(0))
 
 
-func _on_unit_selected(unit: Node2D) -> void:
-	if !unit:
-		return
-	var item = get_root().get_first_child()
-	while item != null:
-		if item.get_metadata(0) == unit:
-			item.select(0)
-		else:
-			item.deselect(0)
-		item = item.get_next()
+func _on_object_selected(object: Node) -> void:
+	check_tree(get_root(), object)
 "
 
 [sub_resource type="GDScript" id="GDScript_lgolh"]
 script/source = "extends VBoxContainer
 
 
-var connected_unit: Unit
+var connected_object: Node
 
 
 func clear() -> void:
-	connected_unit = null
+	connected_object = null
 	$GridContainer/Name.text = ''
 	$GridContainer/Owner.text = ''
 	for child in $ScrollContainer/InspectorsGoHere.get_children():
@@ -213,29 +227,35 @@ func clear() -> void:
 		child.queue_free()
 
 
-func _on_unit_selected(unit: Node2D) -> void:
+func _on_object_selected(object: Node) -> void:
 	clear()
-	if !unit:
+	if !object:
 		return
-	if !(unit is Unit):
+	if (!object is Unit) and (!object is Group):
 		return
-	connected_unit = unit
-	$GridContainer/Name.text = connected_unit.display_name
-	$GridContainer/Owner.text = connected_unit.owning_player.name
-	$GridContainer/Owner.add_theme_color_override(\"font_color\", connected_unit.owning_player.color)
+	connected_object = object
+	$GridContainer/Name.text = connected_object.display_name
+	$GridContainer/Owner.text = connected_object.owning_player.name
+	$GridContainer/Owner.add_theme_color_override(\"font_color\", connected_object.owning_player.color)
 	
-	if connected_unit.mover:
-		var new_inspector = load('res://Source/UI/Inspectors/' + connected_unit.mover.inspector + '.tscn').instantiate()
-		new_inspector.linked_mover = connected_unit.mover
+	if connected_object is Group:
+		var new_inspector = load('res://Source/UI/Inspectors/GroupInspector.tscn').instantiate()
+		new_inspector.linked_actor = connected_object
 		$ScrollContainer/InspectorsGoHere.add_child(new_inspector)
+	
+	if connected_object is Unit:
+		if connected_object.mover:
+			var new_inspector = load('res://Source/UI/Inspectors/' + connected_object.mover.inspector + '.tscn').instantiate()
+			new_inspector.linked_actor = connected_object.mover
+			$ScrollContainer/InspectorsGoHere.add_child(new_inspector)
 "
 
-[sub_resource type="GDScript" id="GDScript_ff03q"]
+[sub_resource type="GDScript" id="GDScript_qrdvn"]
 script/source = "extends HotkeyButton
 
 
 func _pressed():
-	Global.session.local_controller.target_command(CommandPlaceMarker.new(Global.session.local_controller.player))
+	Global.session.local_controller.target_command(CommandPlaceMarker.new())
 "
 
 [sub_resource type="GDScript" id="GDScript_fnweq"]
@@ -243,11 +263,12 @@ script/source = "extends HotkeyButton
 
 
 func _pressed():
-	Global.session.local_controller.target_command(CommandDrawRuler.new(Global.session.local_controller.player))
+	Global.session.local_controller.target_command(CommandDrawRuler.new())
 "
 
 [sub_resource type="GDScript" id="GDScript_vrcrk"]
 script/source = "extends HotkeyButton
+
 
 func _pressed():
 	Global.session.local_controller.show_map_ui = !Global.session.local_controller.show_map_ui
@@ -464,12 +485,11 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
 [node name="Units" type="Tree" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 focus_mode = 0
 hide_root = true
@@ -508,118 +528,33 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Map" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 4
 columns = 4
 metadata/_tab_index = 2
 
-[node name="MarkerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
-custom_minimum_size = Vector2(80, 80)
+[node name="MarkerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
 layout_mode = 2
-focus_mode = 0
-alignment = 2
-icon_alignment = 1
-expand_icon = true
-script = SubResource("GDScript_ff03q")
+tooltip_text = "Place Marker"
+script = SubResource("GDScript_qrdvn")
 action = "place_marker"
-
-[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 10.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_faxib")
-expand_mode = 1
-stretch_mode = 5
 
-[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 15.0
-grow_vertical = 0
-text = "M"
-uppercase = true
-
-[node name="RulerButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
-custom_minimum_size = Vector2(80, 80)
+[node name="RulerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
 layout_mode = 2
-focus_mode = 0
+tooltip_text = "Draw Ruler"
 script = SubResource("GDScript_fnweq")
 action = "draw_ruler"
-
-[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/RulerButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 10.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
 texture = ExtResource("3_yq5ji")
-expand_mode = 1
-stretch_mode = 5
-flip_h = true
 
-[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/RulerButton"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 15.0
-grow_vertical = 0
-text = "R"
-uppercase = true
-
-[node name="ToggleMapUIButton" type="Button" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
-custom_minimum_size = Vector2(80, 80)
+[node name="MapUIButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
 layout_mode = 2
-focus_mode = 0
+tooltip_text = "Show/Hide Map UI"
 script = SubResource("GDScript_vrcrk")
 action = "toggle_map_ui"
-
-[node name="TextureRect" type="TextureRect" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/ToggleMapUIButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 10.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
 texture = ExtResource("6_eqdp0")
-expand_mode = 1
-stretch_mode = 5
-flip_h = true
-
-[node name="Label" type="Label" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/ToggleMapUIButton"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 15.0
-grow_vertical = 0
-text = "H"
-uppercase = true
 
 [node name="Time" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
@@ -722,4 +657,5 @@ layout_mode = 2
 [connection signal="pressed" from="Menu/VBoxContainer/OptionsButton" to="Menu/OptionsMenu" method="set_visible" binds= [true]]
 [connection signal="pressed" from="Menu/OptionsMenu/HBoxContainer/Back" to="Menu/VBoxContainer" method="set_visible" binds= [true]]
 
+[editable path="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
 [editable path="Menu/OptionsMenu"]
