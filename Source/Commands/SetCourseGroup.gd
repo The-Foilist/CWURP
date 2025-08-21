@@ -21,11 +21,10 @@ func validate_confirm(kwargs: Dictionary):
 
 func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
-	var behavior = load("res://Source/Actors/Behaviors/SetCourseGroup.gd").new(actor, target, '', 1)
-	actor.switch_behavior(behavior)
-	print(actor)
-	if actor.owning_player == Global.session.local_controller.player:
-		Global.session.message_handler.send(actor, Global.session.local_controller.player, 'ack', behavior._to_string())
+	
+	for unit in actor.get_all_units(actor):
+		var behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(unit.mover, target, '', 1)
+		unit.mover.switch_behavior(behavior)
 	Global.session.local_controller.targeting = null
 
 

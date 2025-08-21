@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_aqi54"]
 [ext_resource type="Texture2D" uid="uid://dyr3osmpt8dgj" path="res://Assets/art/ships/Akagi 1942.png" id="2_aqi54"]
-[ext_resource type="Resource" uid="uid://cxljerxeraomp" path="res://Assets/data/ships/Akagi 1942.tres" id="2_tumtv"]
+[ext_resource type="Resource" uid="uid://cxljerxeraomp" path="res://Assets/data/ships/Akagi_1942.tres" id="2_tumtv"]
 [ext_resource type="Script" uid="uid://bmdsfrn3kyw71" path="res://Source/Objects/UnitComponents/Hull.gd" id="3_51fus"]
 [ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="4_51fus"]
 [ext_resource type="Script" uid="uid://bjyfeobmmom26" path="res://Source/Actors/ShipMover.gd" id="4_b0t50"]
@@ -29,8 +29,8 @@ spread = 10.0
 initial_velocity_min = 10.0
 initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
-damping_min = 5.0
-damping_max = 8.0
+damping_min = 2.0
+damping_max = 5.0
 color_ramp = SubResource("GradientTexture1D_slwlh")
 
 [node name="Akagi" type="StaticBody2D" node_paths=PackedStringArray("mover")]

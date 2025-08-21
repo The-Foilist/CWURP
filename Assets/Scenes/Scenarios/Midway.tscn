@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://num482qwc6jv" path="res://Assets/art/maps/Midway 10.png" id="3_hgyg1"]
 [ext_resource type="Script" uid="uid://m3bosbw8u4ij" path="res://Source/Actors/Group.gd" id="3_p38gh"]
 [ext_resource type="Script" uid="uid://c5u6aql8khc6o" path="res://Source/Session/StartLocation.gd" id="4_7d5tn"]
-[ext_resource type="PackedScene" uid="uid://vxa4pugp48u7" path="res://Assets/scenes/units/MidwayAirbase.tscn" id="5_ftefp"]
-[ext_resource type="PackedScene" uid="uid://d2yfe0farl30s" path="res://Assets/scenes/units/Akagi.tscn" id="6_7d5tn"]
-[ext_resource type="PackedScene" uid="uid://cq5mpuaqnfijf" path="res://Assets/scenes/units/Hiryu.tscn" id="6_wsuic"]
-[ext_resource type="PackedScene" uid="uid://by5g2t2fkcqfm" path="res://Assets/scenes/units/Kaga.tscn" id="7_ftefp"]
-[ext_resource type="PackedScene" uid="uid://d4lf0dv16thjr" path="res://Assets/scenes/units/Soryu.tscn" id="7_hgyg1"]
+[ext_resource type="PackedScene" uid="uid://vxa4pugp48u7" path="res://Assets/scenes/units/structures/MidwayAirbase.tscn" id="5_ftefp"]
+[ext_resource type="PackedScene" uid="uid://d2yfe0farl30s" path="res://Assets/scenes/units/ships/Akagi_1942.tscn" id="6_7d5tn"]
+[ext_resource type="PackedScene" uid="uid://cq5mpuaqnfijf" path="res://Assets/scenes/units/ships/Hiryu_1942.tscn" id="6_wsuic"]
+[ext_resource type="PackedScene" uid="uid://by5g2t2fkcqfm" path="res://Assets/scenes/units/ships/Kaga_1942.tscn" id="7_ftefp"]
+[ext_resource type="PackedScene" uid="uid://d4lf0dv16thjr" path="res://Assets/scenes/units/ships/Soryu_1942.tscn" id="7_hgyg1"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_gg4fa")

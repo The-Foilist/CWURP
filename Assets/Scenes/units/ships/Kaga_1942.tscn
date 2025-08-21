@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://by5g2t2fkcqfm"]
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_hdb4h"]
-[ext_resource type="Resource" uid="uid://c7u7q444durgt" path="res://Assets/data/ships/Kaga 1942.tres" id="2_dilur"]
+[ext_resource type="Resource" uid="uid://c7u7q444durgt" path="res://Assets/data/ships/Kaga_1942.tres" id="2_dilur"]
 [ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="3_67cuf"]
 [ext_resource type="Texture2D" uid="uid://dshlht2tcc1s0" path="res://Assets/art/ships/Kaga 1942.png" id="3_hdb4h"]
 [ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="4_fnrdf"]
@@ -29,8 +29,8 @@ spread = 10.0
 initial_velocity_min = 10.0
 initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
-damping_min = 5.0
-damping_max = 8.0
+damping_min = 2.0
+damping_max = 5.0
 color_ramp = SubResource("GradientTexture1D_slwlh")
 
 [node name="Kaga" type="StaticBody2D" node_paths=PackedStringArray("mover")]
@@ -94,13 +94,13 @@ scale_threshold = 1.3
 [node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")
 
-[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder", "wake_anim")]
+[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("hull", "powerplant", "rudder", "wake_anim", "unit")]
 script = ExtResource("5_utodv")
-unit = NodePath("..")
 hull = NodePath("../Hull")
 powerplant = NodePath("../Powerplant")
 rudder = NodePath("../Rudder")
 wake_anim = NodePath("../Wake")
+unit = NodePath("..")
 metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
 [editable path="Marker"]

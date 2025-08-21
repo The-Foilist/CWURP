@@ -7,7 +7,7 @@ var radius: float
 
 
 func _init(actor: Actor, heading_target: float, direction: String, radius) -> void:
-	self.actor = actor
+	self.actor = actor as ShipMover
 	self.heading_target = heading_target
 	self.direction = direction
 	self.radius = radius
@@ -15,16 +15,6 @@ func _init(actor: Actor, heading_target: float, direction: String, radius) -> vo
 
 func _to_string() -> String:
 	return "Coming %sto course %03d." % [direction, heading_target]
-
-
-func validate():
-	if actor.owning_player != Global.session.local_controller.player:
-		return "You can only issue orders to units under your control."
-	if not actor:
-		return "Only ships can parse this order."
-	if !(actor is ShipMover):
-		return "Only ships can parse this order."
-	return null
 
 
 func process() -> void:
@@ -36,3 +26,7 @@ func process() -> void:
 	
 	var pos_clamp = min(actor.hull.turn_radius / radius, 1)
 	actor.rudder.pos_target = clamp(heading_diff / actor.rudder_smoothness, -pos_clamp, pos_clamp)
+
+func preprocess() -> void:
+	if actor.owning_player == Global.session.local_controller.player:
+		Global.session.message_handler.send(actor, Global.session.local_controller.player, 'ack', _to_string())

@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://d4lf0dv16thjr"]
 
 [ext_resource type="Script" uid="uid://ta7kl5kr6i6j" path="res://Source/Objects/Unit.gd" id="1_u1v3l"]
-[ext_resource type="Resource" uid="uid://tn6r48d5h20w" path="res://Assets/data/ships/Soryu 1942.tres" id="2_upwp1"]
+[ext_resource type="Resource" uid="uid://tn6r48d5h20w" path="res://Assets/data/ships/Soryu_1942.tres" id="2_upwp1"]
 [ext_resource type="Texture2D" uid="uid://dbf3ak20q0gdo" path="res://Assets/art/white_circle.png" id="3_slwlh"]
 [ext_resource type="Texture2D" uid="uid://refr3qn3afpn" path="res://Assets/art/ships/Soryu 1942.png" id="3_u1v3l"]
 [ext_resource type="PackedScene" uid="uid://cjs4e5rj0kkwp" path="res://Source/UI/World/ShipMarker.tscn" id="4_v2hyn"]
@@ -29,8 +29,8 @@ spread = 10.0
 initial_velocity_min = 10.0
 initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
-damping_min = 5.0
-damping_max = 8.0
+damping_min = 2.0
+damping_max = 5.0
 color_ramp = SubResource("GradientTexture1D_slwlh")
 
 [node name="Soryu" type="StaticBody2D" node_paths=PackedStringArray("mover")]
@@ -93,13 +93,13 @@ scale_threshold = 1.0
 [node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")
 
-[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("unit", "hull", "powerplant", "rudder", "wake_anim")]
+[node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("hull", "powerplant", "rudder", "wake_anim", "unit")]
 script = ExtResource("5_swe74")
-unit = NodePath("..")
 hull = NodePath("../Hull")
 powerplant = NodePath("../Powerplant")
 rudder = NodePath("../Rudder")
 wake_anim = NodePath("../Wake")
+unit = NodePath("..")
 metadata/_custom_type_script = "uid://bjyfeobmmom26"
 
 [editable path="Marker"]

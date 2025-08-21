@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ShipStats" load_steps=2 format=3 uid="uid://tn6r48d5h20w"]
 
-[ext_resource type="Script" uid="uid://wvewlh4b6psl" path="res://Source/Data/ShipData.gd" id="1_m2hvx"]
+[ext_resource type="Script" uid="uid://wvewlh4b6psl" path="res://Source/Data/ShipData.gd" id="1_4mxoa"]
 
 [resource]
-script = ExtResource("1_m2hvx")
+script = ExtResource("1_4mxoa")
 displacement = 16200.0
 draft = 7.6
 hull_drag = 0.0221436
@@ -17,4 +17,5 @@ rudder_drag = 0.0
 rudder_smoothness = 10.0
 vision_height = 25.0
 unit_name = "Soryu 1942"
+scene = &"res://Assets/scenes/units/Soryu.tscn"
 metadata/_custom_type_script = "uid://wvewlh4b6psl"

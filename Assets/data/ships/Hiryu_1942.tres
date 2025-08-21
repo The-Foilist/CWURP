@@ -17,4 +17,5 @@ rudder_drag = 0.0
 rudder_smoothness = 10.0
 vision_height = 25.0
 unit_name = "Hiryu 1942"
+scene = &"res://Assets/scenes/units/Hiryu.tscn"
 metadata/_custom_type_script = "uid://wvewlh4b6psl"

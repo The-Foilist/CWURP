@@ -461,12 +461,11 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
 [node name="Units" type="Tree" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 focus_mode = 0
 hide_root = true
@@ -474,6 +473,7 @@ script = SubResource("GDScript_3b2b5")
 metadata/_tab_index = 0
 
 [node name="Selection" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_lgolh")
 metadata/_tab_index = 1
