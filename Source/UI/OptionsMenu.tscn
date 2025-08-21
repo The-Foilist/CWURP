@@ -28,10 +28,11 @@ func select_from_text(option: OptionButton, text: String) -> bool:
 	return false
 
 
-func _ready() -> void:
+func reset() -> void:
 	var err = config.load(\"user://settings.ini\")
 	if err != OK:
 		return
+	$TabContainer/Video/FPSCap.value = PlayerSettings.frame_rate_cap
 	$TabContainer/Interface/CameraPanSpeed.value = PlayerSettings.camera_pan_speed
 	$TabContainer/Interface/CameraRotSpeed.value = PlayerSettings.camera_rotation_speed
 	$TabContainer/Interface/TextScale.value = PlayerSettings.text_scale
@@ -46,7 +47,12 @@ func _ready() -> void:
 	select_from_text(munition_speed_select, config.get_value(\"Units\", \"munition_speed_units\"))
 
 
-func _on_save_pressed() -> void:
+func _ready() -> void:
+	reset()
+
+
+func _on_apply_pressed() -> void:
+	PlayerSettings.frame_rate_cap = $TabContainer/Video/FPSCap.value
 	PlayerSettings.particle_effects = $TabContainer/Video/ParticleEffects.button_pressed
 	PlayerSettings.camera_pan_speed = $TabContainer/Interface/CameraPanSpeed.value
 	PlayerSettings.camera_rotation_speed = $TabContainer/Interface/CameraRotSpeed.value
@@ -82,6 +88,17 @@ tab_focus_mode = 0
 layout_mode = 2
 columns = 2
 metadata/_tab_index = 0
+
+[node name="FPSCapLabel" type="Label" parent="TabContainer/Video"]
+layout_mode = 2
+text = "Frame Rate Cap"
+horizontal_alignment = 2
+
+[node name="FPSCap" type="SpinBox" parent="TabContainer/Video"]
+layout_mode = 2
+tooltip_text = "For no FPS cap, enter 0."
+max_value = 240.0
+rounded = true
 
 [node name="ParticlesLabel" type="Label" parent="TabContainer/Video"]
 layout_mode = 2
@@ -335,12 +352,20 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 40
 text = "Back"
 
-[node name="Save" type="Button" parent="HBoxContainer"]
+[node name="Revert" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 theme_override_font_sizes/font_size = 40
-text = "Save"
+text = "Revert"
+
+[node name="Apply" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Apply"
 
 [connection signal="pressed" from="HBoxContainer/Back" to="." method="set_visible" binds= [false]]
-[connection signal="pressed" from="HBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="HBoxContainer/Revert" to="." method="reset"]
+[connection signal="pressed" from="HBoxContainer/Apply" to="." method="_on_apply_pressed"]

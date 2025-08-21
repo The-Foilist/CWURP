@@ -3,6 +3,7 @@ extends Node
 var config = ConfigFile.new()
 
 # Video
+var frame_rate_cap: int
 var particle_effects: bool = true
 
 # Controls
@@ -25,6 +26,8 @@ var munition_speed_units: String = 'fps'
 
 
 func save() -> void:
+	config.set_value("Video", "frame_rate_cap", frame_rate_cap)
+	Engine.max_fps = frame_rate_cap
 	config.set_value("Video", "particle_effects", particle_effects)
 	config.set_value("Controls", "camera_pan_speed", camera_pan_speed)
 	config.set_value("Controls", "camera_rotation_speed", camera_rotation_speed)
@@ -45,6 +48,8 @@ func _ready() -> void:
 	var err = config.load("user://settings.ini")
 	if err != OK:
 		return
+	frame_rate_cap = config.get_value("Video", "frame_rate_cap")
+	Engine.max_fps = frame_rate_cap
 	particle_effects = config.get_value("Video", "particle_effects")
 	camera_pan_speed = config.get_value("Controls", "camera_pan_speed")
 	camera_rotation_speed = config.get_value("Controls", "camera_rotation_speed")
