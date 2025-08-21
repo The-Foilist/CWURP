@@ -15,9 +15,12 @@ var heading: float
 var fuel_range: float
 var fuel_endurance: float
 
+var aground: bool = false
+
 
 func _ready() -> void:
 	super()
+	heading = fposmod(unit.rotation_degrees, 360)
 	inspector = 'ShipInspector'
 	if unit.starting_parameters.has('fuel'):
 		powerplant.fuel = unit.starting_parameters['fuel'] * powerplant.fuel_max
@@ -40,21 +43,30 @@ func estimate_range(speed: float, fuel: float) -> float:
 
 
 func move(delta: float) -> void:
+	if Global.session.game.get_height_at_point(unit.global_position) > -hull.draft && not aground:
+		aground = true
+		speed = 0
+		Global.session.message_handler.send(self, unit.owning_player, 'ack', "I have run aground!")
+	
+	if aground:
+		fuel_endurance = powerplant.fuel / (powerplant.fuel_burn)
+		fuel_range = speed * fuel_endurance
+		return
+	
 	var speed_change = powerplant.power_output / (hull.mass + powerplant.fuel)
 	var drag = (rudder.drag * rudder.pos**2 + hull.drag)
 	
 	speed_change -= drag * speed**2
 	speed += speed_change * delta
 	
-	var rotate_amount = rudder.pos * speed * delta / hull.turn_radius
-	var motion = speed * -unit.transform.y
-	unit.rotate(rotate_amount)
-	unit.translate(motion * delta)
+	unit.rotate(rudder.pos * speed * delta / hull.turn_radius)
+	unit.translate(speed * delta * -unit.global_transform.y)
+
 	heading = fposmod(unit.rotation_degrees, 360)
-	
 	fuel_endurance = powerplant.fuel / (powerplant.fuel_burn)
 	fuel_range = speed * fuel_endurance
 	speed_max = sqrt(powerplant.setting_max * powerplant.power_max * powerplant.power_mod / (hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel)))
 	
 	wake_anim.amount = 500 * int(speed)
 	wake_anim.process_material.direction.x = rudder.pos
+	

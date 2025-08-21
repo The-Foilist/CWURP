@@ -38,6 +38,22 @@ func change_time_scale(amt: float) -> void:
 		time_scale = new_scale
 
 
+func get_height_at_point(pos: Vector2):
+	var map_coords: Vector2i
+	var tile_data: TileData
+	
+	map_coords = $World/HeightMap100.local_to_map(pos / 100)
+	tile_data = $World/HeightMap100.get_cell_tile_data(map_coords)
+	if tile_data:
+		return tile_data.get_custom_data('elevation')
+	map_coords = $World/HeightMap10000.local_to_map(pos / 10000)
+	tile_data = $World/HeightMap10000.get_cell_tile_data(map_coords)
+	if tile_data:
+		return tile_data.get_custom_data('elevation')
+	
+	return -INF
+
+
 func _physics_process(delta) -> void:
 	if not pause:
 		elapsed_time += delta * time_scale

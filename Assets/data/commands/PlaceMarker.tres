@@ -7,7 +7,6 @@
 script = ExtResource("2_uklnx")
 target_text = "Click to place a marker on the map"
 cursor = 3
-target_types = Array[StringName]([&"Vector2"])
 icon = ExtResource("1_uklnx")
 tooltip = "Place Marker"
 input_action = &"place_marker"

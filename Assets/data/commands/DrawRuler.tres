@@ -7,7 +7,6 @@
 script = ExtResource("2_ytfln")
 target_text = "Click and drag to show distance and bearing"
 cursor = 3
-target_types = Array[StringName]([&"Vector2"])
 icon = ExtResource("1_ytfln")
 tooltip = "Draw Ruler"
 input_action = &"draw_ruler"

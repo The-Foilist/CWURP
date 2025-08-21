@@ -26,7 +26,7 @@ resources_spreadsheet_view/freeze_first_column=true
 config/name="RTS"
 config/description="Test framework for a potential Real-Time Strategy project"
 run/main_scene="uid://dmw8yfd1qhhhp"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.4", "Double Precision", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -38,7 +38,6 @@ PlayerSettings="*res://PlayerSettings.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=2
 window/vsync/vsync_mode=0
 
 [editor]
@@ -48,7 +47,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
@@ -211,4 +210,4 @@ approach={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 0.462745, 0.627451, 1)
+environment/defaults/default_clear_color=Color(0, 0.333333, 0.658824, 1)

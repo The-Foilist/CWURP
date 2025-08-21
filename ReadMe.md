@@ -1,5 +1,6 @@
 This is Carter's Weird Unnamed RTS Project.
 
+Requires Godot compiled with double precision to work properly!
 
 
 Unit: base for physical in-game objects
@@ -10,14 +11,13 @@ Actor: a Node that can do things to Units and unit components
 	Group: attached to Players, handles order-of-battle, formations, etc.
 Behavior: controls the stuff that Actors do
 	at most one Behavior per Actor at a time
-Command: an action that the user wants to have happen
+Command: an action that the user wants to happen
 	includes adding, removing, switching, or modifying an Actor's Behavior
 
 
 TODO:
-	"Approach" behavior and command for units and groups
+	"Approach" command for groups
 	Group formations
 		Group commands change individual unit behavior depending on formation
 	"Move relative to formation" command
 	Add BB, CA, CL, and DD to Kido Butai to test formations
-	
