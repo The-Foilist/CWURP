@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdu8g2idppsae"
-path="res://.godot/imported/eye.png-5309b2e11ac42437c670085efd00a83b.ctex"
+uid="uid://bepeyejg8a2q8"
+path="res://.godot/imported/dial.png-9835283de43f9174ce92b1eb7f381923.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/eye.png"
-dest_files=["res://.godot/imported/eye.png-5309b2e11ac42437c670085efd00a83b.ctex"]
+source_file="res://Assets/art/icons/dial.png"
+dest_files=["res://.godot/imported/dial.png-9835283de43f9174ce92b1eb7f381923.ctex"]
 
 [params]
 

@@ -23,8 +23,6 @@ func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	var behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(actor, target, '', 1)
 	actor.switch_behavior(behavior)
-	if actor.owning_player == Global.session.local_controller.player:
-		Global.session.message_handler.send(actor, Global.session.local_controller.player, 'ack', behavior._to_string())
 	Global.session.local_controller.targeting = null
 
 

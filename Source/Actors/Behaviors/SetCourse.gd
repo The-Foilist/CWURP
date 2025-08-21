@@ -25,7 +25,8 @@ func process() -> void:
 		heading_diff = fposmod(heading_target - actor.heading, 360)
 	
 	var pos_clamp = min(actor.hull.turn_radius / radius, 1)
-	actor.rudder.pos_target = clamp(heading_diff / actor.rudder_smoothness, -pos_clamp, pos_clamp)
+	actor.rudder.set_target(clamp(heading_diff / actor.rudder_smoothness, -pos_clamp, pos_clamp))
+
 
 func preprocess() -> void:
 	if actor.owning_player == Global.session.local_controller.player:

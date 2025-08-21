@@ -1,5 +1,5 @@
 class_name Behavior
-extends Resource
+extends RefCounted
 
 
 var actor: Actor
@@ -23,6 +23,7 @@ func process() -> void:
 
 func success() -> void:
 	emit_signal("completed")
+	actor.switch_behavior(null)
 
 
 func fail() -> void:

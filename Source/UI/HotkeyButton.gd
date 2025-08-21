@@ -6,6 +6,7 @@ extends Button
 @export var actor: Actor
 
 func _ready() -> void:
+	tooltip_text = command.tooltip
 	if $TextureRect:
 		$TextureRect.texture = command.icon
 	for event in InputMap.action_get_events(command.input_action):

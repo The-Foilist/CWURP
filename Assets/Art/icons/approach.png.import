@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bepeyejg8a2q8"
-path="res://.godot/imported/dial.png-1aa15e46e93e7b9cfbc7cd214da56975.ctex"
+uid="uid://cqaxa1wn2teca"
+path="res://.godot/imported/approach.png-318ba7604e28b30805040820c99a221f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/art/dial.png"
-dest_files=["res://.godot/imported/dial.png-1aa15e46e93e7b9cfbc7cd214da56975.ctex"]
+source_file="res://Assets/art/icons/approach.png"
+dest_files=["res://.godot/imported/approach.png-318ba7604e28b30805040820c99a221f.ctex"]
 
 [params]
 

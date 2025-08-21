@@ -9,7 +9,10 @@ var behavior: Behavior
 var inspector: String
 
 
-func switch_behavior(new_behavior: Behavior) -> void:
+func switch_behavior(new_behavior: Behavior = null) -> void:
+	if !new_behavior:
+		behavior = null
+		return
 	if new_behavior.validate():
 		return
 	behavior = new_behavior

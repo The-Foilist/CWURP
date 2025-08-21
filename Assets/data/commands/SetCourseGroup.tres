@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TargetedCommandData" load_steps=3 format=3 uid="uid://dyooxxhoj4myk"]
 
-[ext_resource type="Texture2D" uid="uid://b61lf3klijf5r" path="res://Assets/art/compass.png" id="1_5eqq2"]
+[ext_resource type="Texture2D" uid="uid://b61lf3klijf5r" path="res://Assets/art/icons/compass.png" id="1_5eqq2"]
 [ext_resource type="Script" uid="uid://c8d17bssig4o1" path="res://Source/Data/TargetedCommandData.gd" id="2_qx1oo"]
 
 [resource]
@@ -8,7 +8,7 @@ script = ExtResource("2_qx1oo")
 target_text = "set course"
 cursor = 3
 icon = ExtResource("1_5eqq2")
-tooltip = " Set Course"
+tooltip = "Set Course"
 input_action = &"set_course"
 script_path = &"res://Source/Commands/SetCourseGroup.gd"
 metadata/_custom_type_script = "uid://c8d17bssig4o1"

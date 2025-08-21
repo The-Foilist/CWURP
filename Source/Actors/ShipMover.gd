@@ -51,7 +51,6 @@ func move(delta: float) -> void:
 	unit.rotate(rotate_amount)
 	unit.translate(motion * delta)
 	heading = fposmod(unit.rotation_degrees, 360)
-	unit.speed = speed
 	
 	fuel_endurance = powerplant.fuel / (powerplant.fuel_burn)
 	fuel_range = speed * fuel_endurance

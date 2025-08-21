@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://ck7wsherx2xgk"]
+
+[ext_resource type="Script" uid="uid://c1hicrs7pin5x" path="res://Source/Session/Game.gd" id="1_s6bwv"]
+[ext_resource type="Script" uid="uid://nipeuxlrpgq8" path="res://Source/Session/Player.gd" id="2_jbv7v"]
+[ext_resource type="Script" uid="uid://c5u6aql8khc6o" path="res://Source/Session/StartLocation.gd" id="5_h5vtg"]
+
+[sub_resource type="TileSet" id="TileSet_p38gh"]
+tile_size = Vector2i(1, 1)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_s6bwv")
+start_time = "1942-06-04T00:00:00"
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Neutral" type="Node" parent="Players"]
+script = ExtResource("2_jbv7v")
+display_name = "Neutral"
+color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Player1" type="Node" parent="Players" node_paths=PackedStringArray("start_location")]
+script = ExtResource("2_jbv7v")
+display_name = "Player 1"
+color = Color(0, 0, 1, 1)
+controllable = true
+start_location = NodePath("../../World/Start Location 1")
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="Player2" type="Node" parent="Players" node_paths=PackedStringArray("start_location")]
+script = ExtResource("2_jbv7v")
+display_name = "Player 2"
+color = Color(1, 0, 0, 1)
+controllable = true
+start_location = NodePath("../../World/Start Location 2")
+metadata/_custom_type_script = "uid://nipeuxlrpgq8"
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="World"]
+scale = Vector2(100, 100)
+tile_set = SubResource("TileSet_p38gh")
+
+[node name="Start Location 1" type="Node2D" parent="World"]
+position = Vector2(-1000, 1000)
+script = ExtResource("5_h5vtg")
+starting_zoom_level = 10
+metadata/_custom_type_script = "uid://c5u6aql8khc6o"
+
+[node name="Start Location 2" type="Node2D" parent="World"]
+position = Vector2(1000, -1000)
+script = ExtResource("5_h5vtg")
+starting_zoom_level = 3
+metadata/_custom_type_script = "uid://c5u6aql8khc6o"
+
+[node name="UILayer" type="Node2D" parent="."]
+z_index = 1000
