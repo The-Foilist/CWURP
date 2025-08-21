@@ -9,9 +9,16 @@ var game: Game
 var mouse_coords: Vector2 = Vector2(0,0)
 var hovered_object: Node2D
 var mouse_intersect_params: PhysicsPointQueryParameters2D
-var targeting: Command
+var targeting: TargetedCommand
 var marker_number: int = 1
 var show_map_ui: bool = true
+
+
+func sort_by_z(a, b) -> bool:
+	if a.collider.z_index > b.collider.z_index:
+		return true
+	return false
+
 
 func get_object_under_mouse() -> Node2D:
 	if !cam:
@@ -20,6 +27,7 @@ func get_object_under_mouse() -> Node2D:
 	mouse_intersect_params.position = mouse_coords
 	var result = cam.get_world_2d().direct_space_state.intersect_point(mouse_intersect_params)
 	if result:
+		result.sort_custom(sort_by_z)
 		if result[0].collider is SelectionArea and result[0].collider.input_pickable:
 			return result[0].collider.connected_object
 		elif result[0].collider is UnitComponent:
@@ -40,7 +48,7 @@ func setup_player(idx: int) -> void:
 	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_object_selected(player.selection)
 
 
-func target_command(command: Command):
+func target_command(command: TargetedCommand):
 	if targeting:
 		targeting.cancel()
 	targeting = command
@@ -68,13 +76,18 @@ func _process(delta) -> void:
 
 
 func _unhandled_input(event) -> void:
-	if targeting:
-		if event.is_action_pressed('confirm_target'):
-			targeting.confirm(cam.get_global_mouse_position())
-		elif event.is_action_released('confirm_target'):
-			targeting.release(cam.get_global_mouse_position())
-		if event.is_action_pressed('cancel_target'):
-			targeting.cancel()
+	if targeting && event.is_action_pressed('confirm_target'):
+		if hovered_object:
+			targeting.confirm({'target': hovered_object})
+		else:
+			targeting.confirm({'target': cam.get_global_mouse_position()})
+	elif targeting && event.is_action_released('confirm_target'):
+		if hovered_object:
+			targeting.release({'target': hovered_object})
+		else:
+			targeting.release({'target': cam.get_global_mouse_position()})
+	elif targeting && event.is_action_pressed("cancel_target"):
+		targeting.cancel()
 	elif event.is_action_pressed("select_group"):
 		if hovered_object:
 			if hovered_object is Unit:
@@ -87,8 +100,7 @@ func _unhandled_input(event) -> void:
 	elif event.is_action_pressed("select"):
 		if hovered_object:
 			player.select(hovered_object)
-	
-	if event.is_action_pressed('deselect'):
+	elif event.is_action_pressed('deselect'):
 		player.select(null)
 
 

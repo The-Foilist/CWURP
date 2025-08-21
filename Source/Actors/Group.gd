@@ -22,7 +22,7 @@ func get_all_units(group: Group) -> Array:
 	return units
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var pos = Vector2(0,0)
 	var speed = 999999999
 	var unit_list =  get_all_units(self)

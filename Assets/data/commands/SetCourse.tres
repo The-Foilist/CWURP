@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TargetedCommandData" load_steps=3 format=3 uid="uid://dx25xlul563bl"]
+
+[ext_resource type="Texture2D" uid="uid://b61lf3klijf5r" path="res://Assets/art/compass.png" id="1_g05cg"]
+[ext_resource type="Script" uid="uid://c8d17bssig4o1" path="res://Source/Data/TargetedCommandData.gd" id="2_g05cg"]
+
+[resource]
+script = ExtResource("2_g05cg")
+target_text = "set course"
+cursor = 3
+target_types = Array[StringName]([&"float", &"Vector2"])
+icon = ExtResource("1_g05cg")
+tooltip = " Set Course"
+input_action = &"set_course"
+script_path = &"res://Source/Commands/SetCourse.gd"
+metadata/_custom_type_script = "uid://c8d17bssig4o1"

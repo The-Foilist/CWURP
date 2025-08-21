@@ -54,5 +54,5 @@ func move(delta: float) -> void:
 	fuel_range = speed * fuel_endurance
 	speed_max = sqrt(powerplant.setting_max * powerplant.power_max * powerplant.power_mod / (hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel)))
 	
-	wake_anim.amount = 500 * speed
+	wake_anim.amount = 500 * int(speed)
 	wake_anim.process_material.direction.x = rudder.pos

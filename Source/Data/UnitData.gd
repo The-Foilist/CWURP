@@ -1,4 +1,4 @@
-class_name Statblock
+class_name UnitData
 extends Resource
 
 

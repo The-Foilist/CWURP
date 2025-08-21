@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TargetedCommandData" load_steps=3 format=3 uid="uid://de63rcnhi843t"]
+
+[ext_resource type="Texture2D" uid="uid://55cunpu8mw3h" path="res://Assets/art/ruler.png" id="1_ytfln"]
+[ext_resource type="Script" uid="uid://c8d17bssig4o1" path="res://Source/Data/TargetedCommandData.gd" id="2_ytfln"]
+
+[resource]
+script = ExtResource("2_ytfln")
+target_text = "Click and drag to show distance and bearing"
+cursor = 3
+target_types = Array[StringName]([&"Vector2"])
+icon = ExtResource("1_ytfln")
+tooltip = "Draw Ruler"
+input_action = &"draw_ruler"
+script_path = &"res://Source/Commands/DrawRuler.gd"
+metadata/_custom_type_script = "uid://c8d17bssig4o1"

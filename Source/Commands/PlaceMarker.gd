@@ -1,28 +1,23 @@
-class_name CommandPlaceMarker
-extends Command
+extends TargetedCommand
 
 
-func _init():
-	self.cursor = Input.CURSOR_CROSS
-	self.target_text = "Click to place a marker on the map..."
+var target: Vector2
 
 
-func validate(target):
-	if target is Vector2:
-		return target
-	elif target is Unit:
-		target = target.global_position
-		return target
-	return
+func validate_confirm(kwargs: Dictionary):
+	if kwargs['target'] is Vector2:
+		target = kwargs['target']
+		return null
+	elif kwargs['target'] is Node2D:
+		target = kwargs['target'].global_position
+		return null
+	else:
+		return 'Error: must target location or object.'
 
 
-func confirm(target) -> void:
-	target = validate(target)
-	if !target:
-		if cancel_on_fail:
-			cancel()
-		else:
-			return
+func confirm(kwargs: Dictionary) -> void:
+	super(kwargs)
+	var player = Global.session.local_controller.player
 	var new_marker = player.create_marker(target)
 	Global.session.message_handler.send(null, player, 'map', 'Placed %s at (%d,%d).' % [Global.session.message_handler.wrap_name(new_marker), target.x, target.y])
-	super(target)
+	Global.session.local_controller.targeting = null

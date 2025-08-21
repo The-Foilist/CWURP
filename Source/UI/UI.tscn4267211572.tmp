@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://d4agehp3labnq"]
+[gd_scene load_steps=33 format=3 uid="uid://d4agehp3labnq"]
 
 [ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
 [ext_resource type="RichTextEffect" uid="uid://dwgdfx0e4jnq0" path="res://Source/Session/Messages/MessageSender.tres" id="2_ywsxj"]
@@ -250,6 +250,30 @@ func _on_object_selected(object: Node) -> void:
 			$ScrollContainer/InspectorsGoHere.add_child(new_inspector)
 "
 
+[sub_resource type="GDScript" id="GDScript_qrdvn"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.local_controller.target_command(CommandPlaceMarker.new())
+"
+
+[sub_resource type="GDScript" id="GDScript_fnweq"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.local_controller.target_command(CommandDrawRuler.new())
+"
+
+[sub_resource type="GDScript" id="GDScript_vrcrk"]
+script/source = "extends HotkeyButton
+
+
+func _pressed():
+	Global.session.local_controller.show_map_ui = !Global.session.local_controller.show_map_ui
+"
+
 [sub_resource type="GDScript" id="GDScript_xb563"]
 script/source = "extends Label
 
@@ -275,7 +299,7 @@ func _process(_delta) -> void:
 "
 
 [sub_resource type="GDScript" id="GDScript_eqdp0"]
-script/source = "extends Button
+script/source = "extends HotkeyButton
 
 
 func _pressed():
@@ -283,7 +307,7 @@ func _pressed():
 "
 
 [sub_resource type="GDScript" id="GDScript_agc84"]
-script/source = "extends Button
+script/source = "extends HotkeyButton
 
 
 func _pressed():
@@ -295,7 +319,7 @@ func _pressed():
 "
 
 [sub_resource type="GDScript" id="GDScript_i125b"]
-script/source = "extends Button
+script/source = "extends HotkeyButton
 
 
 func _pressed():
@@ -511,17 +535,23 @@ theme_override_constants/v_separation = 4
 columns = 4
 metadata/_tab_index = 2
 
-[node name="ToggleMapUIButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+[node name="MarkerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
 layout_mode = 2
-command = ExtResource("7_agc84")
-
-[node name="PlaceMarkerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
-layout_mode = 2
+tooltip_text = "Place Marker"
+script = SubResource("GDScript_qrdvn")
 command = ExtResource("5_ywsxj")
 
-[node name="DrawRulerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+[node name="RulerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
 layout_mode = 2
+tooltip_text = "Draw Ruler"
+script = SubResource("GDScript_fnweq")
 command = ExtResource("6_eqdp0")
+
+[node name="MapUIButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+layout_mode = 2
+tooltip_text = "Show/Hide Map UI"
+script = SubResource("GDScript_vrcrk")
+command = ExtResource("7_agc84")
 
 [node name="Time" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
@@ -621,4 +651,5 @@ layout_mode = 2
 [connection signal="pressed" from="Menu/VBoxContainer/OptionsButton" to="Menu/OptionsMenu" method="set_visible" binds= [true]]
 [connection signal="pressed" from="Menu/OptionsMenu/HBoxContainer/Back" to="Menu/VBoxContainer" method="set_visible" binds= [true]]
 
+[editable path="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/MarkerButton"]
 [editable path="Menu/OptionsMenu"]

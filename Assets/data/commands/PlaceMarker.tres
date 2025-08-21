@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TargetedCommandData" load_steps=3 format=3 uid="uid://btppugycedn4k"]
+
+[ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/art/marker.png" id="1_uklnx"]
+[ext_resource type="Script" uid="uid://c8d17bssig4o1" path="res://Source/Data/TargetedCommandData.gd" id="2_uklnx"]
+
+[resource]
+script = ExtResource("2_uklnx")
+target_text = "Click to place a marker on the map"
+cursor = 3
+target_types = Array[StringName]([&"Vector2"])
+icon = ExtResource("1_uklnx")
+tooltip = "Place Marker"
+input_action = &"place_marker"
+script_path = &"res://Source/Commands/PlaceMarker.gd"
+metadata/_custom_type_script = "uid://c8d17bssig4o1"

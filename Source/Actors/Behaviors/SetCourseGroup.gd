@@ -1,4 +1,3 @@
-class_name GroupSetCourse
 extends Behavior
 
 
@@ -28,15 +27,7 @@ func validate():
 	return null
 
 
-func propagate(parent_node: Group) -> void:
-	for unit in parent_node.units:
-		var new_behavior = SetCourse.new(unit.mover, self.heading_target, self.direction, self.radius)		
-		unit.mover.switch_behavior(new_behavior)
-	if parent_node.groups.size() > 0:
-		for n in parent_node.groups:
-			propagate(n)
-
-
 func preprocess() -> void:
-	print(heading_target)
-	propagate(actor)
+	for unit in actor.get_all_units(actor):
+		var new_behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(unit.mover, self.heading_target, self.direction, self.radius)
+		unit.mover.switch_behavior(new_behavior)

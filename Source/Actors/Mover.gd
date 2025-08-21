@@ -5,7 +5,7 @@ extends UnitActor
 var speed_max: float
 
 
-func move(delta: float) -> void:
+func move(_delta: float) -> void:
 	pass
 	
 

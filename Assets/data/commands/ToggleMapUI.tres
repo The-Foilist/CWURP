@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CommandData" load_steps=3 format=3 uid="uid://fxep0u4jcoab"]
+
+[ext_resource type="Texture2D" uid="uid://cdu8g2idppsae" path="res://Assets/art/eye.png" id="1_0a2ys"]
+[ext_resource type="Script" uid="uid://c87d5txnc7ckc" path="res://Source/Data/CommandData.gd" id="2_0a2ys"]
+
+[resource]
+script = ExtResource("2_0a2ys")
+icon = ExtResource("1_0a2ys")
+tooltip = "Toggle Map UI"
+input_action = &"toggle_map_ui"
+script_path = &"res://Source/Commands/ToggleMapUI.gd"
+metadata/_custom_type_script = "uid://c87d5txnc7ckc"

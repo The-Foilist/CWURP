@@ -1,5 +1,5 @@
 class_name ShipStats
-extends Statblock
+extends UnitData
 
 @export var displacement: float
 @export var draft: float

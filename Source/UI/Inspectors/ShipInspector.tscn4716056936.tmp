@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1mfdqgjdjb2"]
+[gd_scene load_steps=3 format=3 uid="uid://c1mfdqgjdjb2"]
 
 [ext_resource type="PackedScene" uid="uid://7c580cxvugqx" path="res://Source/UI/HotkeyButton.tscn" id="1_n76gg"]
-[ext_resource type="Resource" uid="uid://dx25xlul563bl" path="res://Assets/data/commands/SetCourse.tres" id="2_n76gg"]
 
 [sub_resource type="GDScript" id="GDScript_ea14l"]
 script/source = "extends Inspector
@@ -31,8 +30,6 @@ func _ready() -> void:
 			if ![$GridContainer/HeadingLabel, $GridContainer/SpeedLabel, heading_readout, speed_readout].has(child):
 				$GridContainer.remove_child(child)
 				child.queue_free()
-	else:
-		$Orders/SetCourseButton.actor = linked_actor
 
 
 func _process(delta: float) -> void:
@@ -161,4 +158,5 @@ columns = 4
 
 [node name="SetCourseButton" parent="Orders" instance=ExtResource("1_n76gg")]
 layout_mode = 2
-command = ExtResource("2_n76gg")
+tooltip_text = "Set Course"
+script = null

@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://o6fdywunr25r"]
+[gd_scene load_steps=4 format=3 uid="uid://o6fdywunr25r"]
 
 [ext_resource type="PackedScene" uid="uid://7c580cxvugqx" path="res://Source/UI/HotkeyButton.tscn" id="1_mijpl"]
-[ext_resource type="Texture2D" uid="uid://b61lf3klijf5r" path="res://Assets/art/compass.png" id="2_tr2fa"]
+[ext_resource type="Resource" uid="uid://dyooxxhoj4myk" path="res://Assets/data/commands/SetCourseGroup.tres" id="2_mijpl"]
 
 [sub_resource type="GDScript" id="GDScript_ea14l"]
 script/source = "extends Inspector
@@ -12,6 +12,7 @@ func _ready() -> void:
 		get_parent().remove_child(self)
 		self.queue_free()
 		return
+	$Orders/SetCourseButton.actor = linked_actor
 
 
 func _process(delta: float) -> void:
@@ -19,17 +20,6 @@ func _process(delta: float) -> void:
 	
 	if linked_actor.owning_player != Global.session.local_controller.player:
 		return
-"
-
-[sub_resource type="GDScript" id="GDScript_t65ev"]
-script/source = "extends HotkeyButton
-
-
-func _pressed():
-	var actor = get_node(\"../..\").linked_actor
-	var new_behavior = SetCourse.new(actor, 0, '', 1)
-	
-	Global.session.local_controller.target_command(CommandSetCourse.new(actor, new_behavior))
 "
 
 [node name="GroupInspector" type="VBoxContainer"]
@@ -48,9 +38,6 @@ horizontal_alignment = 1
 [node name="Orders" type="GridContainer" parent="."]
 layout_mode = 2
 
-[node name="Button" parent="Orders" instance=ExtResource("1_mijpl")]
+[node name="SetCourseButton" parent="Orders" instance=ExtResource("1_mijpl")]
 layout_mode = 2
-tooltip_text = "Set Course"
-script = SubResource("GDScript_t65ev")
-action = "set_course"
-texture = ExtResource("2_tr2fa")
+command = ExtResource("2_mijpl")

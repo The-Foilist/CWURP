@@ -22,7 +22,7 @@ func wrap_name(object: Node) -> String:
 
 func send(sender: Node, receiver: Node, type: String, content: String) -> void:
 	# Add sender
-	if (sender is Player) or (sender is Unit):
+	if (sender is Player) or (sender is Unit) or (sender is Group):
 		content = '[sender]' + wrap_name(sender) + '[/sender]: ' + content
 	elif sender is UnitActor:
 		content = '[sender]' + wrap_name(sender.unit) + '[/sender]: ' + content
