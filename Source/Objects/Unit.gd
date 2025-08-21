@@ -8,4 +8,4 @@ extends StaticBody2D
 @export var mover: Mover
 @export var group: Group
 
-@export var speed: float
+@export var starting_parameters: Dictionary

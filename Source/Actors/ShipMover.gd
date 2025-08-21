@@ -19,10 +19,13 @@ var fuel_endurance: float
 func _ready() -> void:
 	super()
 	inspector = 'ShipInspector'
-	if unit.speed:
-		speed = unit.speed
-		powerplant.setting = clamp(unit.speed**2 * hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel) / (powerplant.power_max * powerplant.power_mod), 0, 1)
+	if unit.starting_parameters.has('fuel'):
+		powerplant.fuel = unit.starting_parameters['fuel'] * powerplant.fuel_max
+	if unit.starting_parameters.has('speed'):
+		speed = unit.starting_parameters['speed']
+		powerplant.setting = clamp(speed**2 * hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel) / (powerplant.power_max * powerplant.power_mod), 0, 1)
 		powerplant.setting_target = powerplant.setting
+
 
 
 # Given a speed, estimate how long until current fuel runs out

@@ -91,7 +91,10 @@ rotation = 2.35619
 display_name = "Akagi"
 owning_player = NodePath("../../Players/Japan")
 group = NodePath("../../Players/Japan/Kido Butai/Carrier Division 1")
-speed = 7.71667
+starting_parameters = {
+"fuel": 0.5,
+"speed": 7.71667
+}
 
 [node name="Kaga" parent="World" node_paths=PackedStringArray("owning_player", "group") instance=ExtResource("7_ftefp")]
 position = Vector2(-444580, -390367)
@@ -99,7 +102,10 @@ rotation = 2.35619
 display_name = "Kaga"
 owning_player = NodePath("../../Players/Japan")
 group = NodePath("../../Players/Japan/Kido Butai/Carrier Division 1")
-speed = 7.71667
+starting_parameters = {
+"fuel": 0.5,
+"speed": 7.71667
+}
 
 [node name="Hiryu" parent="World" node_paths=PackedStringArray("owning_player", "group") instance=ExtResource("6_wsuic")]
 position = Vector2(-445580, -391367)
@@ -107,7 +113,10 @@ rotation = 2.35619
 display_name = "Hiryu"
 owning_player = NodePath("../../Players/Japan")
 group = NodePath("../../Players/Japan/Kido Butai/Carrier Division 2")
-speed = 7.71667
+starting_parameters = {
+"fuel": 0.5,
+"speed": 7.71667
+}
 
 [node name="Soryu" parent="World" node_paths=PackedStringArray("owning_player", "group") instance=ExtResource("7_hgyg1")]
 position = Vector2(-444580, -392367)
@@ -115,7 +124,10 @@ rotation = 2.35619
 display_name = "Soryu"
 owning_player = NodePath("../../Players/Japan")
 group = NodePath("../../Players/Japan/Kido Butai/Carrier Division 2")
-speed = 7.71667
+starting_parameters = {
+"fuel": 0.75,
+"speed": 7.71667
+}
 
 [node name="UILayer" type="Node2D" parent="."]
 z_index = 1000
