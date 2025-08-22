@@ -19,7 +19,7 @@ func validate_confirm(kwargs: Dictionary):
 func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	ruler = preload("res://Source/UI/World/Ruler.tscn").instantiate()
-	Global.session.game.map_ui_layer.add_child(ruler)
+	Global.game.map_ui_layer.add_child(ruler)
 	ruler.clear_points()
 	ruler.add_point(target)
 	ruler.add_point(target)
@@ -30,7 +30,7 @@ func release(kwargs: Dictionary) -> void:
 	super(kwargs)
 	ruler.visible = false
 	ruler.clear_points()
-	Global.session.game.map_ui_layer.remove_child(ruler)
+	Global.game.map_ui_layer.remove_child(ruler)
 	ruler.queue_free()
 	ruler = null
 
@@ -43,5 +43,5 @@ func cancel() -> void:
 
 func process(_delta: float) -> void:
 	if ruler:
-		var mouse_pos = Global.session.local_controller.cam.get_global_mouse_position()
+		var mouse_pos = Global.local_controller.cam.get_global_mouse_position()
 		ruler.set_point_position(1, mouse_pos)

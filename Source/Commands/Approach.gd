@@ -19,9 +19,9 @@ func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	var behavior = load("res://Source/Actors/Behaviors/Approach.gd").new(actor, target, 100)
 	actor.switch_behavior(behavior)
-	Global.session.local_controller.targeting = null
+	Global.local_controller.targeting = null
 
 
 func process(_delta: float) -> void:
-	target = Global.session.local_controller.cam.get_global_mouse_position()
+	target = Global.local_controller.cam.get_global_mouse_position()
 	target_text = '%s: %s -> (%.d, %.d)' % [actor.unit.display_name, target_text_base, target.x, target.y]

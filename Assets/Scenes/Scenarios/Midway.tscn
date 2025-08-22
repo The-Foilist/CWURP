@@ -12,9 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://by5g2t2fkcqfm" path="res://Assets/scenes/units/ships/Kaga_1942.tscn" id="7_ftefp"]
 [ext_resource type="PackedScene" uid="uid://d4lf0dv16thjr" path="res://Assets/scenes/units/ships/Soryu_1942.tscn" id="7_hgyg1"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("units")]
 script = ExtResource("1_gg4fa")
 start_time = "1942-06-04T00:00:00"
+units = [NodePath("World/Midway Airbase"), NodePath("World/Akagi"), NodePath("World/Kaga"), NodePath("World/Hiryu"), NodePath("World/Soryu")]
 
 [node name="Players" type="Node" parent="."]
 

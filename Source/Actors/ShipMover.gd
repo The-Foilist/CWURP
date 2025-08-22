@@ -1,5 +1,5 @@
 class_name ShipMover
-extends Mover
+extends PoweredMover
 
 
 @export var hull: Hull
@@ -8,12 +8,6 @@ extends Mover
 @export var wake_anim: GPUParticles2D
 
 @onready var rudder_smoothness: float = unit.statblock.rudder_smoothness
-
-var speed: float
-var heading: float
-
-var fuel_range: float
-var fuel_endurance: float
 
 var aground: bool = false
 
@@ -30,20 +24,14 @@ func _ready() -> void:
 		powerplant.setting_target = powerplant.setting
 
 
-
 # Given a speed, estimate how long until current fuel runs out
 func estimate_endurance(speed: float, fuel: float) -> float:
 	var setting = speed**2 * hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel) / (powerplant.power_max * powerplant.power_mod)
 	return fuel / (powerplant.fuel_burn * powerplant.fuel_burn_mod * setting)
 
 
-# Given a speed, estimate how far you can get with current fuel
-func estimate_range(speed: float, fuel: float) -> float:
-	return estimate_endurance(speed, fuel) * speed
-
-
 func move(delta: float) -> void:
-	if Global.session.game.get_height_at_point(unit.global_position) > -hull.draft && not aground:
+	if not aground && Global.game.get_height_at_point(unit.global_position) > unit.height - hull.draft:
 		aground = true
 		speed = 0
 		Global.session.message_handler.send(self, unit.owning_player, 'ack', "I have run aground!")

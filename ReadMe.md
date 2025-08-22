@@ -16,8 +16,35 @@ Command: an action that the user wants to happen
 
 
 TODO:
-	"Approach" command for groups
-	Group formations
+
+	Save/Load
+	
+	Movement planner
+		Destination marker
+			Drag and drop on map
+			Choose speed or time of arrial
+			Calculate fuel consumption and flag if fuel insufficient
+		Link destinations together
+	
+	Group Formations
+		Column, Line, Circle, Freeform
 		Group commands change individual unit behavior depending on formation
-	"Move relative to formation" command
-	Add BB, CA, CL, and DD to Kido Butai to test formations
+			Line ahead - column turn OR turn together (becomes line formation)
+			Line - turn together
+			Circle - turn together
+		"Maintain formation" behavior
+		"Move relative to formation" command
+	
+	Vision
+		Fog of war - hide units not visible to local player
+		Shared vision between players
+	
+	Add additional units
+		Kongo, Haruna, Tone, Chikuma, Nagara, IJN DDs
+		Yorktown, Enterprise, Hornet
+	
+	Aircraft
+	
+	LoL-style commands option (just press key while hovering over target)
+	
+	

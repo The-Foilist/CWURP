@@ -9,3 +9,8 @@ extends StaticBody2D
 @export var group: Group
 
 @export var starting_parameters: Dictionary
+
+var height: float
+
+
+signal died

@@ -30,7 +30,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			translate((position - get_global_mouse_position()) * 0.2)
 			zoom_level += 1
 	if event.is_action_pressed("camera_snap_to_selection"):
-		var target = Global.session.local_controller.player.selection
+		var target = Global.local_controller.player.selection
 		if following:
 			if following != target:
 				following = target

@@ -33,4 +33,4 @@ func release(kwargs: Dictionary):
 
 
 func cancel() -> void:
-	Global.session.local_controller.targeting = null
+	Global.local_controller.targeting = null

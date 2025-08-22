@@ -26,7 +26,7 @@ func select(target: Node) -> void:
 	emit_signal('selection_updated', selection)
 	if !selection:
 		return
-	if Global.session.local_controller.player == self:
+	if Global.local_controller.player == self:
 		Global.session.message_handler.send(null, self, 'select', 'You have selected ' + Global.session.message_handler.wrap_name(selection) + '.')
 
 

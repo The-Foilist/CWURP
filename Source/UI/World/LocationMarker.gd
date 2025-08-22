@@ -7,14 +7,14 @@ var display_name: String = 'Marker'
 
 func _ready() -> void:
 	$PanelContainer/VBoxContainer/Name.text = display_name
-	$PanelContainer/VBoxContainer/Time.text = Global.session.game.current_time
+	$PanelContainer/VBoxContainer/Time.text = Global.game.current_time
 
 
 func _process(delta: float) -> void:
 	super(delta)
-	visible = Global.session.local_controller.show_map_ui
+	visible = Global.local_controller.show_map_ui
 	$SelectionArea.input_pickable = visible
-	global_rotation = Global.session.local_controller.cam.global_rotation
+	global_rotation = Global.local_controller.cam.global_rotation
 	$PanelContainer.scale = Vector2(PlayerSettings.text_scale/PlayerSettings.marker_scale, PlayerSettings.text_scale/PlayerSettings.marker_scale)
 	$PanelContainer.visible = (player.selection == self)
 

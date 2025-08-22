@@ -12,7 +12,7 @@ var elapsed_time: float = 0
 
 
 @export var start_time: String
-
+@export var units: Array[Unit]
 
 @onready var world := $World
 @onready var map_ui_layer := $UILayer
@@ -24,7 +24,12 @@ var elapsed_time: float = 0
 @onready var current_time = "%04d-%02d-%02d %02d:%02d:%02d" % [time_dict.year, time_dict.month, time_dict.day, time_dict.hour, time_dict.minute, time_dict.second]
 
 
+signal game_start
 signal paused(on: bool)
+
+
+func _on_sesion_start() -> void:
+	emit_signal("game_start")
 
 
 func toggle_pause(on: bool) -> void:

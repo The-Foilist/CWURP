@@ -20,7 +20,7 @@ func switch_behavior(new_behavior: Behavior = null) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if Global.session.game.pause:
+	if Global.game.pause:
 		return
 	if behavior:
 		behavior.process()

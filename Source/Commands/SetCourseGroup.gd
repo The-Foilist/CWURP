@@ -25,9 +25,9 @@ func confirm(kwargs: Dictionary) -> void:
 	for unit in actor.get_all_units(actor):
 		var behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(unit.mover, target, '', 1)
 		unit.mover.switch_behavior(behavior)
-	Global.session.local_controller.targeting = null
+	Global.local_controller.targeting = null
 
 
 func process(_delta: float) -> void:
-	target = Global.bearing_to(actor.center, Global.session.local_controller.cam.get_global_mouse_position())
+	target = Global.bearing_to(actor.center, Global.local_controller.cam.get_global_mouse_position())
 	target_text = actor.display_name + ': ' + target_text_base + ' -> ' + str(target)

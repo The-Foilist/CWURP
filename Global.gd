@@ -33,6 +33,8 @@ const VOLUME_CONVERSION = {
 }
 
 var session: Session
+var local_controller: LocalController
+var game: Game
 var game_scene: PackedScene
 var player_slot: int = 1
 

@@ -12,6 +12,6 @@ func update(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Global.session.game.pause:
+	if Global.game.pause:
 		return
-	update(delta * Global.session.game.time_scale)
+	update(delta * Global.game.time_scale)

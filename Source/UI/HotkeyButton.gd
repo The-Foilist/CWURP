@@ -31,5 +31,5 @@ func _unhandled_input(event) -> void:
 func _pressed() -> void:
 	var new_command = load(command.script_path).new(command, actor)
 	if command is TargetedCommandData:
-		Global.session.local_controller.targeting = new_command
+		Global.local_controller.targeting = new_command
 	new_command.start({})

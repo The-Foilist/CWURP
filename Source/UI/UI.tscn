@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://d4agehp3labnq"]
+[gd_scene load_steps=31 format=3 uid="uid://d4agehp3labnq"]
 
 [ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
 [ext_resource type="RichTextEffect" uid="uid://dwgdfx0e4jnq0" path="res://Source/Session/Messages/MessageSender.tres" id="2_ywsxj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://btppugycedn4k" path="res://Assets/data/commands/PlaceMarker.tres" id="5_ywsxj"]
 [ext_resource type="Resource" uid="uid://de63rcnhi843t" path="res://Assets/data/commands/DrawRuler.tres" id="6_eqdp0"]
 [ext_resource type="Resource" uid="uid://fxep0u4jcoab" path="res://Assets/data/commands/ToggleMapUI.tres" id="7_agc84"]
+[ext_resource type="PackedScene" uid="uid://pw2m0y6ndhbt" path="res://Source/UI/Planner.tscn" id="8_i125b"]
 
 [sub_resource type="GDScript" id="GDScript_ywsxj"]
 script/source = "extends HSplitContainer
@@ -199,8 +200,13 @@ func check_tree(item: TreeItem, object: Node) -> void:
 func update() -> void:
 	clear()
 	var root = create_item()
-	for group in Global.session.local_controller.player.unit_groups:
+	for group in Global.local_controller.player.unit_groups:
 		build_tree(group, root)
+	for unit in Global.local_controller.player.units:
+		if !unit.group:
+			var child = create_item(root)
+			child.set_text(0, unit.display_name)
+			child.set_metadata(0, unit)
 
 
 func _on_item_mouse_selected(mouse_position, _mouse_button_index) -> void:
@@ -461,11 +467,12 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
 [node name="Units" type="Tree" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 focus_mode = 0
 hide_root = true
@@ -503,25 +510,28 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Map" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
+[node name="Map" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
 layout_mode = 2
-theme_override_constants/h_separation = 4
-theme_override_constants/v_separation = 4
-columns = 4
 metadata/_tab_index = 2
 
-[node name="ToggleMapUIButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+[node name="GridContainer" type="GridContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map"]
+layout_mode = 2
+columns = 4
+
+[node name="ToggleMapUIButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/GridContainer" instance=ExtResource("4_agc84")]
 layout_mode = 2
 command = ExtResource("7_agc84")
 
-[node name="PlaceMarkerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+[node name="PlaceMarkerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/GridContainer" instance=ExtResource("4_agc84")]
 layout_mode = 2
 command = ExtResource("5_ywsxj")
 
-[node name="DrawRulerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("4_agc84")]
+[node name="DrawRulerButton" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map/GridContainer" instance=ExtResource("4_agc84")]
 layout_mode = 2
 command = ExtResource("6_eqdp0")
+
+[node name="Planner" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer/Map" instance=ExtResource("8_i125b")]
+layout_mode = 2
 
 [node name="Time" type="HBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2

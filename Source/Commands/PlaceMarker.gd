@@ -17,7 +17,7 @@ func validate_confirm(kwargs: Dictionary):
 
 func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
-	var player = Global.session.local_controller.player
+	var player = Global.local_controller.player
 	var new_marker = player.create_marker(target)
 	Global.session.message_handler.send(null, player, 'map', 'Placed %s at (%d,%d).' % [Global.session.message_handler.wrap_name(new_marker), target.x, target.y])
-	Global.session.local_controller.targeting = null
+	Global.local_controller.targeting = null

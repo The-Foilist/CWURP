@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_8g4jt"]
 
 [node name="Marker" type="Sprite2D"]
-z_index = 1000
 texture = ExtResource("1_pncfr")
 script = ExtResource("2_pncfr")
 metadata/_custom_type_script = "uid://bmjopfd5mngwo"

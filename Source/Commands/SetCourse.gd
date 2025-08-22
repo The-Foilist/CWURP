@@ -23,9 +23,9 @@ func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	var behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(actor, target, '', 1)
 	actor.switch_behavior(behavior)
-	Global.session.local_controller.targeting = null
+	Global.local_controller.targeting = null
 
 
 func process(_delta: float) -> void:
-	target = Global.bearing_to(actor.unit.global_position, Global.session.local_controller.cam.get_global_mouse_position())
+	target = Global.bearing_to(actor.unit.global_position, Global.local_controller.cam.get_global_mouse_position())
 	target_text = '%s: %s -> %03.1f °' % [actor.unit.display_name, target_text_base, target]

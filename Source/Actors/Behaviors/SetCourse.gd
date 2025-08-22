@@ -29,5 +29,5 @@ func process() -> void:
 
 
 func preprocess() -> void:
-	if actor.owning_player == Global.session.local_controller.player:
-		Global.session.message_handler.send(actor, Global.session.local_controller.player, 'ack', _to_string())
+	if actor.owning_player == Global.local_controller.player:
+		Global.session.message_handler.send(actor, Global.local_controller.player, 'ack', _to_string())

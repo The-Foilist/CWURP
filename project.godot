@@ -199,6 +199,7 @@ approach={
 2d_physics/layer_2="Surface"
 2d_physics/layer_3="Subsurface"
 2d_physics/layer_4="Air"
+2d_physics/layer_5="Vision"
 
 [physics]
 
@@ -210,4 +211,4 @@ approach={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 0.333333, 0.658824, 1)
+environment/defaults/default_clear_color=Color(0, 0.541176, 0.741176, 1)
