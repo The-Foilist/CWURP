@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_ytfln")
-target_text = "Click and drag to show distance and bearing"
+target_text = "Click and drag to show distance and bearing..."
 cursor = 3
 icon = ExtResource("1_ytfln")
 tooltip = "Draw Ruler"

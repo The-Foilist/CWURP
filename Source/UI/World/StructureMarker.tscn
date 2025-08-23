@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1kvrh06vii8e"]
+
+[ext_resource type="Texture2D" uid="uid://wf1sb8kkvogu" path="res://Assets/art/icon_square.png" id="1_wnstn"]
+[ext_resource type="Script" uid="uid://bmjopfd5mngwo" path="res://Source/UI/World/UnitMarker.gd" id="2_j11r8"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_p428o"]
+
+[node name="Marker" type="Sprite2D"]
+texture = ExtResource("1_wnstn")
+script = ExtResource("2_j11r8")
+metadata/_custom_type_script = "uid://bmjopfd5mngwo"
+
+[node name="SelectionArea" parent="." instance=ExtResource("3_p428o")]
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+polygon = PackedVector2Array(50, -50, 50, 50, -50, 50, -50, -50)
+
+[editable path="SelectionArea"]

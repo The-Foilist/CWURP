@@ -106,6 +106,8 @@ func _unhandled_input(event) -> void:
 
 
 func _on_messages_meta_clicked(meta):
+	if !meta:
+		return
 	var obj = instance_from_id(int(meta))
-	if obj is Unit:
+	if obj is Unit or obj is Group:
 		player.select(obj)

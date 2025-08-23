@@ -88,7 +88,7 @@ polygon = PackedVector2Array(10, -55, 10, -51, 12, -49, 16, -42, 16, -41, 12, -4
 
 [node name="Marker" parent="." instance=ExtResource("4_v2hyn")]
 visible = false
-scale_threshold = 1.0
+scale_threshold = 2.0
 
 [node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")

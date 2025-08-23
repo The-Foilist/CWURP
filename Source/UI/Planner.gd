@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 var max_seconds: int = 3600
-var selected_seconds: int
+var selected_seconds: float
 
 var marker_list: Array[UnitMarker] = []
 
@@ -16,7 +16,7 @@ func create_markers() -> void:
 
 
 func update_markers() -> void:
-	if selected_seconds == 0:
+	if selected_seconds <= 0:
 		for marker in marker_list:
 			marker.snap_on_unit = true
 	else:
@@ -28,8 +28,11 @@ func update_markers() -> void:
 
 
 func _process(delta) -> void:
+	if !Global.game.pause:
+		selected_seconds = max(0, selected_seconds - delta * Global.game.time_scale)
+		$TimeSlider.value -= delta * Global.game.time_scale / max_seconds
 	var selected_time = Time.get_datetime_dict_from_unix_time(Global.game.start_timestamp + Global.game.elapsed_time + selected_seconds)
-	var offset = " (+%0d:%02d:%02d)" % [floor(selected_seconds / 3600), floor(selected_seconds / 60 % 60), floor(selected_seconds % 60)]
+	var offset = " (+%0d:%02d:%02d)" % [int(selected_seconds / 3600), int(selected_seconds / 60) % 60, int(selected_seconds) % 60]
 	$TimeReadout.text = "%04d-%02d-%02d %02d:%02d:%02d" % [
 		selected_time.year,
 		selected_time.month,
@@ -48,4 +51,4 @@ func _on_max_time_value_changed(value) -> void:
 
 
 func _on_time_slider_value_changed(value) -> void:
-	selected_seconds = int(value * max_seconds)
+	selected_seconds = value * max_seconds

@@ -31,8 +31,8 @@ func _on_unit_died() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	rotation = unit.rotation
 	if snap_on_unit:
+		rotation = unit.rotation
 		global_position = unit.global_position
 	
 	visible = not(global_scale.x < scale_threshold) && Global.local_controller.show_map_ui
