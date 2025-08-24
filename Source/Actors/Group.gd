@@ -10,6 +10,15 @@ var center: Vector2
 var max_speed: float
 
 
+func get_all_groups(group: Group) -> Array:
+	var out_list: Array[Group] = []
+	for child in groups:
+		out_list.append(child)
+		if child.groups.size() > 0:
+			out_list.append_array(get_all_groups(child))
+	return out_list
+
+
 func get_all_units(group: Group) -> Array:
 	var units: Array[Unit] = []
 	
@@ -25,7 +34,7 @@ func get_all_units(group: Group) -> Array:
 func _physics_process(_delta):
 	var pos = Vector2(0,0)
 	var speed = INF
-	var unit_list =  get_all_units(self)
+	var unit_list = get_all_units(self)
 	
 	for unit in unit_list:
 		pos += unit.global_position

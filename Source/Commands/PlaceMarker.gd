@@ -21,7 +21,7 @@ func confirm(kwargs: Dictionary) -> void:
 	var new_marker = load("res://Source/UI/World/LocationMarker.tscn").instantiate()
 	new_marker.player = player
 	new_marker.global_position = kwargs['target']
-	new_marker.name = 'Marker ' + str(player.marker_number)
+	new_marker.display_name = 'Marker ' + str(player.marker_number)
 	player.marker_number += 1
 	player.markers.append(new_marker)
 	Global.game.map_ui_layer.add_child(new_marker)

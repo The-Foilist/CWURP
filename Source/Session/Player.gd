@@ -7,6 +7,9 @@ extends Node
 @export var units: Array[Unit]
 @export var unit_groups: Array[Group]
 @export var start_location: StartLocation
+@export var flag: Unit
+
+var names: Dictionary
 
 @onready var game = get_parent().get_parent()
 
@@ -26,3 +29,14 @@ func select(target: Node) -> void:
 	emit_signal('selection_updated', selection)
 	if !selection:
 		return
+
+
+func _on_game_start() -> void:
+	for player in get_parent().get_children():
+		names[player.display_name] = player
+	for unit in units:
+		names[unit.display_name] = unit
+	for group in unit_groups:
+		names[group.display_name] = group
+	for marker in markers:
+		names[marker.display_name] = marker

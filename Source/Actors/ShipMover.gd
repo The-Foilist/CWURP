@@ -21,6 +21,13 @@ func estimate_endurance(speed: float, fuel: float) -> float:
 	return fuel * powerplant.fuel_max / (powerplant.fuel_burn * powerplant.fuel_burn_mod * speed_to_setting(speed))
 
 
+# Given a speed and distance, estimate the fuel percentage required to reach
+func estimate_fuel(speed: float, distance: float) -> float:
+	var time = distance / speed
+	var fuel_burn_rate = powerplant.fuel_burn_max * powerplant.fuel_burn_mod * speed_to_setting(speed)
+	return fuel_burn_rate * time / powerplant.fuel_max
+
+
 func _ready() -> void:
 	super()
 	heading = fposmod(unit.rotation_degrees, 360)
@@ -29,20 +36,24 @@ func _ready() -> void:
 		powerplant.fuel = unit.starting_parameters['fuel'] * powerplant.fuel_max
 	if unit.starting_parameters.has('speed'):
 		speed = unit.starting_parameters['speed']
+		speed_target = unit.starting_parameters['speed']
 		powerplant.setting = clamp(speed_to_setting(speed), 0, 1)
 		powerplant.setting_target = powerplant.setting
 
 
 func move(delta: float) -> void:
-	if not aground && Global.game.get_height_at_point(unit.global_position) > unit.height - hull.draft:
+	if (not aground) && Global.game.get_height_at_point(unit.global_position) > unit.height - hull.draft:
 		aground = true
 		speed = 0
-		Global.session.message_handler.send(self, unit.owning_player, 'ack', "I have run aground!")
+		clear_orders()
+		Global.session.message_handler.send(self, unit.owning_player, 'warn', "I have run aground!")
 	
 	if aground:
 		fuel_endurance = powerplant.fuel / powerplant.fuel_burn
 		fuel_range = 0
 		return
+	
+	powerplant.set_target(speed_to_setting(speed_target))
 	
 	var speed_change = powerplant.power_output / (hull.mass + powerplant.fuel)
 	var drag = (rudder.drag * rudder.pos**2 + hull.drag)
@@ -60,4 +71,5 @@ func move(delta: float) -> void:
 	speed_max = sqrt(powerplant.setting_max * powerplant.power_max * powerplant.power_mod / (hull.drag * hull.drag_mod * (hull.mass + powerplant.fuel)))
 	
 	wake_anim.amount_ratio = Global.game.time_scale * speed / 10
+	wake_anim.lifetime = 120 / Global.game.time_scale
 	wake_anim.process_material.direction.x = rudder.pos

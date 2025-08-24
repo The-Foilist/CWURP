@@ -19,6 +19,9 @@ func _to_string() -> String:
 
 func process() -> void:
 	var heading_diff = fposmod(heading_target - actor.heading + 180, 360) - 180
+	if abs(heading_diff) < 0.01:
+		success()
+	
 	if direction == "left ":
 		heading_diff = fposmod(heading_target - actor.heading, 360) - 360
 	elif direction == "right ":
@@ -31,3 +34,11 @@ func process() -> void:
 func preprocess() -> void:
 	if actor.owning_player == Global.local_controller.player:
 		Global.session.message_handler.send(actor, Global.local_controller.player, 'ack', _to_string())
+	print(heading_target)
+
+
+func success() -> void:
+	actor.rudder.set_target(0)
+	var message = "Established on course %03d." % heading_target
+	Global.session.message_handler.send(actor, Global.local_controller.player, 'ack', message)
+	super()

@@ -3,10 +3,15 @@ extends RefCounted
 
 
 var actor: Actor
+var prev: Behavior
+var next: Behavior
+
+var time: float = 0
 
 
-signal completed()
-signal failed()
+signal completed
+signal failed
+signal removed
 
 
 func validate():
@@ -21,15 +26,18 @@ func process() -> void:
 	pass
 
 
-func switch_out() -> void:
-	pass
+func removed_from_queue() -> void:
+	if next:
+		next.prev = prev
+	if prev:
+		prev.next = next
 
 
 func success() -> void:
 	emit_signal("completed")
-	actor.switch_behavior(null)
+	actor.next_order()
 
 
 func fail() -> void:
-	emit_signal("completed")
-	actor.switch_behavior(null)
+	emit_signal("failed")
+	actor.next_order()

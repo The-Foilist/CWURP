@@ -20,7 +20,7 @@ texture = ExtResource("2_cxpjd")
 connected_object = NodePath("..")
 
 [node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
-polygon = PackedVector2Array(0, -2, 18, -30, 26, -49, 26, -59, 22, -68, 13, -77, 0, -80, -13, -77, -22, -68, -26, -58, -26, -48, -18, -30)
+polygon = PackedVector2Array(0, 1, 18, -29, 26, -48, 26, -59, 23, -68, 15, -76, 4, -80, -4, -80, -15, -76, -23, -68, -26, -58, -26, -47, -18, -29)
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 visible = false
@@ -56,6 +56,6 @@ layout_mode = 2
 
 [connection signal="input_event" from="SelectionArea" to="." method="_on_selection_area_input_event"]
 [connection signal="gui_input" from="PanelContainer" to="." method="drag_input"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/RemoveButton" to="." method="remove"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/RemoveButton" to="." method="_on_remove_button_pressed"]
 
 [editable path="SelectionArea"]

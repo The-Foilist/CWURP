@@ -2,7 +2,7 @@ extends Command
 
 
 func start(_kwargs: Dictionary):
-	actor.switch_behavior(null)
+	actor.clear_orders()
 	actor.rudder.set_target(0)
 	actor.powerplant.set_target(actor.speed_to_setting(actor.speed))
 	var message = "Maintaining present course and speed."

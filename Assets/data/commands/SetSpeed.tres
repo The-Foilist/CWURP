@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CommandData" load_steps=3 format=3 uid="uid://c07kbop2st41s"]
+
+[ext_resource type="Script" uid="uid://c87d5txnc7ckc" path="res://Source/Data/CommandData.gd" id="1_87twb"]
+[ext_resource type="Texture2D" uid="uid://bepeyejg8a2q8" path="res://Assets/art/icons/dial.png" id="1_o202g"]
+
+[resource]
+script = ExtResource("1_87twb")
+icon = ExtResource("1_o202g")
+tooltip = "Set speed"
+input_action = &""
+script_path = &"res://Source/Commands/SetSpeed.tres"
+metadata/_custom_type_script = "uid://c87d5txnc7ckc"

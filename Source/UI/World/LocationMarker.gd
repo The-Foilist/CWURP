@@ -7,7 +7,7 @@ var location_label: Label
 
 var dragging: bool
 
-signal removed(marker: LocationMarker)
+signal removed
 
 
 func _ready() -> void:
@@ -25,11 +25,8 @@ func _process(delta: float) -> void:
 
 
 func remove():
-	emit_signal("removed", self)
+	emit_signal("removed")
 	player.markers.erase(self)
-	Global.session.message_handler.send(null, player, 'map', 'Removed %s.' % Global.session.message_handler.wrap_name(self))
-	if player.selection == self:
-		player.selection = null
 	get_parent().remove_child(self)
 	queue_free()
 
@@ -43,6 +40,9 @@ func drag_input(event):
 		location_label.text = "(%.d, %.d)" % [global_position.x, global_position.y]
 
 
-func _on_selection_area_input_event(viewport, event, shape_idx):
-	if event.is_action_pressed("select"):
-		$PanelContainer.visible = !$PanelContainer.visible
+func toggle_panel_visibility() -> void:
+	$PanelContainer.visible = !$PanelContainer.visible
+
+
+func _on_remove_button_pressed():
+	remove()

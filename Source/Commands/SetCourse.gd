@@ -22,7 +22,7 @@ func validate_confirm(kwargs: Dictionary):
 func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	var behavior = load("res://Source/Actors/Behaviors/SetCourse.gd").new(actor, target, '', 1)
-	actor.switch_behavior(behavior)
+	actor.replace_orders(behavior)
 	Global.local_controller.targeting = null
 
 

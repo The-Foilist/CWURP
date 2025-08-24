@@ -16,6 +16,7 @@ var setting: float = 0
 var setting_target: float = 1
 var power_output: float = 0
 var fuel_burn: float = 0
+var out_of_fuel: bool = false
 
 
 func set_target(val: float) -> void:
@@ -24,9 +25,13 @@ func set_target(val: float) -> void:
 
 func update(delta: float) -> void:
 	super(delta)
+	if out_of_fuel:
+		return
 	if fuel <= 0:
 		setting = 0
 		power_output = 0
+		out_of_fuel = true
+		Global.session.message_handler.send(self, unit.owning_player, 'warn', "I am out of fuel!")
 		return
 	setting += clamp(setting_target - setting, -ramp_rate * delta, ramp_rate * delta)
 	setting = clamp(setting, 0, setting_max) 

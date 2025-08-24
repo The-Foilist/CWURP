@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=4 uid="uid://dt8w8atfoguob"]
 
 [ext_resource type="Script" uid="uid://c1hicrs7pin5x" path="res://Source/Session/Game.gd" id="1_gg4fa"]
-[ext_resource type="Script" uid="uid://nipeuxlrpgq8" path="res://Source/Session/Player.gd" id="2_wsuic"]
+[ext_resource type="Script" uid="uid://nipeuxlrpgq8" path="res://Source/Session/Player.gd" id="2_htlhn"]
 [ext_resource type="Texture2D" uid="uid://num482qwc6jv" path="res://Assets/art/maps/Midway 10.png" id="3_hgyg1"]
 [ext_resource type="Script" uid="uid://m3bosbw8u4ij" path="res://Source/Actors/Group.gd" id="3_p38gh"]
 [ext_resource type="Script" uid="uid://c5u6aql8khc6o" path="res://Source/Session/StartLocation.gd" id="4_7d5tn"]
@@ -16,32 +16,33 @@
 script = ExtResource("1_gg4fa")
 start_time = "1942-06-04T00:00:00"
 units = [NodePath("World/Midway Airbase"), NodePath("World/Akagi"), NodePath("World/Kaga"), NodePath("World/Hiryu"), NodePath("World/Soryu")]
+metadata/_custom_type_script = "uid://c1hicrs7pin5x"
 
 [node name="Players" type="Node" parent="."]
 
 [node name="Neutral" type="Node" parent="Players"]
-script = ExtResource("2_wsuic")
+script = ExtResource("2_htlhn")
 display_name = "Neutral"
 color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://nipeuxlrpgq8"
 
-[node name="USA" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location")]
-script = ExtResource("2_wsuic")
-display_name = "Midway Garrison"
+[node name="USA" type="Node" parent="Players" node_paths=PackedStringArray("units", "start_location", "flag")]
+script = ExtResource("2_htlhn")
+display_name = "USA"
 color = Color(0, 0, 1, 1)
-controllable = true
 units = [NodePath("../../World/Midway Airbase")]
 start_location = NodePath("../../World/Start Location 1")
+flag = NodePath("../../World/Midway Airbase")
 metadata/_custom_type_script = "uid://nipeuxlrpgq8"
 
-[node name="Japan" type="Node" parent="Players" node_paths=PackedStringArray("units", "unit_groups", "start_location")]
-script = ExtResource("2_wsuic")
-display_name = "Kido Butai"
+[node name="Japan" type="Node" parent="Players" node_paths=PackedStringArray("units", "unit_groups", "start_location", "flag")]
+script = ExtResource("2_htlhn")
+display_name = "Japan"
 color = Color(1, 0, 0, 1)
-controllable = true
 units = [NodePath("../../World/Akagi"), NodePath("../../World/Kaga"), NodePath("../../World/Hiryu"), NodePath("../../World/Soryu")]
 unit_groups = [NodePath("Kido Butai")]
 start_location = NodePath("../../World/Start Location 2")
+flag = NodePath("../../World/Akagi")
 metadata/_custom_type_script = "uid://nipeuxlrpgq8"
 
 [node name="Kido Butai" type="Node" parent="Players/Japan" node_paths=PackedStringArray("groups", "owning_player")]

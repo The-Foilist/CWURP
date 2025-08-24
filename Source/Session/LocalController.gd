@@ -39,13 +39,14 @@ func setup_player(idx: int) -> void:
 	
 	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units._on_object_selected)
 	player.selection_updated.connect($UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_object_selected)
+	player.selection_updated.connect($UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/MessageInput._on_object_selected)
 	
 	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/Messages.update()
 	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Units.update()
-	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer/MessageTypeFilter.setup()
-	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer/PlayerFilter.setup()
+	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer2/MessageTypeFilter.setup()
+	$UI/HSplitContainer/VSplitContainer/BottomBar/VBoxContainer/HBoxContainer2/PlayerFilter.setup()
 	$UI/HSplitContainer/SideBar/VBoxContainer/TabContainer/Selection._on_object_selected(player.selection)
-
+	
 
 func target_command(command: TargetedCommand):
 	if targeting:
@@ -95,6 +96,8 @@ func _input(event) -> void:
 	elif event.is_action_pressed("select"):
 		if hovered_object is Unit:
 			player.select(hovered_object)
+		elif hovered_object is LocationMarker:
+			hovered_object.toggle_panel_visibility()
 	elif event.is_action_pressed('deselect'):
 		player.select(null)
 

@@ -26,9 +26,12 @@ var elapsed_time: float = 0
 
 signal game_start
 signal paused(on: bool)
+signal time_scale_changed(amt)
 
 
 func _on_sesion_start() -> void:
+	for player in players.get_children():
+		game_start.connect(player._on_game_start)
 	emit_signal("game_start")
 
 
@@ -41,6 +44,7 @@ func change_time_scale(amt: float) -> void:
 	var new_scale = time_scale * amt
 	if new_scale <= TIME_SCALE_MAX && new_scale >= TIME_SCALE_MIN:
 		time_scale = new_scale
+	emit_signal("time_scale_changed", new_scale)
 
 
 func get_height_at_point(pos: Vector2):
