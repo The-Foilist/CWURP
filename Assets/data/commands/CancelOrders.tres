@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CommandData" load_steps=3 format=3 uid="uid://b7ktvcqoo0nk1"]
+
+[ext_resource type="Texture2D" uid="uid://c57wdiv6ct4oi" path="res://Assets/art/icons/no.png" id="1_plink"]
+[ext_resource type="Script" uid="uid://c87d5txnc7ckc" path="res://Source/Data/CommandData.gd" id="2_n6uld"]
+
+[resource]
+script = ExtResource("2_n6uld")
+icon = ExtResource("1_plink")
+tooltip = "Cancel Orders"
+input_action = &"cancel_orders"
+script_path = &"res://Source/Commands/CancelOrders.gd"
+metadata/_custom_type_script = "uid://c87d5txnc7ckc"

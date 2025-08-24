@@ -26,14 +26,3 @@ func select(target: Node) -> void:
 	emit_signal('selection_updated', selection)
 	if !selection:
 		return
-
-
-func create_marker(pos: Vector2) -> LocationMarker:
-	var new_marker = load("res://Source/UI/World/LocationMarker.tscn").instantiate()
-	new_marker.player = self
-	new_marker.global_position = pos
-	new_marker.name = 'Marker ' + str(marker_number)
-	marker_number += 1
-	markers.append(new_marker)
-	game.map_ui_layer.add_child(new_marker)
-	return new_marker

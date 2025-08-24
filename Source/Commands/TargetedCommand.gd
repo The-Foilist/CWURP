@@ -23,6 +23,11 @@ func confirm(kwargs: Dictionary):
 		return
 
 
+func confirm_queue(kwargs: Dictionary):
+	if validate_confirm(kwargs):
+		return
+
+
 func validate_release(_kwargs: Dictionary):
 	return null
 

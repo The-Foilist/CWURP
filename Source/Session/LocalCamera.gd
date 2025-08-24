@@ -13,7 +13,7 @@ func _ready() -> void:
 	ignore_rotation = false
 	
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if dragging:
 		if event is InputEventMouseMotion:
 			translate((-event.relative.x / zoom.x) * transform.x + (-event.relative.y / zoom.y) * transform.y)

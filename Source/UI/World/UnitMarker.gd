@@ -15,7 +15,7 @@ func _ready() -> void:
 			return
 		unit = get_parent()
 	$SelectionArea.connected_object = unit
-	self_modulate = unit.owning_player.color
+	$Sprite2D.self_modulate = unit.owning_player.color
 	Global.session.connect("session_start", _on_session_start)
 	unit.died.connect(_on_unit_died)
 
@@ -35,5 +35,5 @@ func _physics_process(delta: float) -> void:
 		rotation = unit.rotation
 		global_position = unit.global_position
 	
-	visible = not(global_scale.x < scale_threshold) && Global.local_controller.show_map_ui
+	visible = not(global_scale.x < scale_threshold)
 	$SelectionArea.input_pickable = visible

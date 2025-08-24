@@ -10,6 +10,8 @@ var inspector: String
 
 
 func switch_behavior(new_behavior: Behavior = null) -> void:
+	if behavior:
+		behavior.switch_out()
 	if !new_behavior:
 		behavior = null
 		return

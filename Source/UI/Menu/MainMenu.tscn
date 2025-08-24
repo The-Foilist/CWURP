@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dmw8yfd1qhhhp"]
 
-[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="1_oseua"]
+[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/Menu/OptionsMenu.tscn" id="1_rs7nd"]
 
 [sub_resource type="GDScript" id="GDScript_kjwba"]
 script/source = "extends Button
@@ -112,7 +112,7 @@ flat = true
 alignment = 0
 script = SubResource("GDScript_kjwba")
 
-[node name="OptionsMenu" parent="." instance=ExtResource("1_oseua")]
+[node name="OptionsMenu" parent="." instance=ExtResource("1_rs7nd")]
 visible = false
 layout_mode = 0
 anchors_preset = 0

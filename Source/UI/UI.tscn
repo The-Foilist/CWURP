@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://d4agehp3labnq"]
 
-[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/OptionsMenu.tscn" id="2_ff03q"]
+[ext_resource type="PackedScene" uid="uid://bfuixbdwhkawx" path="res://Source/UI/Menu/OptionsMenu.tscn" id="2_ff03q"]
 [ext_resource type="RichTextEffect" uid="uid://dwgdfx0e4jnq0" path="res://Source/Session/Messages/MessageSender.tres" id="2_ywsxj"]
 [ext_resource type="RichTextEffect" uid="uid://8mwr7veqf0q2" path="res://Source/Session/Messages/MessageTimestamp.tres" id="3_ywsxj"]
 [ext_resource type="PackedScene" uid="uid://7c580cxvugqx" path="res://Source/UI/HotkeyButton.tscn" id="4_agc84"]
@@ -35,7 +35,7 @@ script/source = "extends Label
 func _process(_delta) -> void:
 	if Global.session.local_controller.targeting:
 		text = str(Global.session.local_controller.targeting.target_text)
-	elif Global.session.local_controller.hovered_object:
+	elif Global.session.local_controller.hovered_object is Unit:
 		text = Global.session.local_controller.hovered_object.display_name
 	else:
 		text = ''
@@ -322,7 +322,7 @@ script/source = "extends Button
 
 
 func _pressed() -> void:
-	get_tree().change_scene_to_file(\"res://Source/UI/MainMenu.tscn\")
+	get_tree().change_scene_to_file(\"res://Source/UI/Menu/MainMenu.tscn\")
 "
 
 [node name="UI" type="CanvasLayer"]
@@ -366,6 +366,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="HSplitContainer/VSplitContainer/Overlay/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
+physics_object_picking = true
 size = Vector2i(1560, 780)
 render_target_update_mode = 4
 
@@ -467,12 +468,11 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="HSplitContainer/SideBar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 2
+current_tab = 0
 tab_focus_mode = 0
 script = SubResource("GDScript_yq5ji")
 
 [node name="Units" type="Tree" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 focus_mode = 0
 hide_root = true
@@ -511,6 +511,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Map" type="VBoxContainer" parent="HSplitContainer/SideBar/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

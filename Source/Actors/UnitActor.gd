@@ -5,5 +5,5 @@ extends Actor
 @export var unit: Unit
 
 
-func _ready():
+func _ready() -> void:
 	owning_player = unit.owning_player

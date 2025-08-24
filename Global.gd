@@ -48,14 +48,3 @@ func seconds_to_time_string(seconds: float) -> String:
 	var m = int(floor(seconds/60)) % 60
 	var h = int(floor(seconds/3600))
 	return "%d:%02d:%02d" % [h,m,s]
-
-
-func get_all_children(parent_node: Node) -> Array[Node]:
-	var nodes: Array = []
-	for n in parent_node.get_children():
-		if n.get_child_count() > 0:
-			nodes.append(n)
-			nodes.append_array(get_all_children(n))
-		else:
-			nodes.append(n)
-	return nodes

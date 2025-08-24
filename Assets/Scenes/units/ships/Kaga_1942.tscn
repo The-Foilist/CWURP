@@ -46,9 +46,9 @@ metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
 [node name="Wake" type="GPUParticles2D" parent="."]
 z_index = -1000
 position = Vector2(0, 116)
-amount = 4000
+amount = 3000
 texture = ExtResource("3_67cuf")
-lifetime = 200.0
+lifetime = 120.0
 visibility_rect = Rect2(-1e+07, -1e+07, 2e+07, 2e+07)
 process_material = SubResource("ParticleProcessMaterial_tm0or")
 
@@ -87,11 +87,12 @@ metadata/_custom_type_script = "uid://biuqiixq718m3"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FlightDeck"]
 polygon = PackedVector2Array(-7, -125, 7, -125, 11, -110, 13, -88, 13, -80, 15, -68, 17, -65, 18, -56, 18, -46, 14, -43, 15, -29, 15, -22, 15, 116, 10, 123, -10, 123, -15, 116, -15, -30, -14, -36, -14, -70, -13, -100, -11, -114)
 
-[node name="Marker" parent="." instance=ExtResource("4_fnrdf")]
+[node name="Marker" parent="." node_paths=PackedStringArray("unit") instance=ExtResource("4_fnrdf")]
 visible = false
+unit = NodePath("..")
 scale_threshold = 2.5
 
-[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
+[node name="SelectionArea" parent="Marker" index="1" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")
 
 [node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("hull", "powerplant", "rudder", "wake_anim", "unit")]

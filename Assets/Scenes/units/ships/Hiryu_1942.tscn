@@ -46,9 +46,9 @@ metadata/_custom_type_script = "uid://ta7kl5kr6i6j"
 [node name="Wake" type="GPUParticles2D" parent="."]
 z_index = -1000
 position = Vector2(0, 101)
-amount = 4000
+amount = 3000
 texture = ExtResource("3_7y3fe")
-lifetime = 200.0
+lifetime = 120.0
 visibility_rect = Rect2(-1e+07, -1e+07, 2e+07, 2e+07)
 process_material = SubResource("ParticleProcessMaterial_7y3fe")
 
@@ -91,7 +91,7 @@ visible = false
 unit = NodePath("..")
 scale_threshold = 2.0
 
-[node name="SelectionArea" parent="Marker" index="0" node_paths=PackedStringArray("connected_object")]
+[node name="SelectionArea" parent="Marker" index="1" node_paths=PackedStringArray("connected_object")]
 connected_object = NodePath("../..")
 
 [node name="ShipMover" type="Node" parent="." node_paths=PackedStringArray("hull", "powerplant", "rudder", "wake_anim", "unit")]

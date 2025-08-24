@@ -18,6 +18,12 @@ func validate_confirm(kwargs: Dictionary):
 func confirm(kwargs: Dictionary) -> void:
 	super(kwargs)
 	var player = Global.local_controller.player
-	var new_marker = player.create_marker(target)
-	Global.session.message_handler.send(null, player, 'map', 'Placed %s at (%d,%d).' % [Global.session.message_handler.wrap_name(new_marker), target.x, target.y])
+	var new_marker = load("res://Source/UI/World/LocationMarker.tscn").instantiate()
+	new_marker.player = player
+	new_marker.global_position = kwargs['target']
+	new_marker.name = 'Marker ' + str(player.marker_number)
+	player.marker_number += 1
+	player.markers.append(new_marker)
+	Global.game.map_ui_layer.add_child(new_marker)
+	Global.session.message_handler.send(null, player, 'map', 'Placed %s at (%d,%d).' % [Global.session.message_handler.wrap_name(new_marker), kwargs['target'].x, kwargs['target'].y])
 	Global.local_controller.targeting = null

@@ -2,6 +2,7 @@ class_name PoweredMover
 extends Mover
 
 
+var fuel_percent: float
 var fuel_range: float
 var fuel_endurance: float
 

@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://bmjopfd5mngwo" path="res://Source/UI/World/UnitMarker.gd" id="2_pncfr"]
 [ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_8g4jt"]
 
-[node name="Marker" type="Sprite2D"]
-texture = ExtResource("1_pncfr")
+[node name="Marker" type="Node2D"]
 script = ExtResource("2_pncfr")
 metadata/_custom_type_script = "uid://bmjopfd5mngwo"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_pncfr")
 
 [node name="SelectionArea" parent="." instance=ExtResource("3_8g4jt")]
 

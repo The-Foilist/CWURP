@@ -12,7 +12,6 @@ func create_markers() -> void:
 			if marker.unit.mover:
 				if marker.unit.mover is PoweredMover:
 					marker_list.append(marker)
-	print(marker_list.size())
 
 
 func update_markers() -> void:

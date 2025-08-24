@@ -21,6 +21,10 @@ func process() -> void:
 	pass
 
 
+func switch_out() -> void:
+	pass
+
+
 func success() -> void:
 	emit_signal("completed")
 	actor.switch_behavior(null)
@@ -28,3 +32,4 @@ func success() -> void:
 
 func fail() -> void:
 	emit_signal("completed")
+	actor.switch_behavior(null)

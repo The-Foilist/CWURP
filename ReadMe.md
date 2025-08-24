@@ -2,29 +2,13 @@ This is Carter's Weird Unnamed RTS Project.
 
 Requires Godot compiled with double precision to work properly!
 
-
-Unit: base for physical in-game objects
-	modular components for things like ship hull, rudder, powerplant, weapons
-	data is encoded in UnitData resources and loaded on ready()
-Actor: a Node that can do things to Units and unit components
-	Mover: attached to Units, handles the Unit's movement physics and move commands
-	Group: attached to Players, handles order-of-battle, formations, etc.
-Behavior: controls the stuff that Actors do
-	at most one Behavior per Actor at a time
-Command: an action that the user wants to happen
-	includes adding, removing, switching, or modifying an Actor's Behavior
-
-
 TODO:
-
-	Save/Load
+	Waypoints
+		Calculate fuel consumption and flag if fuel insufficient
 	
-	Movement planner
-		Destination marker
-			Drag and drop on map
-			Choose speed or time of arrial
-			Calculate fuel consumption and flag if fuel insufficient
-		Link destinations together
+	Planner
+		Make marker follow waypoint paths
+		Make marker stop where fuel is estimated to run out
 	
 	Group Formations
 		Column, Line, Circle, Freeform
@@ -47,4 +31,4 @@ TODO:
 	
 	LoL-style commands option (just press key while hovering over target)
 	
-	
+	Save/Load

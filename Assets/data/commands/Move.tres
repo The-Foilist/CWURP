@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TargetedCommandData" load_steps=3 format=3 uid="uid://r6k5s1ubuvrf"]
+
+[ext_resource type="Texture2D" uid="uid://cqaxa1wn2teca" path="res://Assets/art/icons/approach.png" id="1_ardps"]
+[ext_resource type="Script" uid="uid://c8d17bssig4o1" path="res://Source/Data/TargetedCommandData.gd" id="2_keq74"]
+
+[resource]
+script = ExtResource("2_keq74")
+target_text = "Move to waypoint"
+cursor = 3
+icon = ExtResource("1_ardps")
+tooltip = "Move"
+input_action = &"move"
+script_path = &"res://Source/Commands/Move.gd"
+metadata/_custom_type_script = "uid://c8d17bssig4o1"

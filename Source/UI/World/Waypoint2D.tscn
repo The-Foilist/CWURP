@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccancfn6qprj6"]
+
+[ext_resource type="Texture2D" uid="uid://cawp78nuacm7e" path="res://Assets/art/icons/marker.png" id="1_0bik1"]
+[ext_resource type="Script" uid="uid://bky4h3o866i3d" path="res://Source/UI/World/Waypoint2D.gd" id="2_xyrsg"]
+[ext_resource type="PackedScene" uid="uid://bqxwrkdlbhqdv" path="res://Source/UI/World/SelectionArea.tscn" id="3_rpc05"]
+[ext_resource type="Texture2D" uid="uid://dh242kv5p30fj" path="res://Assets/art/icons/x_sm.png" id="4_xyrsg"]
+
+[node name="Waypoint" type="Node2D"]
+script = ExtResource("2_xyrsg")
+display_name = "Waypoint"
+metadata/_custom_type_script = "uid://bky4h3o866i3d"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2000
+z_as_relative = false
+texture = ExtResource("1_0bik1")
+offset = Vector2(0, -40)
+
+[node name="SelectionArea" parent="." node_paths=PackedStringArray("connected_object") instance=ExtResource("3_rpc05")]
+connected_object = NodePath("..")
+
+[node name="CollisionPolygon2D" parent="SelectionArea" index="0"]
+polygon = PackedVector2Array(0, -1, 18, -30, 26, -49, 26, -59, 22, -68, 13, -77, 0, -80, -13, -77, -22, -68, -26, -58, -26, -48, -18, -30)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+offset_right = 142.0
+offset_bottom = 82.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Waypoint"
+horizontal_alignment = 1
+
+[node name="RemoveButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+focus_mode = 0
+button_mask = 3
+icon = ExtResource("4_xyrsg")
+
+[node name="LocationLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="SpeedLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Speed:"
+horizontal_alignment = 2
+
+[node name="SpeedInput" type="SpinBox" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+tooltip_text = "Change speed of travel to this waypoint"
+step = 0.01
+update_on_text_changed = true
+select_all_on_focus = true
+
+[node name="DurationLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Time: "
+horizontal_alignment = 2
+
+[node name="DurationReadout" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="ArrivalTimeLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "ETA: "
+horizontal_alignment = 2
+
+[node name="ArrivalTimeReadout" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[connection signal="input_event" from="SelectionArea" to="." method="_on_selection_area_input_event"]
+[connection signal="gui_input" from="PanelContainer" to="." method="drag_input"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/RemoveButton" to="." method="remove"]
+
+[editable path="SelectionArea"]
