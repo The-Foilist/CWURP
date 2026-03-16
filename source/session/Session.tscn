@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://byxuphp0jl6lw"]
+
+[ext_resource type="Script" uid="uid://c437vps7u0ua1" path="res://source/session/Session.gd" id="1_dnh0r"]
+[ext_resource type="PackedScene" uid="uid://bchcupgup8lel" path="res://source/ui/game/UI.tscn" id="2_54xw2"]
+[ext_resource type="Script" uid="uid://8uwqme7pkmsx" path="res://source/session/LocalController.gd" id="3_54xw2"]
+
+[node name="Session" type="Node" unique_id=1371922866]
+script = ExtResource("1_dnh0r")
+
+[node name="LocalController" type="Node" parent="." unique_id=691160226]
+script = ExtResource("3_54xw2")
+
+[node name="UI" parent="LocalController" unique_id=2106468855 instance=ExtResource("2_54xw2")]
+
+[node name="CursorTarget" parent="LocalController/UI/HSplitContainer/VSplitContainer/Overlay" parent_id_path=PackedInt32Array(2106468855, 1187751193) index="1" unique_id=1470663433 node_paths=PackedStringArray("local_controller")]
+local_controller = NodePath("../../../../..")
+
+[editable path="LocalController/UI"]

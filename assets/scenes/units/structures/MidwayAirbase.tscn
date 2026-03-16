@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b4gbc3qhygee"]
+
+[ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_whll3"]
+[ext_resource type="Texture2D" uid="uid://b6afdv8wmsnhh" path="res://assets/art/structures/Midway Airbase.png" id="2_34slg"]
+[ext_resource type="Resource" uid="uid://c1duuff8xsufq" path="res://assets/data/units/structures/MidwayAirbase.tres" id="2_j3265"]
+[ext_resource type="Script" uid="uid://bbgst0tsgctab" path="res://source/objects/Runway.gd" id="3_cie8e"]
+[ext_resource type="PackedScene" uid="uid://bh065gowy55qd" path="res://source/ui/game/markers/MarkerStructure.tscn" id="5_7xtov"]
+
+[node name="Unit" type="AnimatableBody2D" unique_id=344491561]
+script = ExtResource("1_whll3")
+statblock = ExtResource("2_j3265")
+metadata/_custom_type_script = "uid://bndthe27a56xh"
+
+[node name="Runway1" type="StaticBody2D" parent="." unique_id=961199835 node_paths=PackedStringArray("unit")]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("3_cie8e")
+start_heading = 71.5
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://bbgst0tsgctab"
+
+[node name="Shape" type="CollisionPolygon2D" parent="Runway1" unique_id=9336512]
+polygon = PackedVector2Array(651, -137, 696, -4, -844, 507, -889, 380)
+
+[node name="Runway2" type="StaticBody2D" parent="." unique_id=405170214 node_paths=PackedStringArray("unit")]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("3_cie8e")
+start_heading = 43.5
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://bbgst0tsgctab"
+
+[node name="Shape" type="CollisionPolygon2D" parent="Runway2" unique_id=1009383737]
+polygon = PackedVector2Array(429, -556, 533, -465, -435, 553, -533, 455)
+
+[node name="Runway3" type="StaticBody2D" parent="." unique_id=20198234 node_paths=PackedStringArray("unit")]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("3_cie8e")
+start_heading = 135.5
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://bbgst0tsgctab"
+
+[node name="Shape" type="CollisionPolygon2D" parent="Runway3" unique_id=1095419138]
+polygon = PackedVector2Array(92, -380, 191, -478, 883, 235, 784, 330)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1460954005]
+scale = Vector2(10, 10)
+texture = ExtResource("2_34slg")
+
+[node name="Marker" parent="." unique_id=1183166109 node_paths=PackedStringArray("unit") instance=ExtResource("5_7xtov")]
+unit = NodePath("..")
+scale_threshold = 20.0

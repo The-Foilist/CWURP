@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bh065gowy55qd"]
+
+[ext_resource type="Script" uid="uid://dnbvwmo8t6wc0" path="res://source/ui/game/markers/Marker.gd" id="1_kccvo"]
+[ext_resource type="Texture2D" uid="uid://dw6pcud7yfrc8" path="res://assets/art/icons/icon_square.png" id="2_kccvo"]
+
+[node name="Marker" type="Area2D" unique_id=1183166109]
+visible = false
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("1_kccvo")
+metadata/_custom_type_script = "uid://dnbvwmo8t6wc0"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1155048277]
+polygon = PackedVector2Array(50, -50, 50, 50, -50, 50, -50, -50)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1158800793]
+texture = ExtResource("2_kccvo")

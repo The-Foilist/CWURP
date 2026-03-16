@@ -1,0 +1,346 @@
+[gd_scene format=3 uid="uid://i1wfalshj0tt"]
+
+[sub_resource type="GDScript" id="GDScript_i26rj"]
+script/source = "extends VBoxContainer
+
+
+var config = ConfigFile.new()
+
+
+@onready var distance_select = $TabContainer/Measures/DistanceSelect
+@onready var range_select = $TabContainer/Measures/RangeSelect
+@onready var altitude_select = $TabContainer/Measures/AltitudeSelect
+@onready var ship_speed_select = $TabContainer/Measures/ShipSpeedSelect
+@onready var aircraft_speed_select = $TabContainer/Measures/AircraftSpeedSelect
+@onready var vertical_speed_select = $TabContainer/Measures/VerticalSpeedSelect
+@onready var munition_speed_select = $TabContainer/Measures/MunitionSpeedSelect
+
+
+func get_selected_text(option: OptionButton) -> String:
+	return option.get_item_text(option.selected).split('(')[1].trim_suffix(')')
+
+
+func select_from_text(option: OptionButton, text: String) -> bool:
+	for i in range(option.item_count):
+		if '(' + text + ')' in option.get_item_text(i):
+			option.select(i)
+			return true
+	return false
+
+
+func _ready() -> void:
+	var err = config.load(\"user://settings.ini\")
+	if err != OK:
+		return
+	$TabContainer/Interface/CameraPanSpeed.value = PlayerSettings.camera_pan_speed
+	$TabContainer/Interface/CameraRotSpeed.value = PlayerSettings.camera_rotation_speed
+	$TabContainer/Interface/TextScale.value = PlayerSettings.text_scale
+	$TabContainer/Interface/MarkerScale.value = PlayerSettings.marker_scale
+	$TabContainer/Interface/ResizeableUI.button_pressed = PlayerSettings.resizeable_ui
+	select_from_text(distance_select, PlayerSettings.distance_units)
+	select_from_text(range_select, PlayerSettings.range_units)
+	select_from_text(altitude_select, PlayerSettings.altitude_units)
+	select_from_text(ship_speed_select, PlayerSettings.ship_speed_units)
+	select_from_text(aircraft_speed_select, PlayerSettings.aircraft_speed_units)
+	select_from_text(vertical_speed_select, PlayerSettings.vertical_speed_units)
+	select_from_text(munition_speed_select, PlayerSettings.munition_speed_units)
+
+
+func _on_save_pressed() -> void:
+	PlayerSettings.particle_effects = $TabContainer/Video/ParticleEffects.button_pressed
+	PlayerSettings.camera_pan_speed = $TabContainer/Interface/CameraPanSpeed.value
+	PlayerSettings.camera_rotation_speed = $TabContainer/Interface/CameraRotSpeed.value
+	PlayerSettings.text_scale = $TabContainer/Interface/TextScale.value
+	PlayerSettings.marker_scale = $TabContainer/Interface/MarkerScale.value
+	PlayerSettings.resizeable_ui = $TabContainer/Interface/ResizeableUI.button_pressed
+	PlayerSettings.distance_units = get_selected_text(distance_select)
+	PlayerSettings.range_units = get_selected_text(range_select)
+	PlayerSettings.altitude_units = get_selected_text(altitude_select)
+	PlayerSettings.ship_speed_units = get_selected_text(ship_speed_select)
+	PlayerSettings.aircraft_speed_units = get_selected_text(aircraft_speed_select)
+	PlayerSettings.vertical_speed_units = get_selected_text(vertical_speed_select)
+	PlayerSettings.munition_speed_units = get_selected_text(munition_speed_select)
+	PlayerSettings.save()
+"
+
+[node name="OptionsMenu" type="VBoxContainer" unique_id=1349797176]
+custom_minimum_size = Vector2(400, 600)
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 400.0
+offset_bottom = -480.0
+grow_vertical = 2
+script = SubResource("GDScript_i26rj")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1475429681]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tab_focus_mode = 0
+
+[node name="Video" type="GridContainer" parent="TabContainer" unique_id=577639214]
+layout_mode = 2
+columns = 2
+metadata/_tab_index = 0
+
+[node name="ParticlesLabel" type="Label" parent="TabContainer/Video" unique_id=843522656]
+layout_mode = 2
+text = "Particle Effects"
+horizontal_alignment = 2
+
+[node name="ParticleEffects" type="CheckButton" parent="TabContainer/Video" unique_id=1018327198]
+layout_mode = 2
+button_pressed = true
+
+[node name="Interface" type="GridContainer" parent="TabContainer" unique_id=1780849365]
+visible = false
+layout_mode = 2
+columns = 2
+metadata/_tab_index = 1
+
+[node name="CameraPanSpeedLabel" type="Label" parent="TabContainer/Interface" unique_id=513019766]
+layout_mode = 2
+text = "Camera Pan Speed"
+horizontal_alignment = 2
+
+[node name="CameraPanSpeed" type="SpinBox" parent="TabContainer/Interface" unique_id=1368359254]
+layout_mode = 2
+tooltip_text = "Value is pixels per second. Pan speed is based on zoom level."
+min_value = 100.0
+max_value = 2500.0
+value = 500.0
+
+[node name="CameraRotSpeedLabel" type="Label" parent="TabContainer/Interface" unique_id=475779582]
+layout_mode = 2
+text = "Camera Rotation Speed"
+horizontal_alignment = 2
+
+[node name="CameraRotSpeed" type="SpinBox" parent="TabContainer/Interface" unique_id=834058202]
+layout_mode = 2
+min_value = 0.2
+max_value = 5.0
+step = 0.1
+value = 1.0
+
+[node name="TextScaleLabel" type="Label" parent="TabContainer/Interface" unique_id=1215896873]
+layout_mode = 2
+text = "Text Scale"
+horizontal_alignment = 2
+
+[node name="TextScale" type="SpinBox" parent="TabContainer/Interface" unique_id=1094007046]
+layout_mode = 2
+tooltip_text = "Changes the size of all UI text"
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="MarkerScaleLabel" type="Label" parent="TabContainer/Interface" unique_id=108121406]
+layout_mode = 2
+text = "Marker Scale"
+horizontal_alignment = 2
+
+[node name="MarkerScale" type="SpinBox" parent="TabContainer/Interface" unique_id=1707768358]
+layout_mode = 2
+tooltip_text = "Changes the size of location and unit markers"
+min_value = 0.2
+max_value = 5.0
+step = 0.1
+value = 1.0
+
+[node name="ResizeableUILabel" type="Label" parent="TabContainer/Interface" unique_id=630722177]
+layout_mode = 2
+text = "Resizeable UI"
+horizontal_alignment = 2
+
+[node name="ResizeableUI" type="CheckButton" parent="TabContainer/Interface" unique_id=1328513105]
+layout_mode = 2
+size_flags_horizontal = 0
+tooltip_text = "Enables dragging of the side bar and bottom bar to resize them."
+
+[node name="Measures" type="GridContainer" parent="TabContainer" unique_id=1582141196]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 2
+metadata/_tab_index = 2
+
+[node name="Distance" type="Label" parent="TabContainer/Measures" unique_id=1787369411]
+layout_mode = 2
+text = "Distance"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DistanceSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1625409248]
+layout_mode = 2
+tooltip_text = "Units for general distance measurements"
+focus_mode = 0
+selected = 5
+item_count = 6
+popup/item_0/text = "feet (ft)"
+popup/item_0/id = 0
+popup/item_1/text = "yards (yd)"
+popup/item_1/id = 0
+popup/item_2/text = "meters (m)"
+popup/item_2/id = 0
+popup/item_3/text = "kilometers (km)"
+popup/item_3/id = 0
+popup/item_4/text = "statute miles (mi)"
+popup/item_4/id = 0
+popup/item_5/text = "nautical miles (nm)"
+popup/item_5/id = 0
+
+[node name="Range" type="Label" parent="TabContainer/Measures" unique_id=141371566]
+layout_mode = 2
+text = "Weapon Range"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RangeSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=638102671]
+layout_mode = 2
+tooltip_text = "Units for weapon range measurements"
+focus_mode = 0
+selected = 5
+item_count = 6
+popup/item_0/text = "feet (ft)"
+popup/item_0/id = 0
+popup/item_1/text = "yards (yd)"
+popup/item_1/id = 0
+popup/item_2/text = "meters (m)"
+popup/item_2/id = 0
+popup/item_3/text = "kilometers (km)"
+popup/item_3/id = 0
+popup/item_4/text = "statute miles (mi)"
+popup/item_4/id = 0
+popup/item_5/text = "nautical miles (nm)"
+popup/item_5/id = 0
+
+[node name="Altitude" type="Label" parent="TabContainer/Measures" unique_id=211884296]
+layout_mode = 2
+text = "Altitude"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AltitudeSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1233300251]
+layout_mode = 2
+tooltip_text = "Units for vertical distance measurements"
+focus_mode = 0
+selected = 0
+item_count = 2
+popup/item_0/text = "feet (ft)"
+popup/item_0/id = 0
+popup/item_1/text = "meters (m)"
+popup/item_1/id = 0
+
+[node name="ShipSpeed" type="Label" parent="TabContainer/Measures" unique_id=166536250]
+layout_mode = 2
+text = "Ship Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ShipSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1320739082]
+layout_mode = 2
+tooltip_text = "Units for ship speed measurements"
+focus_mode = 0
+selected = 1
+item_count = 5
+popup/item_0/text = "meters per second (m/s)"
+popup/item_0/id = 0
+popup/item_1/text = "knots (kt)"
+popup/item_1/id = 0
+popup/item_2/text = "miles per hour (mph)"
+popup/item_2/id = 0
+popup/item_3/text = "feet per second (fps)"
+popup/item_3/id = 0
+popup/item_4/text = "kilometers per hour (kph)"
+popup/item_4/id = 0
+
+[node name="AircraftSpeed" type="Label" parent="TabContainer/Measures" unique_id=475063877]
+layout_mode = 2
+text = "Aircraft Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AircraftSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1181765799]
+layout_mode = 2
+tooltip_text = "Units for aircraft speed measurements"
+focus_mode = 0
+selected = 1
+item_count = 5
+popup/item_0/text = "meters per second (m/s)"
+popup/item_0/id = 0
+popup/item_1/text = "knots (kt)"
+popup/item_1/id = 0
+popup/item_2/text = "miles per hour (mph)"
+popup/item_2/id = 0
+popup/item_3/text = "feet per second (fps)"
+popup/item_3/id = 0
+popup/item_4/text = "kilometers per hour (kph)"
+popup/item_4/id = 0
+
+[node name="VerticalSpeed" type="Label" parent="TabContainer/Measures" unique_id=243050866]
+layout_mode = 2
+text = "Vertical Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VerticalSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=132258199]
+layout_mode = 2
+tooltip_text = "Units for aircraft climb/dive rate measurements"
+focus_mode = 0
+selected = 3
+item_count = 4
+popup/item_0/text = "meters per second (m/s)"
+popup/item_0/id = 0
+popup/item_1/text = "feet per second (fps)"
+popup/item_1/id = 0
+popup/item_2/text = "meters per minute (m/m)"
+popup/item_2/id = 0
+popup/item_3/text = "feet per minute (fpm)"
+popup/item_3/id = 0
+
+[node name="MunitionSpeed" type="Label" parent="TabContainer/Measures" unique_id=115874429]
+layout_mode = 2
+text = "Munition Speed"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MunitionSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1087682820]
+layout_mode = 2
+tooltip_text = "Units for flight speed of shells and bombs"
+focus_mode = 0
+selected = 3
+item_count = 5
+popup/item_0/text = "meters per second (m/s)"
+popup/item_0/id = 0
+popup/item_1/text = "knots (kt)"
+popup/item_1/id = 0
+popup/item_2/text = "miles per hour (mph)"
+popup/item_2/id = 0
+popup/item_3/text = "feet per second (fps)"
+popup/item_3/id = 0
+popup/item_4/text = "kilometers per hour (kph)"
+popup/item_4/id = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=479745137]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="HBoxContainer" unique_id=1615312322]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="Save" type="Button" parent="HBoxContainer" unique_id=31386933]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Save"
+
+[connection signal="pressed" from="HBoxContainer/Back" to="." method="set_visible" binds= [false]]
+[connection signal="pressed" from="HBoxContainer/Save" to="." method="_on_save_pressed"]

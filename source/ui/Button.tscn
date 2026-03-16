@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bg24svdfb23x1"]
+
+[ext_resource type="Script" uid="uid://cqihpvg6wj1ok" path="res://source/ui/ButtonData.gd" id="1_fv76v"]
+
+[sub_resource type="GDScript" id="GDScript_hbt4d"]
+script/source = "extends Button
+
+@export var stats: ButtonData
+
+
+func _ready():
+	$TextureRect.texture = stats.texture
+	$Label.text = stats.hotkey
+"
+
+[sub_resource type="Resource" id="Resource_dtr7y"]
+script = ExtResource("1_fv76v")
+hotkey = "B"
+metadata/_custom_type_script = "uid://cqihpvg6wj1ok"
+
+[node name="Button" type="Button" unique_id=598860002]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 8.0
+offset_bottom = 8.0
+script = SubResource("GDScript_hbt4d")
+stats = SubResource("Resource_dtr7y")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1215063488]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=11459247]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 1.0
+grow_vertical = 0
+vertical_alignment = 2

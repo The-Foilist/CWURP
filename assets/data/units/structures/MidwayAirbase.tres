@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatblockUnit" format=3 uid="uid://c1duuff8xsufq"]
+
+[ext_resource type="Script" uid="uid://comh57t572fmm" path="res://source/data_files/StatblockUnit.gd" id="1_ecvuc"]
+
+[resource]
+script = ExtResource("1_ecvuc")
+type = 4
+display_name = "Midway Airbase"
+scene_path = "uid://b4gbc3qhygee"
+metadata/_custom_type_script = "uid://comh57t572fmm"

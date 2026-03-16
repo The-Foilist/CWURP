@@ -1,0 +1,62 @@
+[gd_scene format=4 uid="uid://bgctuflihwda3"]
+
+[ext_resource type="Script" uid="uid://do0u7818s1213" path="res://source/session/Scenario.gd" id="1_c0dn2"]
+[ext_resource type="Script" uid="uid://c8fgkm3heffsh" path="res://source/session/World.gd" id="1_l4b8s"]
+[ext_resource type="Script" uid="uid://bftrxfdpnmoc1" path="res://source/session/Player.gd" id="2_edn6w"]
+[ext_resource type="Resource" uid="uid://bcredunm2nxfn" path="res://assets/data/scenarios/Pearl Harbor.tres" id="2_l4b8s"]
+[ext_resource type="TileSet" uid="uid://cckahy4pq6bhu" path="res://assets/terrain/height_tile_set.tres" id="3_c0dn2"]
+
+[node name="Scenario" type="Node" unique_id=1608859501 node_paths=PackedStringArray("world", "players")]
+script = ExtResource("1_c0dn2")
+data = ExtResource("2_l4b8s")
+world = NodePath("World")
+players = [NodePath("Players/Neutral"), NodePath("Players/USA"), NodePath("Players/Japan")]
+metadata/_custom_type_script = "uid://do0u7818s1213"
+
+[node name="Players" type="Node" parent="." unique_id=1670778370]
+
+[node name="Neutral" type="Node" parent="Players" unique_id=51143486]
+script = ExtResource("2_edn6w")
+color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
+
+[node name="USA" type="Node" parent="Players" unique_id=1609956363]
+script = ExtResource("2_edn6w")
+color = Color(0, 0, 1, 1)
+metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
+
+[node name="Japan" type="Node" parent="Players" unique_id=1664971677]
+script = ExtResource("2_edn6w")
+color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
+
+[node name="World" type="Node2D" parent="." unique_id=435527587 node_paths=PackedStringArray("height_grids", "object_layer", "ui_layer")]
+script = ExtResource("1_l4b8s")
+height_grids = [NodePath("Height Grid 100"), NodePath("Height Grid 10000")]
+object_layer = NodePath("Object Layer")
+ui_layer = NodePath("UI Layer")
+metadata/_custom_type_script = "uid://c8fgkm3heffsh"
+
+[node name="Height Grid 10000" type="TileMapLayer" parent="World" unique_id=417644467]
+visible = false
+scale = Vector2(1000, 1000)
+tile_map_data = PackedByteArray("AAD/////AAATAAIAAAD//wAAAAATAAIAAAAAAAAAAAATAAIAAAAAAP//AAATAAIAAAA=")
+tile_set = ExtResource("3_c0dn2")
+occlusion_enabled = false
+collision_enabled = false
+
+[node name="Height Grid 100" type="TileMapLayer" parent="World" unique_id=1689140501]
+visible = false
+scale = Vector2(100, 100)
+tile_map_data = PackedByteArray("AAAAAAAAAAATAAEAAAABAAAAAAATAAEAAAACAAAAAAATAAEAAAADAAAAAAATAAEAAAAEAAAAAAATAAEAAAAFAAAAAAATAAEAAAAGAAAAAAATAAEAAAAHAAAAAAATAAEAAAAIAAAAAAATAAEAAAAJAAAAAAATAAEAAAAAAAEAAAATAAEAAAABAAEAAAATAAEAAAACAAEAAAATAAEAAAADAAEAAAATAAEAAAAEAAEAAAATAAEAAAAFAAEAAAATAAEAAAAGAAEAAAATAAEAAAAHAAEAAAATAAEAAAAIAAEAAAATAAEAAAAHAAIAAAATAAEAAAAGAAIAAAATAAEAAAAFAAIAAAATAAEAAAAEAAIAAAATAAEAAAADAAIAAAATAAEAAAACAAIAAAATAAEAAAABAAIAAAATAAEAAAAAAAIAAAATAAEAAAAAAAMAAAATAAEAAAABAAMAAAATAAEAAAACAAMAAAATAAEAAAADAAMAAAATAAEAAAAEAAMAAAATAAEAAAAFAAMAAAATAAEAAAAGAAMAAAATAAEAAAAFAAQAAAATAAEAAAAEAAQAAAATAAEAAAADAAQAAAATAAEAAAACAAQAAAATAAEAAAABAAQAAAATAAEAAAAAAAQAAAATAAEAAAAAAAUAAAATAAEAAAABAAUAAAATAAEAAAACAAUAAAATAAEAAAADAAUAAAATAAEAAAAEAAUAAAATAAEAAAADAAYAAAATAAEAAAACAAYAAAATAAEAAAABAAYAAAATAAEAAAAAAAYAAAATAAEAAAAAAAcAAAATAAEAAAABAAcAAAATAAEAAAACAAcAAAATAAEAAAABAAgAAAATAAEAAAAAAAgAAAATAAEAAAAAAAkAAAATAAEAAAA=")
+tile_set = ExtResource("3_c0dn2")
+occlusion_enabled = false
+collision_enabled = false
+
+[node name="Art Layer" type="Node2D" parent="World" unique_id=695431660]
+z_index = -1000
+
+[node name="Object Layer" type="Node2D" parent="World" unique_id=2098905238]
+
+[node name="UI Layer" type="Node2D" parent="World" unique_id=1511224957]
+z_index = 1000

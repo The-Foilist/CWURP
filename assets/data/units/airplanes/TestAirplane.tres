@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="StatblockAirplane" format=3 uid="uid://7uylju2qcagk"]
+
+[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_qchl4"]
+
+[resource]
+script = ExtResource("1_qchl4")
+airplane_type = "Fighter"
+min_speed = 50.0
+max_speed = 100.0
+acceleration = 5.0
+climb_rate = 2.0
+turn_rate = 10.0
+ceiling = 5000.0
+takeoff_speed = 60.0
+taxi_turn_rate = 10.0
+taxi_acceleration = 5.0
+taxi_deceleration = 20.0
+taxi_terrains = Array[int]([5, 4, 2])
+type = 3
+display_name = "Test Airplane"
+scene_path = "uid://bmwfl3ovf43li"
+metadata/_custom_type_script = "uid://gh7ubuiirsg0"

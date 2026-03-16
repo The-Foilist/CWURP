@@ -1,0 +1,46 @@
+[gd_scene format=4 uid="uid://d2buljcpxad55"]
+
+[ext_resource type="Script" uid="uid://do0u7818s1213" path="res://source/session/Scenario.gd" id="1_12ei1"]
+[ext_resource type="Script" uid="uid://c8fgkm3heffsh" path="res://source/session/World.gd" id="1_q6ga7"]
+[ext_resource type="Script" uid="uid://bftrxfdpnmoc1" path="res://source/session/Player.gd" id="2_pt7ip"]
+[ext_resource type="TileSet" uid="uid://cckahy4pq6bhu" path="res://assets/terrain/height_tile_set.tres" id="3_pt7ip"]
+
+[node name="Scenario" type="Node" unique_id=280455200 node_paths=PackedStringArray("world", "players")]
+script = ExtResource("1_12ei1")
+world = NodePath("World")
+players = [NodePath("Players/Neutral")]
+metadata/_custom_type_script = "uid://do0u7818s1213"
+
+[node name="Players" type="Node" parent="." unique_id=1026067390]
+
+[node name="Neutral" type="Node" parent="Players" unique_id=1596309899]
+script = ExtResource("2_pt7ip")
+color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
+
+[node name="World" type="Node2D" parent="." unique_id=435527587]
+script = ExtResource("1_q6ga7")
+metadata/_custom_type_script = "uid://c8fgkm3heffsh"
+
+[node name="Height Grid 10000" type="TileMapLayer" parent="World" unique_id=417644467]
+visible = false
+scale = Vector2(1000, 1000)
+tile_map_data = PackedByteArray("AAD/////AAATAAIAAAD//wAAAAATAAIAAAAAAAAAAAATAAIAAAAAAP//AAATAAIAAAA=")
+tile_set = ExtResource("3_pt7ip")
+occlusion_enabled = false
+collision_enabled = false
+
+[node name="Height Grid 100" type="TileMapLayer" parent="World" unique_id=1689140501]
+visible = false
+scale = Vector2(100, 100)
+tile_map_data = PackedByteArray("AAAAAAAAAAATAAEAAAABAAAAAAATAAEAAAACAAAAAAATAAEAAAADAAAAAAATAAEAAAAEAAAAAAATAAEAAAAFAAAAAAATAAEAAAAGAAAAAAATAAEAAAAHAAAAAAATAAEAAAAIAAAAAAATAAEAAAAJAAAAAAATAAEAAAAAAAEAAAATAAEAAAABAAEAAAATAAEAAAACAAEAAAATAAEAAAADAAEAAAATAAEAAAAEAAEAAAATAAEAAAAFAAEAAAATAAEAAAAGAAEAAAATAAEAAAAHAAEAAAATAAEAAAAIAAEAAAATAAEAAAAHAAIAAAATAAEAAAAGAAIAAAATAAEAAAAFAAIAAAATAAEAAAAEAAIAAAATAAEAAAADAAIAAAATAAEAAAACAAIAAAATAAEAAAABAAIAAAATAAEAAAAAAAIAAAATAAEAAAAAAAMAAAATAAEAAAABAAMAAAATAAEAAAACAAMAAAATAAEAAAADAAMAAAATAAEAAAAEAAMAAAATAAEAAAAFAAMAAAATAAEAAAAGAAMAAAATAAEAAAAFAAQAAAATAAEAAAAEAAQAAAATAAEAAAADAAQAAAATAAEAAAACAAQAAAATAAEAAAABAAQAAAATAAEAAAAAAAQAAAATAAEAAAAAAAUAAAATAAEAAAABAAUAAAATAAEAAAACAAUAAAATAAEAAAADAAUAAAATAAEAAAAEAAUAAAATAAEAAAADAAYAAAATAAEAAAACAAYAAAATAAEAAAABAAYAAAATAAEAAAAAAAYAAAATAAEAAAAAAAcAAAATAAEAAAABAAcAAAATAAEAAAACAAcAAAATAAEAAAABAAgAAAATAAEAAAAAAAgAAAATAAEAAAAAAAkAAAATAAEAAAA=")
+tile_set = ExtResource("3_pt7ip")
+occlusion_enabled = false
+collision_enabled = false
+
+[node name="Art Layer" type="Node2D" parent="World" unique_id=695431660]
+
+[node name="Object Layer" type="Node2D" parent="World" unique_id=2098905238]
+
+[node name="UI Layer" type="Node2D" parent="World" unique_id=1511224957]
+z_index = 1000

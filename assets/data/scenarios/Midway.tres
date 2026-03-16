@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StatblockScenario" format=3 uid="uid://c7pl8fujdnt4x"]
+
+[ext_resource type="Script" uid="uid://c5yqqb5vjfxop" path="res://source/data_files/StatblockScenario.gd" id="1_skjh4"]
+
+[resource]
+script = ExtResource("1_skjh4")
+origin_latlong = Vector2(28.2, -177.35)
+start_time = "1942-06-04 00:00:00"
+player_slots = Dictionary[int, String]({
+1: "USA",
+2: "Japan"
+})
+scene_path = "uid://bolixi50x0j3d"
+metadata/_custom_type_script = "uid://c5yqqb5vjfxop"

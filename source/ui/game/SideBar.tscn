@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://maw0wgexhjj6"]
+
+[ext_resource type="PackedScene" uid="uid://cgn3nu2ch7e0y" path="res://source/ui/game/Selection.tscn" id="1_jx6vb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l2vu"]
+bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+
+[sub_resource type="GDScript" id="GDScript_qfoon"]
+script/source = "extends Label
+
+
+func _process(_delta) -> void:
+	if Global.world:
+		text = Time.get_datetime_string_from_unix_time(Global.world.time, true)
+"
+
+[sub_resource type="GDScript" id="GDScript_0l2vu"]
+script/source = "extends Label
+
+
+func _process(_delta) -> void:
+	if Global.world:
+		text = \"×\" + str(Global.world.time_scale)
+"
+
+[sub_resource type="GDScript" id="GDScript_bmslg"]
+script/source = "extends Label
+
+
+func _process(_delta) -> void:
+	if Global.world:
+		visible = Global.world.pause
+"
+
+[sub_resource type="GDScript" id="GDScript_hpug2"]
+script/source = "extends Button
+
+
+func _pressed():
+	Global.world.change_time_scale(0.5)
+"
+
+[sub_resource type="GDScript" id="GDScript_vx13l"]
+script/source = "extends Button
+
+
+func _pressed():
+	if Global.world:
+		Global.world.toggle_pause(!Global.world.pause)
+		if Global.world.pause:
+			text = 'Resume'
+		else:
+			text = 'Pause'
+"
+
+[sub_resource type="GDScript" id="GDScript_kqm7q"]
+script/source = "extends Button
+
+
+func _pressed():
+	Global.world.change_time_scale(2)
+"
+
+[node name="SideBar" type="PanelContainer" unique_id=550890192]
+custom_minimum_size = Vector2(360, 0)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -135.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0l2vu")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=354870093]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=516733923]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer" unique_id=191787555]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+tab_focus_mode = 0
+
+[node name="Units" type="Tree" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=837101850]
+visible = false
+layout_mode = 2
+focus_mode = 0
+metadata/_tab_index = 0
+
+[node name="Selection" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=1404051474 instance=ExtResource("1_jx6vb")]
+layout_mode = 2
+
+[node name="Time" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1954978784]
+layout_mode = 2
+
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/Time" unique_id=159651681]
+layout_mode = 2
+script = SubResource("GDScript_qfoon")
+
+[node name="TimeScale" type="Label" parent="MarginContainer/VBoxContainer/Time" unique_id=1512741194]
+layout_mode = 2
+script = SubResource("GDScript_0l2vu")
+
+[node name="Pause" type="Label" parent="MarginContainer/VBoxContainer/Time" unique_id=966023006]
+layout_mode = 2
+text = "PAUSED"
+script = SubResource("GDScript_bmslg")
+
+[node name="TimeControls" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=458527709]
+layout_mode = 2
+
+[node name="SlowTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1238571197]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "-"
+script = SubResource("GDScript_hpug2")
+
+[node name="PauseButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1547794174]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "PAUSE"
+script = SubResource("GDScript_vx13l")
+
+[node name="SpeedTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1004590611]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "+"
+script = SubResource("GDScript_kqm7q")

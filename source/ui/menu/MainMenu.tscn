@@ -1,0 +1,200 @@
+[gd_scene format=3 uid="uid://5be3r6ur1jn4"]
+
+[ext_resource type="PackedScene" uid="uid://i1wfalshj0tt" path="res://source/ui/menu/OptionsMenu.tscn" id="1_oseua"]
+
+[sub_resource type="GDScript" id="GDScript_kjwba"]
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id="GDScript_oseua"]
+script/source = "extends OptionButton
+
+
+@export var scenarios: Array[String]
+
+
+signal update_player_slot_list(scenario_name: String)
+
+
+func _ready() -> void:
+	var dir = DirAccess.open(\"res://assets/data/scenarios\")
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != \"\":
+		add_item(file_name.trim_suffix('.tres'))
+		file_name = dir.get_next()
+	if !Global.game_scene:
+		_on_item_selected(0)
+
+
+func _on_item_selected(index):
+	var scenario_name = get_item_text(index)
+	Global.game_scene = load(\"res://assets/scenes/scenarios/%s.tscn\" % scenario_name)
+	emit_signal(\"update_player_slot_list\", scenario_name)
+"
+
+[sub_resource type="GDScript" id="GDScript_qwi31"]
+script/source = "extends OptionButton
+
+
+var scenario_data: StatblockScenario
+
+
+func _on_map_select_update_player_slot_list(scenario_name):
+	clear()
+	scenario_data = load(\"res://assets/data/scenarios/%s.tres\" % scenario_name)
+	for i in scenario_data.player_slots:
+		add_item(scenario_data.player_slots[i], i)
+	select(get_item_index(0))
+
+
+func _on_item_selected(index):
+	Global.player_slot = get_item_id(index)
+"
+
+[sub_resource type="GDScript" id="GDScript_uud8e"]
+script/source = "extends Button
+
+
+func _pressed():
+	if !Global.game_scene:
+		return
+	if !Global.player_slot:
+		return
+	get_tree().change_scene_to_file(\"res://source/session/Session.tscn\")
+"
+
+[node name="MainMenu" type="Control" unique_id=994220401]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1292155152]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainMenu" type="VBoxContainer" parent="." unique_id=367100023]
+layout_mode = 1
+offset_right = 300.0
+offset_bottom = 264.0
+
+[node name="Label" type="Label" parent="MainMenu" unique_id=420450682]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Carter's Weird Unnamed RTS Project"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu" unique_id=1074956012]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="MainMenu" unique_id=679942247]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "New Game"
+flat = true
+alignment = 0
+
+[node name="Load" type="Button" parent="MainMenu" unique_id=1608447732]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+disabled = true
+text = "Load"
+flat = true
+alignment = 0
+
+[node name="Options" type="Button" parent="MainMenu" unique_id=306312922]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Options"
+flat = true
+alignment = 0
+
+[node name="Exit" type="Button" parent="MainMenu" unique_id=1828313381]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Exit"
+flat = true
+alignment = 0
+script = SubResource("GDScript_kjwba")
+
+[node name="OptionsMenu" parent="." unique_id=852145421 instance=ExtResource("1_oseua")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_bottom = 0.0
+offset_bottom = 0.0
+grow_vertical = 1
+
+[node name="GameSelect" type="VBoxContainer" parent="." unique_id=154683897]
+visible = false
+layout_mode = 0
+offset_right = 41.0
+offset_bottom = 31.0
+
+[node name="ScenarioLabel" type="Label" parent="GameSelect" unique_id=423834369]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Select a scenario to play..."
+
+[node name="MapSelect" type="OptionButton" parent="GameSelect" unique_id=1802908351]
+layout_mode = 2
+allow_reselect = true
+script = SubResource("GDScript_oseua")
+scenarios = Array[String](["Midway"])
+
+[node name="PlayerSlotLabel" type="Label" parent="GameSelect" unique_id=1708493306]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Select which player..."
+
+[node name="PlayerSlotSelect" type="OptionButton" parent="GameSelect" unique_id=1225433411]
+layout_mode = 2
+script = SubResource("GDScript_qwi31")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameSelect" unique_id=905056648]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="GameSelect/HBoxContainer" unique_id=614968726]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="Play" type="Button" parent="GameSelect/HBoxContainer" unique_id=1755306109]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Play"
+script = SubResource("GDScript_uud8e")
+
+[connection signal="pressed" from="MainMenu/NewGame" to="MainMenu" method="set_visible" binds= [false]]
+[connection signal="pressed" from="MainMenu/NewGame" to="GameSelect" method="set_visible" binds= [true]]
+[connection signal="pressed" from="MainMenu/Options" to="MainMenu" method="set_visible" binds= [false]]
+[connection signal="pressed" from="MainMenu/Options" to="OptionsMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="OptionsMenu/HBoxContainer/Back" to="MainMenu" method="set_visible" binds= [true]]
+[connection signal="item_selected" from="GameSelect/MapSelect" to="GameSelect/MapSelect" method="_on_item_selected"]
+[connection signal="update_player_slot_list" from="GameSelect/MapSelect" to="GameSelect/PlayerSlotSelect" method="_on_map_select_update_player_slot_list"]
+[connection signal="item_selected" from="GameSelect/PlayerSlotSelect" to="GameSelect/PlayerSlotSelect" method="_on_item_selected"]
+[connection signal="pressed" from="GameSelect/HBoxContainer/Back" to="MainMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="GameSelect/HBoxContainer/Back" to="GameSelect" method="set_visible" binds= [false]]
+
+[editable path="OptionsMenu"]
