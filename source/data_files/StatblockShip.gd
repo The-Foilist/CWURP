@@ -3,17 +3,17 @@ extends StatblockUnit
 
 
 @export_enum (
-	"CV",	# Fleet aircraft carrier
-	"CVL",	# Light aircraft carrier
-	"CVE",	# Escort aircraft carrier
-	"BB",	# Battleship
-	"BC",	# Battlecruiser
-	"CA",	# Heavy Cruiser
-	"CL",	# Light cruiser
-	"DD",	# Destroyer
-	"DE",	# Destroyer Escort
-	"AO",	# Fleet Oiler
-) var ship_class: String
+	"Aircraft Carrier",	# Fleet aircraft carrier
+	"Light Carrier",	# Light aircraft carrier
+	"Excort Carrier",	# Escort aircraft carrier
+	"Battleship",	# Battleship
+	"Battlecruiser",	# Battlecruiser
+	"Heavy Cruiser",	# Heavy Cruiser
+	"Light Cruiser",	# Light cruiser
+	"Destroyer",	# Destroyer
+	"Destroyer Escort",	# Destroyer Escort
+	"Fleet Oiler",	# Fleet Oiler
+) var subtype: String
 
 @export_group("Movement")
 @export var hull_drag_coef: float

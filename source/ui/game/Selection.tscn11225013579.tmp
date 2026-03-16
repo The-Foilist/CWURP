@@ -9,21 +9,11 @@ var connected_object: Unit
 
 func clear() -> void:
 	connected_object = null
-	$Name.text = ''
+	$HBoxContainer/Name.text = ''
 	$HBoxContainer/Owner.text = ''
-	$HBoxContainer/Subtype.text = ''
-	$HBoxContainer/Model.text = ''
 	for child in $ScrollContainer/InspectorsGoHere.get_children():
 		$ScrollContainer/InspectorsGoHere.remove_child(child)
 		child.queue_free()
-
-
-func update_coords(coords: Vector2) -> void:
-	var coords_pos = abs(coords)
-	var minutes = Vector2(fmod(coords_pos.x, 1), fmod(coords_pos.y, 1)) * 60
-	var seconds = Vector2(fmod(minutes.x, 1), fmod(minutes.y, 1)) * 60
-	$Coords/LatReadout.text = \"LAT: %3.0f° %2.0f\\' %2.0f\\\"\" % [coords.x, minutes.x, seconds.x]
-	$Coords/LonReadout.text = \"LON: %3.0f° %2.0f\\' %2.0f\\\"\"% [coords.y, minutes.y, seconds.y]
 
 
 func _on_object_selected(object: Unit) -> void:
@@ -31,12 +21,13 @@ func _on_object_selected(object: Unit) -> void:
 	if !object:
 		return
 	connected_object = object
-	$Name.text = connected_object.display_name
+	$HBoxContainer/Name.text = connected_object.display_name
 	$HBoxContainer/Owner.text = connected_object.owning_player.name
 	$HBoxContainer/Owner.add_theme_color_override(\"font_color\", connected_object.owning_player.color)
-	$HBoxContainer/Model.text = connected_object.unit_model
-	$HBoxContainer/Subtype.text = connected_object.unit_subtype
-	update_coords(connected_object.world.get_coords_at_position(connected_object.global_position))
+	
+	var coords = connected_object.world.get_coords_at_position(connected_object.global_position)
+	$Coords/LatReadout.text = \"%03.0f °\" % coords.x
+	$Coords/LonReadout.text = \"%03.0f °\" % coords.y
 	
 	for child in connected_object.get_children():
 		if child is Mover:
@@ -51,7 +42,11 @@ func _process(_delta):
 		clear()
 		return
 	if connected_object.active_mover:
-		update_coords(connected_object.active_mover.pos_data['coords'])
+		var coords = connected_object.active_mover.pos_data['coords']
+		var minutes = Vector2(fmod(coords.x, 1), fmod(coords.y, 1)) * 60
+		var seconds = Vector2(fmod(minutes.x, 1), fmod(minutes.y, 1)) * 60
+		$Coords/LatReadout.text = \"%3.0f ° %2.0f \\' %2.0f \\\"\" % [coords.x, minutes.x, seconds.x]
+		$Coords/LonReadout.text = \"%3.0f ° %2.0f \\' %2.0f \\\"\"% [coords.y, minutes.y, seconds.y]
 "
 
 [node name="Selection" type="VBoxContainer" unique_id=1404051474]
@@ -62,28 +57,18 @@ size_flags_vertical = 3
 script = SubResource("GDScript_gabmv")
 metadata/_tab_index = 1
 
-[node name="Name" type="Label" parent="." unique_id=391870708]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1904814926]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer" unique_id=391870708]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Name"
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1904814926]
-layout_mode = 2
 
 [node name="Owner" type="Label" parent="HBoxContainer" unique_id=318833799]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Owner"
-
-[node name="Model" type="Label" parent="HBoxContainer" unique_id=1246484022]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Subtype" type="Label" parent="HBoxContainer" unique_id=443206722]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Subtype"
 
 [node name="Coords" type="HBoxContainer" parent="." unique_id=1295639244]
 layout_mode = 2

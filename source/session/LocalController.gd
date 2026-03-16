@@ -1,5 +1,5 @@
 class_name LocalController
-extends Node
+extends CanvasLayer
 
 
 var player: Player
@@ -20,8 +20,8 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	cam = $UI/HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
-	player.selection_updated.connect($UI/HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection._on_object_selected)
+	cam = $HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
+	player.selection_updated.connect($HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection._on_object_selected)
 
 
 func sort_by_z(a, b) -> bool:
@@ -52,6 +52,7 @@ func _process(_delta) -> void:
 		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed("select"):

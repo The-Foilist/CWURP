@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bchcupgup8lel"]
 
 [ext_resource type="Script" uid="uid://v7ypfn8833d2" path="res://source/session/LocalCamera.gd" id="1_bmslg"]
+[ext_resource type="Script" uid="uid://8uwqme7pkmsx" path="res://source/session/LocalController.gd" id="1_mrb1h"]
 [ext_resource type="PackedScene" uid="uid://dbe6xhfbyuo4s" path="res://source/ui/game/BottomBar.tscn" id="2_0cjw3"]
 [ext_resource type="PackedScene" uid="uid://maw0wgexhjj6" path="res://source/ui/game/SideBar.tscn" id="3_mrb1h"]
 [ext_resource type="PackedScene" uid="uid://pmjbct4h3cpe" path="res://source/ui/menu/PauseMenu.tscn" id="4_0cjw3"]
@@ -25,7 +26,9 @@ func _process(_delta) -> void:
 		text = str(Global.world.get_coords_at_position(local_controller.mouse_coords))
 "
 
-[node name="UI" type="CanvasLayer" unique_id=2106468855]
+[node name="LocalController" type="CanvasLayer" unique_id=503432967]
+script = ExtResource("1_mrb1h")
+metadata/_custom_type_script = "uid://8uwqme7pkmsx"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=1846558814]
 anchors_preset = 15
@@ -65,11 +68,12 @@ script = SubResource("GDScript_mrvir")
 script = ExtResource("1_bmslg")
 metadata/_custom_type_script = "uid://v7ypfn8833d2"
 
-[node name="CursorTarget" type="Label" parent="HSplitContainer/VSplitContainer/Overlay" unique_id=1470663433]
+[node name="CursorTarget" type="Label" parent="HSplitContainer/VSplitContainer/Overlay" unique_id=1470663433 node_paths=PackedStringArray("local_controller")]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 script = SubResource("GDScript_0cjw3")
+local_controller = NodePath("../../../..")
 
 [node name="BottomBar" parent="HSplitContainer/VSplitContainer" unique_id=544570086 instance=ExtResource("2_0cjw3")]
 layout_mode = 2
@@ -78,3 +82,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Menu" parent="." unique_id=1619618854 instance=ExtResource("4_0cjw3")]
+
+[editable path="HSplitContainer/VSplitContainer/BottomBar"]
+[editable path="HSplitContainer/SideBar"]

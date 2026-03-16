@@ -4,19 +4,22 @@
 
 [resource]
 script = ExtResource("1_qchl4")
-airplane_type = "Fighter"
+subtype = "Fighter"
 min_speed = 50.0
 max_speed = 100.0
 acceleration = 5.0
 climb_rate = 2.0
 turn_rate = 10.0
 ceiling = 5000.0
+taxi_speed = 5.0
 takeoff_speed = 60.0
 taxi_turn_rate = 10.0
 taxi_acceleration = 5.0
 taxi_deceleration = 20.0
 taxi_terrains = Array[int]([5, 4, 2])
 type = 3
+model = "F4F-4"
+movement_types = Array[int]([0, 3])
 display_name = "Test Airplane"
 scene_path = "uid://bmwfl3ovf43li"
 metadata/_custom_type_script = "uid://gh7ubuiirsg0"

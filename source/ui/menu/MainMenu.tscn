@@ -26,13 +26,13 @@ func _ready() -> void:
 	while file_name != \"\":
 		add_item(file_name.trim_suffix('.tres'))
 		file_name = dir.get_next()
-	if !Global.game_scene:
+	if !Global.scenario_scene:
 		_on_item_selected(0)
 
 
 func _on_item_selected(index):
 	var scenario_name = get_item_text(index)
-	Global.game_scene = load(\"res://assets/scenes/scenarios/%s.tscn\" % scenario_name)
+	Global.scenario_scene = load(\"res://assets/scenes/scenarios/%s.tscn\" % scenario_name)
 	emit_signal(\"update_player_slot_list\", scenario_name)
 "
 
@@ -60,7 +60,7 @@ script/source = "extends Button
 
 
 func _pressed():
-	if !Global.game_scene:
+	if !Global.scenario_scene:
 		return
 	if !Global.player_slot:
 		return

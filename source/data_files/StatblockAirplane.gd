@@ -11,7 +11,7 @@ extends StatblockUnit
 	"Floatplane",		# single engine floatplane, any role
 	"Flying Boat",		# 2+ engine, lands on belly rather than floats
 	"Transport"			# 2+ engine
-) var airplane_type: String
+) var subtype: String
 
 
 @export_group("Movement - Airborne")
@@ -23,6 +23,7 @@ extends StatblockUnit
 @export var ceiling: float
 
 @export_group("Movement - Taxi")
+@export var taxi_speed: float
 @export var takeoff_speed: float
 @export var taxi_turn_rate: float
 @export var taxi_acceleration: float

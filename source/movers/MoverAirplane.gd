@@ -13,7 +13,6 @@ var turn_rate: float
 var air_speed: float
 var velocity: Vector2
 var runway: Unit
-var origin_point: Vector2
 
 @export var target_speed: float
 @export var target_heading: float
@@ -23,6 +22,7 @@ var origin_point: Vector2
 func _ready() -> void:
 	super()
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
+	movement_type = Global.MovementTypes.Air
 	airspeed_min = unit.statblock.min_speed
 	airspeed_max = unit.statblock.max_speed
 	acceleration = unit.statblock.acceleration
@@ -41,19 +41,12 @@ func land() -> void:
 	taxi_mover.target_heading = Global.vec_to_br(velocity).x
 	taxi_mover.air_speed = air_speed
 	taxi_mover.ground_speed = unit.speed
-	taxi_mover.pos_data = world.get_data_at_position(unit.global_position)
-	active = false
+	switch_mover(taxi_mover)
 	if runway:
 		var pos = unit.global_position
 		world.object_layer.remove_child(unit)
 		unit.global_position = pos
 		runway.add_child(unit)
-	taxi_mover.active = true
-	air_speed = 0
-	velocity = Vector2(0,0)
-	target_speed = 0
-	target_heading = 0
-	target_altitude = 0
 
 
 func move(delta: float) -> void:

@@ -30,6 +30,13 @@ const VOLUME_CONVERSION = {
 	"gal": 3.78541,
 }
 
+enum UnitTypes {
+	None = 0,
+	Ship,
+	Submarine,
+	Airplane,
+	Structure
+}
 enum MovementTypes {
 	Ground		= 0,
 	Water		= 1,
@@ -48,7 +55,7 @@ enum Terrains {
 	Ice		= 7
 }
 
-var game_scene: PackedScene
+var scenario_scene: PackedScene
 var player_slot: int
 var session: Session
 var local_controller: LocalController

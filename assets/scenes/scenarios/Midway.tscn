@@ -78,6 +78,8 @@ texture = ExtResource("4_d3jhq")
 
 [node name="TestAirbase" parent="World/Object Layer" unique_id=360373803 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("9_ro32k")]
 position = Vector2(1934, -1420)
+collision_layer = 3
+collision_mask = 0
 world = NodePath("../..")
 owning_player = NodePath("../../../Players/USA")
 starting_data = {
@@ -87,6 +89,7 @@ starting_data = {
 [node name="TestAirplane" parent="World/Object Layer/TestAirbase/Runway3" parent_id_path=PackedInt32Array(360373803, 20198234) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("5_nwdgp")]
 position = Vector2(816, 263)
 rotation = -0.7853982
+collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 

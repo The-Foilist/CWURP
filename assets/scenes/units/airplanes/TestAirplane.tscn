@@ -7,13 +7,14 @@
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_eperc"]
 [ext_resource type="PackedScene" uid="uid://cy5uplhmkyf20" path="res://source/ui/game/markers/MarkerAirplane.tscn" id="6_pd5xj"]
 
-[node name="Unit" type="AnimatableBody2D" unique_id=1528469654]
+[node name="Unit" type="AnimatableBody2D" unique_id=1528469654 node_paths=PackedStringArray("active_mover")]
 z_index = 1
 collision_layer = 3
 collision_mask = 2
 sync_to_physics = false
 script = ExtResource("1_r3m0a")
 statblock = ExtResource("2_vabpu")
+active_mover = NodePath("MoverTaxi")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
@@ -23,7 +24,6 @@ polygon = PackedVector2Array(-1, -4, 1, -4, 1, -3, 6, -2, 6, -1, 1, 0, 1, 3, 2, 
 script = ExtResource("3_dv2l6")
 taxi_mover = NodePath("../MoverTaxi")
 unit = NodePath("..")
-active = false
 metadata/_custom_type_script = "uid://dphobtg6r2gmu"
 
 [node name="MoverTaxi" type="Node" parent="." unique_id=595992666 node_paths=PackedStringArray("airborne_mover", "unit")]

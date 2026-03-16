@@ -9,8 +9,8 @@ extends Area2D
 func _ready() -> void:
 	unit.died.connect(_on_unit_died)
 	$Sprite2D.self_modulate = unit.owning_player.color
-	get_parent().remove_child(self)
-	Global.world.ui_layer.add_child(self)
+	get_parent().remove_child.call_deferred(self)
+	Global.world.ui_layer.add_child.call_deferred(self)
 
 
 func _on_unit_died() -> void:
@@ -18,7 +18,7 @@ func _on_unit_died() -> void:
 	queue_free()
 
 
-func _process(delta) -> void:
+func _process(_delta) -> void:
 	var zoom = Global.local_controller.cam.zoom
 	global_scale = Vector2(PlayerSettings.marker_scale/zoom.x, PlayerSettings.marker_scale/zoom.y)
 	

@@ -28,30 +28,19 @@ func _ready() -> void:
 	if unit.get_parent() is Runway:
 		runway = unit.get_parent()
 		unit.height = runway.height
-	active = true
-	if unit.starting_data:
-		var movement_type = unit.starting_data['movement_type']
-		if movement_type:
-			if movement_type == Global.MovementTypes.Air or movement_type == Global.MovementTypes.Interior:
-				active = false
 
 
 func liftoff() -> void:
 	airborne_mover.air_speed = air_speed
 	airborne_mover.target_speed = INF
 	airborne_mover.target_altitude = INF
-	airborne_mover.pos_data = world.get_data_at_position(unit.global_position)
-	active = false
+	airborne_mover.velocity = ground_speed * -unit.global_transform.y
+	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
 		runway.remove_child(unit)
 		unit.global_position = pos
 		world.object_layer.add_child(unit)
-	airborne_mover.active = true
-	target_speed = 0
-	target_heading = 0
-	ground_speed = 0
-	air_speed = 0
 
 
 func move(delta: float) -> void:

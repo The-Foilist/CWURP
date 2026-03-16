@@ -2,11 +2,6 @@ class_name StatblockUnit
 extends Statblock
 
 
-enum UnitTypes {
-	None = 0,
-	Ship,
-	Submarine,
-	Airplane,
-	Structure
-}
-@export var type: UnitTypes
+@export var type: Global.UnitTypes
+@export var model: String
+@export var movement_types: Array[Global.MovementTypes]
