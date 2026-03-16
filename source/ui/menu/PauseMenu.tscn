@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://pmjbct4h3cpe"]
 
 [ext_resource type="PackedScene" uid="uid://i1wfalshj0tt" path="res://source/ui/menu/OptionsMenu.tscn" id="1_8eu6x"]
+[ext_resource type="PackedScene" uid="uid://b5n2r3tp26t5w" path="res://source/ui/menu/KeybindsMenu.tscn" id="2_aymso"]
 
 [sub_resource type="GDScript" id="GDScript_c4qpo"]
 script/source = "extends CenterContainer
@@ -9,6 +10,7 @@ script/source = "extends CenterContainer
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(\"toggle_menu\"):
 		visible = !visible
+		Global.local_controller.cam.set_process(!visible)
 "
 
 [sub_resource type="GDScript" id="GDScript_1m3re"]
@@ -42,6 +44,11 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Options"
 
+[node name="KeybindsButton" type="Button" parent="VBoxContainer" unique_id=1843533260]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Keybinds"
+
 [node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1272660575]
 layout_mode = 2
 size_flags_vertical = 3
@@ -52,9 +59,17 @@ script = SubResource("GDScript_1m3re")
 visible = false
 layout_mode = 2
 
+[node name="KeybindsMenu" parent="." unique_id=374661502 instance=ExtResource("2_aymso")]
+visible = false
+layout_mode = 2
+
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="set_visible" binds= [false]]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="VBoxContainer" method="set_visible" binds= [false]]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="OptionsMenu" method="set_visible" binds= [true]]
+[connection signal="pressed" from="VBoxContainer/KeybindsButton" to="VBoxContainer" method="set_visible" binds= [false]]
+[connection signal="pressed" from="VBoxContainer/KeybindsButton" to="KeybindsMenu" method="set_visible" binds= [true]]
 [connection signal="pressed" from="OptionsMenu/HBoxContainer/Back" to="VBoxContainer" method="set_visible" binds= [true]]
+[connection signal="pressed" from="KeybindsMenu/HBoxContainer/Back" to="VBoxContainer" method="set_visible" binds= [true]]
 
 [editable path="OptionsMenu"]
+[editable path="KeybindsMenu"]

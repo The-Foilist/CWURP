@@ -20,7 +20,10 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if dragging:
 		if event is InputEventMouseMotion:
-			translate((-event.relative.x / zoom.x) * transform.x + (-event.relative.y / zoom.y) * transform.y)
+			var trans_vec = (-event.relative.x / zoom.x) * transform.x + (-event.relative.y / zoom.y) * transform.y
+			if PlayerSettings.invert_drag_scroll:
+				trans_vec = -trans_vec
+			translate(trans_vec)
 	if event.is_action("camera_drag"):
 		dragging = event.pressed
 	if event.is_action_pressed("camera_zoom_in"):

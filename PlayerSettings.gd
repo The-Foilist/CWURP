@@ -3,26 +3,27 @@ extends Node
 var config = ConfigFile.new()
 
 # Video
-var frame_rate_cap: int = 9000
-var particle_effects: bool = true
+var frame_rate_cap: int		= 9000
+var particle_effects: bool	= true
 
 # Controls
-var camera_pan_speed: float = 500
-var camera_rotation_speed: float = 1
-var text_scale: float = 1
-var marker_scale: float = 1
-var resizeable_ui: bool = true
+var camera_pan_speed: float			= 500
+var camera_rotation_speed: float	= 1
+var invert_drag_scroll: bool		= false
+var text_scale: float				= 1
+var marker_scale: float				= 0.5
+var resizeable_ui: bool				= true
 var bottom_bar_size: int
 var side_bar_size: int
 
 # Display measurement units
-var distance_units: String = 'nm'
-var range_units: String = 'yd'
-var altitude_units: String = 'ft'
-var ship_speed_units: String = 'kt'
-var aircraft_speed_units: String = 'kt'
-var vertical_speed_units: String = 'fpm'
-var munition_speed_units: String = 'fps'
+var distance_units: String			= 'nm'
+var range_units: String				= 'yd'
+var altitude_units: String			= 'ft'
+var ship_speed_units: String		= 'kt'
+var aircraft_speed_units: String	= 'kt'
+var vertical_speed_units: String	= 'fpm'
+var munition_speed_units: String	= 'fps'
 
 
 func save() -> void:
@@ -31,6 +32,7 @@ func save() -> void:
 	config.set_value("Video", "particle_effects", particle_effects)
 	config.set_value("Controls", "camera_pan_speed", camera_pan_speed)
 	config.set_value("Controls", "camera_rotation_speed", camera_rotation_speed)
+	config.set_value("Controls", "invert_drag_scroll", invert_drag_scroll)
 	config.set_value("Controls", "text_scale", text_scale)
 	config.set_value("Controls", "marker_scale", marker_scale)
 	config.set_value("Controls", "resizeable_ui", resizeable_ui)
@@ -53,6 +55,7 @@ func _ready() -> void:
 	particle_effects = config.get_value("Video", "particle_effects")
 	camera_pan_speed = config.get_value("Controls", "camera_pan_speed")
 	camera_rotation_speed = config.get_value("Controls", "camera_rotation_speed")
+	invert_drag_scroll = config.get_value("Controls", "invert_drag_scroll")
 	text_scale = config.get_value("Controls", "text_scale")
 	marker_scale = config.get_value("Controls", "marker_scale")
 	resizeable_ui = config.get_value("Controls", "resizeable_ui")

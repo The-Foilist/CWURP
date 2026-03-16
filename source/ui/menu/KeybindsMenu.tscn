@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://b5n2r3tp26t5w"]
+
+[sub_resource type="GDScript" id="GDScript_beaaf"]
+script/source = "extends VBoxContainer
+
+var config = ConfigFile.new()
+
+var keybind_controls: Array[HBoxContainer]
+
+
+func save_keybind(save_category: String, save_name: String, event: InputEvent) -> void:
+	config.set_value(save_category, save_name, event)
+	config.save(\"user://keybinds.ini\")
+
+
+func clear() -> void:
+	keybind_controls.clear()
+	for child in $ScrollContainer/VBoxContainer.get_children():
+		$ScrollContainer/VBoxContainer.remove_child(child)
+		child.queue_free()
+
+
+func populate() -> void:
+	var err = config.load(\"user://keybinds.ini\")
+	if err != OK:
+		return
+	for category in config.get_sections():
+		var new_accordion = FoldableContainer.new()
+		new_accordion.title = category.capitalize()
+		new_accordion.title_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		$ScrollContainer/VBoxContainer.add_child(new_accordion)
+		var new_vbox = VBoxContainer.new()
+		new_accordion.add_child(new_vbox)
+		for key in config.get_section_keys(category):
+			var new_keybind_control = preload(\"res://source/ui/menu/Keybind.tscn\").instantiate()
+			keybind_controls.append(new_keybind_control)
+			new_keybind_control.action_category = category
+			new_keybind_control.action_name = key
+			new_keybind_control.event = config.get_value(category, key)
+			new_vbox.add_child(new_keybind_control)
+
+
+func _ready() -> void:
+	clear()
+	populate()
+
+
+func _on_back_pressed():
+	for kc in keybind_controls:
+		kc.set_process_input(false)
+
+
+func _on_save_pressed():
+	for kc in keybind_controls:
+		save_keybind(kc.action_category, kc.action_name, kc.event)
+		var full_name = kc.action_category + '_' + kc.action_name
+		if !InputMap.has_action(full_name):
+			continue
+		InputMap.action_erase_events(full_name)
+		InputMap.action_add_event(full_name, kc.event)
+
+
+func _on_reset_pressed():
+	clear()
+	populate()
+"
+
+[node name="KeybindsMenu" type="VBoxContainer" unique_id=374661502]
+custom_minimum_size = Vector2(440, 600)
+offset_right = 440.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+script = SubResource("GDScript_beaaf")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=315061949]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1469535249]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=881750064]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="HBoxContainer" unique_id=857606363]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Back"
+
+[node name="Reset" type="Button" parent="HBoxContainer" unique_id=426564780]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Reset"
+
+[node name="Save" type="Button" parent="HBoxContainer" unique_id=1081067616]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "Save"
+
+[connection signal="pressed" from="HBoxContainer/Back" to="." method="set_visible" binds= [false]]
+[connection signal="pressed" from="HBoxContainer/Reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="HBoxContainer/Save" to="." method="_on_save_pressed"]
