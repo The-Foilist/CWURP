@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="RTS Framework"
+config/name="CWURP"
+config/description="Carter's Weird Unnamed RTS Project"
 run/main_scene="uid://5be3r6ur1jn4"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
