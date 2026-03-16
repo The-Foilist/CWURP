@@ -22,7 +22,6 @@ var runway: Unit
 func _ready() -> void:
 	super()
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
-	movement_type = Global.MovementTypes.Air
 	airspeed_min = unit.statblock.min_speed
 	airspeed_max = unit.statblock.max_speed
 	acceleration = unit.statblock.acceleration
