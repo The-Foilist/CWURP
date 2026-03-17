@@ -21,23 +21,43 @@ func clear() -> void:
 
 
 func populate() -> void:
-	var err = config.load(\"user://keybinds.ini\")
-	if err != OK:
-		return
-	for category in config.get_sections():
-		var new_accordion = FoldableContainer.new()
-		new_accordion.title = category.capitalize()
-		new_accordion.title_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		$ScrollContainer/VBoxContainer.add_child(new_accordion)
-		var new_vbox = VBoxContainer.new()
-		new_accordion.add_child(new_vbox)
-		for key in config.get_section_keys(category):
-			var new_keybind_control = preload(\"res://source/ui/menu/Keybind.tscn\").instantiate()
-			keybind_controls.append(new_keybind_control)
-			new_keybind_control.action_category = category
-			new_keybind_control.action_name = key
-			new_keybind_control.event = config.get_value(category, key)
-			new_vbox.add_child(new_keybind_control)
+	config.load(\"user://keybinds.ini\")
+	var category = ''
+	var new_vbox: VBoxContainer
+	for action in InputMap.get_actions():
+		
+		# Ignore built-in input actions
+		if action.begins_with('ui_'):
+			continue
+		
+		# Grab input actions of the form \"category_action_name\"
+		if action.split('_')[0] != category:
+			category = action.split('_')[0]
+			
+			# Create dropdown for the category
+			var new_accordion = FoldableContainer.new()
+			new_accordion.title = category.capitalize()
+			new_accordion.title_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			$ScrollContainer/VBoxContainer.add_child(new_accordion)
+			new_vbox = VBoxContainer.new()
+			new_accordion.add_child(new_vbox)
+		
+		# Create keybind UI object
+		var key = action.trim_prefix(category + '_')
+		var new_keybind_control = preload(\"res://source/ui/menu/Keybind.tscn\").instantiate()
+		keybind_controls.append(new_keybind_control)
+		new_keybind_control.action_category = category
+		new_keybind_control.action_name = key
+		
+		# Get event from config if it exists, otherwise use the default in ProjectSettings
+		if config.has_section_key(category, key):
+			var event = config.get_value(category, key)
+			InputMap.action_erase_events(action)
+			InputMap.action_add_event(action, event)
+			new_keybind_control.event = event
+		else:
+			new_keybind_control.event = InputMap.action_get_events(action)[0]
+		new_vbox.add_child(new_keybind_control)
 
 
 func _ready() -> void:

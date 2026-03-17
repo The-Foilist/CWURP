@@ -55,8 +55,8 @@ func _process(_delta) -> void:
 
 
 func _unhandled_input(event) -> void:
-	if event.is_action_pressed("select"):
+	if event.is_action_pressed("selection_select"):
 		if hovered_object:
 			player.select(hovered_object)
-	if event.is_action_pressed("deselect"):
+	if event.is_action_pressed("selection_deselect"):
 		player.select(null)

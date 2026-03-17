@@ -12,6 +12,7 @@ func _init() -> void:
 func _ready() -> void:
 	add_child(Global.scenario)
 
+
 # Quit back to main menu
 func end() -> void:
 	Global.scenario_scene = null

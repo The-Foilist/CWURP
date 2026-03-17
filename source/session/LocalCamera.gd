@@ -6,7 +6,7 @@ var zoom_min: float = -10
 var zoom_max: float = 40
 var dragging := false
 @export var zoom_level: int = 0
-var following: Node
+var following: Node2D
 
 
 func _init() -> void:

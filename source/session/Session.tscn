@@ -9,3 +9,5 @@ script = ExtResource("1_dnh0r")
 [node name="UI" parent="." unique_id=2106468855 instance=ExtResource("2_54xw2")]
 
 [editable path="UI"]
+[editable path="UI/HSplitContainer/VSplitContainer/BottomBar"]
+[editable path="UI/HSplitContainer/SideBar"]
