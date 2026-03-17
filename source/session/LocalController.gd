@@ -36,12 +36,14 @@ func get_object_under_mouse():
 	var result = cam.get_world_2d().direct_space_state.intersect_point(mouse_intersect_params)
 	if result:
 		result.sort_custom(sort_by_z)
-		if result[0].collider is Unit:
-			return result[0].collider
-		elif result[0].collider is Marker and result[0].collider.input_pickable:
-			return result[0].collider.unit
-		elif result[0].collider is UnitComponent:
-			return result[0].collider.unit
+		print(result)
+		for i in result.size():
+			if result[i].collider is Unit:
+				return result[i].collider
+			elif result[i].collider is Marker and result[0].collider.input_pickable:
+				return result[i].collider.unit
+			elif result[i].collider is UnitComponent:
+				return result[i].collider.unit
 
 
 func _process(_delta) -> void:

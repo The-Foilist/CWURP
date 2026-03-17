@@ -7,7 +7,7 @@
 [ext_resource type="TileSet" uid="uid://cckahy4pq6bhu" path="res://assets/terrain/height_tile_set.tres" id="3_xxyv6"]
 [ext_resource type="TileSet" uid="uid://84dmuv6hxlnj" path="res://assets/terrain/terrain_tile_set.tres" id="4_82s1o"]
 [ext_resource type="Texture2D" uid="uid://17u3anddocft" path="res://assets/art/maps/Midway 10.png" id="4_d3jhq"]
-[ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/TestAirplane.tscn" id="5_nwdgp"]
+[ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/F4F-4.tscn" id="5_nwdgp"]
 [ext_resource type="PackedScene" uid="uid://b4gbc3qhygee" path="res://assets/scenes/units/structures/MidwayAirbase.tscn" id="9_ro32k"]
 
 [node name="Scenario" type="Node" unique_id=1136243973 node_paths=PackedStringArray("world", "players")]

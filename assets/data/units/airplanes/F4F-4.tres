@@ -20,6 +20,6 @@ taxi_terrains = Array[int]([5, 4, 2])
 type = 3
 model = "F4F-4"
 movement_types = Array[int]([0, 3])
-display_name = "Test Airplane"
+display_name = "F4F-4"
 scene_path = "uid://bmwfl3ovf43li"
 metadata/_custom_type_script = "uid://gh7ubuiirsg0"

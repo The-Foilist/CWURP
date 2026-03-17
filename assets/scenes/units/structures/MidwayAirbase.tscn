@@ -49,5 +49,6 @@ scale = Vector2(10, 10)
 texture = ExtResource("2_34slg")
 
 [node name="Marker" parent="." unique_id=1183166109 node_paths=PackedStringArray("unit") instance=ExtResource("5_7xtov")]
+visible = true
 unit = NodePath("..")
 scale_threshold = 20.0
