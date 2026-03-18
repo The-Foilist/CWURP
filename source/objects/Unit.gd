@@ -9,6 +9,7 @@ var display_name: String
 @export var owning_player: Player
 @export var starting_data: Dictionary
 @export var active_mover: Mover
+@export var comms: Comms
 
 var unit_type: Global.UnitTypes
 var unit_subtype: String = ''
@@ -22,12 +23,14 @@ signal died
 
 
 func _ready() -> void:
-	
 	unit_type = statblock.type
 	unit_model = statblock.model
 	if "subtype" in statblock:
 		unit_subtype = statblock.subtype
-	display_name = statblock.display_name
+	if statblock.display_name == '':
+		display_name = name
+	else:
+		display_name = statblock.display_name
 	if !starting_data:
 		return
 	if 'height' in starting_data:

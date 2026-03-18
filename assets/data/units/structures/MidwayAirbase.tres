@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_ecvuc")
 type = 4
+model = "Airbase"
 display_name = "Midway Airbase"
 scene_path = "uid://b4gbc3qhygee"
 metadata/_custom_type_script = "uid://comh57t572fmm"

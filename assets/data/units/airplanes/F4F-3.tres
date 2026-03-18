@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="StatblockAirplane" format=3 uid="uid://7uylju2qcagk"]
 
-[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_qchl4"]
+[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_je6hn"]
 
 [resource]
-script = ExtResource("1_qchl4")
+script = ExtResource("1_je6hn")
 subtype = "Fighter"
 min_speed = 50.0
 max_speed = 100.0
@@ -18,8 +18,7 @@ taxi_acceleration = 5.0
 taxi_deceleration = 20.0
 taxi_terrains = Array[int]([5, 4, 2])
 type = 3
-model = "F4F-4"
+model = "F4F-3"
 movement_types = Array[int]([0, 3])
-display_name = "F4F-4"
 scene_path = "uid://bmwfl3ovf43li"
 metadata/_custom_type_script = "uid://gh7ubuiirsg0"

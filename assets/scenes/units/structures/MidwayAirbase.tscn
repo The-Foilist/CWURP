@@ -5,11 +5,18 @@
 [ext_resource type="Resource" uid="uid://c1duuff8xsufq" path="res://assets/data/units/structures/MidwayAirbase.tres" id="2_j3265"]
 [ext_resource type="Script" uid="uid://bbgst0tsgctab" path="res://source/objects/Runway.gd" id="3_cie8e"]
 [ext_resource type="PackedScene" uid="uid://bh065gowy55qd" path="res://source/ui/game/markers/MarkerStructure.tscn" id="5_7xtov"]
+[ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="6_7onyu"]
 
-[node name="Unit" type="AnimatableBody2D" unique_id=344491561]
+[node name="Unit" type="AnimatableBody2D" unique_id=344491561 node_paths=PackedStringArray("comms")]
 script = ExtResource("1_whll3")
 statblock = ExtResource("2_j3265")
+comms = NodePath("Comms")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
+
+[node name="Comms" type="Node" parent="." unique_id=1734691392 node_paths=PackedStringArray("unit")]
+script = ExtResource("6_7onyu")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
 [node name="Runway1" type="StaticBody2D" parent="." unique_id=961199835 node_paths=PackedStringArray("unit")]
 collision_layer = 3

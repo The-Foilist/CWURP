@@ -3,12 +3,16 @@ extends CanvasLayer
 
 
 var player: Player
-var cam: LocalCamera
 
 var mouse_intersect_params: PhysicsPointQueryParameters2D
 
 var mouse_coords: Vector2
 var hovered_object: Unit
+
+@onready var cam: LocalCamera = $HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
+@onready var ui_selection: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection
+@onready var ui_message_input: Control = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageInput
+@onready var ui_message_log: MessageLog = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/RichTextLabel
 
 
 func _init() -> void:
@@ -18,10 +22,10 @@ func _init() -> void:
 	mouse_intersect_params.collide_with_areas = true
 	mouse_intersect_params.collision_mask = 1
 
-
 func _ready() -> void:
-	cam = $HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
-	player.selection_updated.connect($HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection._on_object_selected)
+	cam.global_position = player.host_unit.global_position
+	player.selection_updated.connect(ui_selection._on_object_selected)
+	player.selection_updated.connect(ui_message_input._on_object_selected)
 
 
 func sort_by_z(a, b) -> bool:
@@ -36,7 +40,6 @@ func get_object_under_mouse():
 	var result = cam.get_world_2d().direct_space_state.intersect_point(mouse_intersect_params)
 	if result:
 		result.sort_custom(sort_by_z)
-		print(result)
 		for i in result.size():
 			if result[i].collider is Unit:
 				return result[i].collider
@@ -60,5 +63,15 @@ func _unhandled_input(event) -> void:
 	if event.is_action_pressed("selection_select"):
 		if hovered_object:
 			player.select(hovered_object)
-	if event.is_action_pressed("selection_deselect"):
+	if event.is_action_pressed("selection_clear_selection"):
 		player.select(null)
+	if event.is_action_pressed("selection_select_home"):
+		player.select(player.host_unit)
+
+
+func _on_messages_meta_clicked(meta):
+	if !meta:
+		return
+	var obj = instance_from_id(int(meta))
+	if obj is Unit:
+		player.select(obj)

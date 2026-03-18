@@ -12,6 +12,9 @@ func clear() -> void:
 	$Name.text = ''
 	$HBoxContainer/Owner.text = ''
 	$HBoxContainer/Subtype.text = ''
+	$HBoxContainer/Model.text = ''
+	$Coords/LatReadout.text = ''
+	$Coords/LonReadout.text = ''
 	for child in $ScrollContainer/InspectorsGoHere.get_children():
 		$ScrollContainer/InspectorsGoHere.remove_child(child)
 		child.queue_free()
@@ -34,6 +37,7 @@ func _on_object_selected(object: Unit) -> void:
 	$HBoxContainer/Owner.text = connected_object.owning_player.name
 	$HBoxContainer/Owner.add_theme_color_override(\"font_color\", connected_object.owning_player.color)
 	$HBoxContainer/Subtype.text = connected_object.unit_subtype
+	$HBoxContainer/Model.text = connected_object.unit_model
 	update_coords(connected_object.world.get_coords_at_position(connected_object.global_position))
 	
 	for child in connected_object.get_children():
@@ -72,6 +76,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 2
+
+[node name="Model" type="Label" parent="HBoxContainer" unique_id=627301070]
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
 
 [node name="Subtype" type="Label" parent="HBoxContainer" unique_id=443206722]
 layout_mode = 2

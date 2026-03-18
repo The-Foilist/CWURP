@@ -14,10 +14,11 @@ const TIME_SCALE_MIN: float = 0.0625
 var pause: bool = false
 var time_scale: float = 1
 
-@onready var statblock = get_parent().data
+@onready var statblock = get_parent().data as StatblockScenario
 @onready var wind: Vector2 = statblock.wind
 @onready var sea_state: float = statblock.sea_state
 @onready var time: float = Time.get_unix_time_from_datetime_string(statblock.start_time)
+@onready var time_str: String = statblock.start_time
 
 
 signal paused(on: bool)
@@ -78,3 +79,4 @@ func _physics_process(delta: float) -> void:
 	if pause:
 		return
 	time += delta * time_scale
+	time_str = Time.get_datetime_string_from_unix_time(time, true)

@@ -13,7 +13,7 @@ func appear(on: bool) -> void:
 
 
 func _unhandled_input(event) -> void:
-	if event.is_action_pressed(\"menu_toggle_menu\"):
+	if event.is_action_pressed(\"interface_toggle_menu\"):
 		appear(!visible)
 "
 

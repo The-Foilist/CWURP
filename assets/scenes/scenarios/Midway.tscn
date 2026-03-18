@@ -4,18 +4,23 @@
 [ext_resource type="Script" uid="uid://c8fgkm3heffsh" path="res://source/session/World.gd" id="1_hyi82"]
 [ext_resource type="Resource" uid="uid://c7pl8fujdnt4x" path="res://assets/data/scenarios/Midway.tres" id="2_hyi82"]
 [ext_resource type="Script" uid="uid://bftrxfdpnmoc1" path="res://source/session/Player.gd" id="2_nwdgp"]
+[ext_resource type="Script" uid="uid://b6cd6m2tnjuku" path="res://source/communication/CommsHandler.gd" id="3_mnf8x"]
 [ext_resource type="TileSet" uid="uid://cckahy4pq6bhu" path="res://assets/terrain/height_tile_set.tres" id="3_xxyv6"]
 [ext_resource type="TileSet" uid="uid://84dmuv6hxlnj" path="res://assets/terrain/terrain_tile_set.tres" id="4_82s1o"]
 [ext_resource type="Texture2D" uid="uid://17u3anddocft" path="res://assets/art/maps/Midway 10.png" id="4_d3jhq"]
-[ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/F4F-4.tscn" id="5_nwdgp"]
+[ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/F4F-3.tscn" id="5_nwdgp"]
 [ext_resource type="PackedScene" uid="uid://b4gbc3qhygee" path="res://assets/scenes/units/structures/MidwayAirbase.tscn" id="9_ro32k"]
 
-[node name="Scenario" type="Node" unique_id=1136243973 node_paths=PackedStringArray("world", "players")]
+[node name="Scenario" type="Node" unique_id=1136243973 node_paths=PackedStringArray("world", "comms_handler", "players")]
 script = ExtResource("1_d3jhq")
 data = ExtResource("2_hyi82")
 world = NodePath("World")
+comms_handler = NodePath("CommsHandler")
 players = [NodePath("Players/Neutral"), NodePath("Players/USA"), NodePath("Players/Japan")]
 metadata/_custom_type_script = "uid://do0u7818s1213"
+
+[node name="CommsHandler" type="Node" parent="." unique_id=1083023295]
+script = ExtResource("3_mnf8x")
 
 [node name="Players" type="Node" parent="." unique_id=1017854366]
 
@@ -24,9 +29,10 @@ script = ExtResource("2_nwdgp")
 color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
 
-[node name="USA" type="Node" parent="Players" unique_id=1020354510]
+[node name="USA" type="Node" parent="Players" unique_id=1020354510 node_paths=PackedStringArray("host_unit")]
 script = ExtResource("2_nwdgp")
 color = Color(0, 0, 1, 1)
+host_unit = NodePath("../../World/Object Layer/Midway Airbase")
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
 
 [node name="Japan" type="Node" parent="Players" unique_id=971008793]
@@ -76,17 +82,18 @@ texture = ExtResource("4_d3jhq")
 
 [node name="Object Layer" type="Node2D" parent="World" unique_id=2098905238]
 
-[node name="TestAirbase" parent="World/Object Layer" unique_id=360373803 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("9_ro32k")]
+[node name="Midway Airbase" parent="World/Object Layer" unique_id=360373803 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("9_ro32k")]
 position = Vector2(1934, -1420)
 collision_layer = 3
 collision_mask = 0
+sync_to_physics = false
 world = NodePath("../..")
 owning_player = NodePath("../../../Players/USA")
 starting_data = {
 "height": 1.0
 }
 
-[node name="TestAirplane" parent="World/Object Layer/TestAirbase/Runway3" parent_id_path=PackedInt32Array(360373803, 20198234) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("5_nwdgp")]
+[node name="VMF-221-1" parent="World/Object Layer/Midway Airbase/Runway3" parent_id_path=PackedInt32Array(360373803, 20198234) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("5_nwdgp")]
 position = Vector2(816, 263)
 rotation = -0.7853982
 collision_mask = 6
@@ -96,4 +103,4 @@ owning_player = NodePath("../../../../../Players/USA")
 [node name="UI Layer" type="Node2D" parent="World" unique_id=1511224957]
 z_index = 1000
 
-[editable path="World/Object Layer/TestAirbase"]
+[editable path="World/Object Layer/Midway Airbase"]

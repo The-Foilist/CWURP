@@ -36,6 +36,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			zoom *= 0.8
 			translate((position - get_global_mouse_position()) * 0.2)
 			zoom_level += 1
+	if event.is_action_pressed("camera_follow"):
+		var target = Global.local_controller.player.selection
+		if following == target:
+			following = null
+		else:
+			following = target
 
 
 func _process(delta: float) -> void:
@@ -45,6 +51,9 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("camera_rotate_right"):
 		rot_dir -= 1
 	rotate(rot_dir * PlayerSettings.camera_rotation_speed * delta)
+	
+	if following:
+		global_position = following.global_position
 	
 	var pan_dir := Vector2(0,0)
 	if Input.is_action_pressed("camera_pan_up"):

@@ -1,6 +1,7 @@
 # CWURP
 Carter's Weird Unnamed RTS Project
 
+## Intro
 Hi, I'm Carter, and this is my project. Here's the idea.
 
 Take a framework for an RTS game, and use it to model historical military scenarios as realistically as possible, with a focus on the Pacific theatre of World War II.

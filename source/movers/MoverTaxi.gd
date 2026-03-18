@@ -62,12 +62,16 @@ func move(delta: float) -> void:
 	# Translation
 	ground_speed += clamp(target_speed - ground_speed, -deceleration * delta, acceleration * delta)
 	var out_vel = ground_speed * -unit.global_transform.y
-	var out_vel_norm = out_vel.normalized()
 	var airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:
 		airspeed_vec += runway.velocity
-	air_speed = airspeed_vec.project(out_vel_norm).length()
-	crosswind = airspeed_vec.slide(out_vel_norm).length()
+	if out_vel.length_squared() == 0:
+		air_speed = 0
+		crosswind = 0
+	else:
+		var out_vel_norm = out_vel.normalized()
+		air_speed = airspeed_vec.project(out_vel_norm).length()
+		crosswind = airspeed_vec.slide(out_vel_norm).length()
 	
 	unit.rotate(deg_to_rad(out_rot))
 	unit.translate(out_vel * delta)

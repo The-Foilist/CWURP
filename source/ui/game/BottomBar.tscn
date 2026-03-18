@@ -1,7 +1,55 @@
 [gd_scene format=3 uid="uid://dbe6xhfbyuo4s"]
 
+[ext_resource type="RichTextEffect" uid="uid://cu7kmhs4xtot5" path="res://source/communication/MessageSender.tres" id="1_4ke8n"]
+[ext_resource type="Script" uid="uid://djb85sd0vnpx4" path="res://source/ui/game/MessageLog.gd" id="1_rv2dq"]
+[ext_resource type="RichTextEffect" uid="uid://br30fchj1qyx7" path="res://source/communication/MessageReceiver.tres" id="2_0lfpp"]
+[ext_resource type="RichTextEffect" uid="uid://7qs4odf4ttma" path="res://source/communication/MessageTimestamp.tres" id="3_2en8x"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfoon"]
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+
+[sub_resource type="GDScript" id="GDScript_77e2e"]
+script/source = "extends HBoxContainer
+
+var recipient: Node
+
+
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"interface_message\"):
+		$Recipient.focus_mode = Control.FOCUS_ALL
+		$Recipient.edit()
+
+
+func _on_recipient_text_submitted(new_text) -> void:
+	$Recipient.focus_mode = Control.FOCUS_CLICK
+	$Message.focus_mode = Control.FOCUS_ALL
+	$Message.edit()
+
+
+func _on_message_text_submitted(new_text) -> void:
+	$Message.clear()
+	$Recipient.focus_mode = Control.FOCUS_CLICK
+	$Message.focus_mode = Control.FOCUS_CLICK
+	if recipient:
+		Global.local_controller.player.host_unit.comms.send(recipient.comms, new_text)
+	else:
+		Global.local_controller.player.host_unit.comms.send(null, new_text)
+
+
+func _on_editing_toggled(toggled_on) -> void:
+	if $Recipient.is_editing() || $Message.is_editing():
+		return
+	$Recipient.focus_mode = Control.FOCUS_CLICK
+	$Message.focus_mode = Control.FOCUS_CLICK
+
+
+func _on_object_selected(object: Node) -> void:
+	recipient = object
+	if !recipient:
+		$Recipient.clear()
+		return
+	$Recipient.text = object.display_name
+"
 
 [node name="BottomBar" type="PanelContainer" unique_id=544570086]
 custom_minimum_size = Vector2(0, 240)
@@ -28,9 +76,15 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
+bbcode_enabled = true
+scroll_following = true
+custom_effects = [ExtResource("1_4ke8n"), ExtResource("2_0lfpp"), ExtResource("3_2en8x")]
+meta_underlined = false
+script = ExtResource("1_rv2dq")
 
 [node name="MessageInput" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=921243936]
 layout_mode = 2
+script = SubResource("GDScript_77e2e")
 
 [node name="Recipient" type="LineEdit" parent="MarginContainer/VBoxContainer/MessageInput" unique_id=1698978969]
 custom_minimum_size = Vector2(84, 0)
@@ -83,3 +137,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Filters"
+
+[connection signal="editing_toggled" from="MarginContainer/VBoxContainer/MessageInput/Recipient" to="MarginContainer/VBoxContainer/MessageInput" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/MessageInput/Recipient" to="MarginContainer/VBoxContainer/MessageInput" method="_on_recipient_text_submitted"]
+[connection signal="editing_toggled" from="MarginContainer/VBoxContainer/MessageInput/Message" to="MarginContainer/VBoxContainer/MessageInput" method="_on_editing_toggled"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/MessageInput/Message" to="MarginContainer/VBoxContainer/MessageInput" method="_on_message_text_submitted"]

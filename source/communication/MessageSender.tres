@@ -1,0 +1,6 @@
+[gd_resource type="RichTextEffect" format=3 uid="uid://cu7kmhs4xtot5"]
+
+[ext_resource type="Script" uid="uid://dnqr67l5b5740" path="res://source/communication/Sender.gd" id="1_qgh7f"]
+
+[resource]
+script = ExtResource("1_qgh7f")
