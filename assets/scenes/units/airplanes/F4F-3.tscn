@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://7uylju2qcagk" path="res://assets/data/units/airplanes/F4F-3.tres" id="2_maftt"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="3_maftt"]
 [ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="3_wonmq"]
+[ext_resource type="Script" uid="uid://dbnu2g6ljgmdh" path="res://source/ai/Actor.gd" id="3_x7nmy"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]
 [ext_resource type="PackedScene" uid="uid://cy5uplhmkyf20" path="res://source/ui/game/markers/MarkerAirplane.tscn" id="6_dplwq"]
@@ -22,9 +23,16 @@ metadata/_custom_type_script = "uid://bndthe27a56xh"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
 polygon = PackedVector2Array(-1, -4, 1, -4, 1, -3, 6, -2, 6, -1, 1, 0, 1, 3, 2, 3, 2, 4, 0, 4, -2, 4, -2, 3, -1, 3, -1, 0, -6, -1, -6, -2, -1, -3)
 
-[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit")]
+[node name="Pilot" type="Node" parent="." unique_id=509528187 node_paths=PackedStringArray("unit", "comms")]
+script = ExtResource("3_x7nmy")
+unit = NodePath("..")
+comms = NodePath("../Comms")
+metadata/_custom_type_script = "uid://dbnu2g6ljgmdh"
+
+[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actor")]
 script = ExtResource("3_maftt")
 unit = NodePath("..")
+actor = NodePath("../Pilot")
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
 [node name="MoverAirplane" type="Node" parent="." unique_id=609073092 node_paths=PackedStringArray("taxi_mover", "unit")]
@@ -44,6 +52,5 @@ scale = Vector2(0.0263, 0.0263)
 texture = ExtResource("5_17b7k")
 
 [node name="Marker" parent="." unique_id=169493972 node_paths=PackedStringArray("unit") instance=ExtResource("6_dplwq")]
-visible = true
 unit = NodePath("..")
 scale_threshold = 0.15

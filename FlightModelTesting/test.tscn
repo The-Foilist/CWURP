@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://bquc7lj1xt25r"]
+
+[ext_resource type="Texture2D" uid="uid://dal845qbrx11l" path="res://FlightModelTesting/F4F Side View.png" id="1_ktm03"]
+
+[sub_resource type="GDScript" id="GDScript_itwft"]
+script/source = "extends GridContainer
+
+@export var plane: Sprite2D
+
+
+func _process(delta):
+	$ALTReadout.text = \"%.0f \" % (plane.altitude / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+	$PitchReadout.text = \"%.1f °\" % plane.pitch_angle
+	$TASReadout.text = \"%.1f \" % (plane.tas / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+	$VAngleReadout.text = \"%.1f °\" % plane.vel_angle
+"
+
+[sub_resource type="GDScript" id="GDScript_ktm03"]
+script/source = "extends Sprite2D
+
+const GRAVITY: float = 9.81
+
+@export var mass: float
+@export var engine_power: float
+@export var drag_coef: float
+
+var power_setting: float = 1
+
+var facing: Vector2 = Vector2(1,0)
+var up: Vector2 = Vector2(0,1)
+var velocity: Vector2 = Vector2(100,0)
+var altitude: float = 1000
+var pitch_angle: float = 0
+var vel_angle: float = 0
+var tas: float = 0
+
+
+func get_air_density_at_height(altitude: float) -> float:
+	return pow(0.847, altitude / 1524)
+
+
+func _physics_process(delta):
+	var air_density = get_air_density_at_height(altitude)
+	
+	# Weight pulls you down
+	velocity += Vector2(0,-1) * GRAVITY * delta
+
+	# Engine pushes you forward
+	velocity += facing * engine_power * power_setting * air_density / mass * delta
+	
+	# Lift pushes you up
+	velocity += up * GRAVITY * delta
+	
+	# Drag pulls you backward
+	velocity -= velocity * velocity.length() * drag_coef * air_density / mass * delta
+	
+	altitude += velocity.y * delta
+	
+	
+	pitch_angle = rad_to_deg(atan(facing.y/facing.x))
+	vel_angle = rad_to_deg(atan(velocity.y/velocity.x))
+	tas = velocity.length()
+	
+	rotation_degrees = -pitch_angle
+	print(facing)
+	print(pitch_angle)
+
+
+func _on_v_slider_value_changed(value):
+	pitch_angle = value * 90
+	facing = Vector2(cos(deg_to_rad(pitch_angle)), sin(deg_to_rad(pitch_angle)))
+	up = Vector2(-sin(deg_to_rad(pitch_angle)), cos(deg_to_rad(pitch_angle)))
+
+
+func _on_v_slider_2_value_changed(value):
+	power_setting = value
+"
+
+[node name="Test" type="Node2D" unique_id=1126413375]
+
+[node name="HBoxContainer" type="PanelContainer" parent="." unique_id=1398713572]
+offset_right = 244.0
+offset_bottom = 228.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=173903664]
+layout_mode = 2
+
+[node name="VSlider" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=558678541]
+layout_mode = 2
+size_flags_horizontal = 1
+min_value = -1.0
+max_value = 1.0
+step = 0.0
+
+[node name="VSlider2" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=106802948]
+layout_mode = 2
+size_flags_horizontal = 1
+max_value = 1.0
+step = 0.0
+value = 1.0
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/HBoxContainer" unique_id=1575535305 node_paths=PackedStringArray("plane")]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+script = SubResource("GDScript_itwft")
+plane = NodePath("../../../Plane")
+
+[node name="ALTLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=304999264]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALT: "
+horizontal_alignment = 2
+
+[node name="ALTReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=987773242]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitchLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=2115146270]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pitch: "
+horizontal_alignment = 2
+
+[node name="PitchReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=600136347]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TASLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=403333953]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TAS: "
+horizontal_alignment = 2
+
+[node name="TASReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=1022576132]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VAngleLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=313506870]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "V angle: "
+horizontal_alignment = 2
+
+[node name="VAngleReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=477277993]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Plane" type="Sprite2D" parent="." unique_id=453081256]
+position = Vector2(950, 484)
+rotation = -1.1082841
+texture = ExtResource("1_ktm03")
+script = SubResource("GDScript_ktm03")
+mass = 2423.0
+engine_power = 15376.0
+drag_coef = 1.0
+
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer/VSlider" to="Plane" method="_on_v_slider_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer/VSlider2" to="Plane" method="_on_v_slider_2_value_changed"]

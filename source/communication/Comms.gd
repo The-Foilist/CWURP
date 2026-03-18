@@ -3,6 +3,7 @@ extends Node
 
 
 @export var unit: Unit
+@export var actor: Actor
 
 
 func send(recipient: Comms = null, message: String = ''):
@@ -11,4 +12,10 @@ func send(recipient: Comms = null, message: String = ''):
 
 
 func receive(message: Message):
-	print(unit.name + ' received \"' + message.content + '\" from ' + message.sender.unit.name)
+	if message.content == 'die':
+		unit.kill()
+		return
+	if actor:
+		if message.sender.unit.owning_player == unit.owning_player:
+			actor.parse_order(message.content)
+	

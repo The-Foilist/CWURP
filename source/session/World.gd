@@ -4,7 +4,7 @@ extends Node2D
 
 const TIME_SCALE_MAX: float = 256
 const TIME_SCALE_MIN: float = 0.0625
-
+const GRAVITY: float = 9.81
 
 @export var height_grids: Array[TileMapLayer]
 @export var terrain_grids: Array[TileMapLayer]
@@ -43,6 +43,7 @@ func get_coords_at_position(point: Vector2) -> Vector2:
 	var lon = statblock.origin_latlong.y + point.x / 111320 * cos(deg_to_rad(lat))
 	return Vector2(lat,lon)
 
+
 func get_height_at_position(point: Vector2) -> float:
 	for height_grid in height_grids:
 		var cell = height_grid.local_to_map(height_grid.to_local(point))
@@ -51,6 +52,7 @@ func get_height_at_position(point: Vector2) -> float:
 			return data.get_custom_data('height')
 	return -INF
 
+
 func get_terrain_at_position(point: Vector2) -> int:
 	for terrain_grid in terrain_grids:
 		var cell = terrain_grid.local_to_map(terrain_grid.to_local(point))
@@ -58,6 +60,7 @@ func get_terrain_at_position(point: Vector2) -> int:
 		if data:
 			return data.get_custom_data('terrain')
 	return 0
+
 
 # Get all data at once
 func get_data_at_position(point: Vector2) -> Dictionary:
@@ -73,6 +76,10 @@ func get_data_at_position(point: Vector2) -> Dictionary:
 	out_dict['height'] = get_height_at_position(point)
 	out_dict['terrain'] = get_terrain_at_position(point)
 	return out_dict
+
+
+func get_air_density_at_height(height: float) -> float:
+	return pow(0.847, height / 1524)
 
 
 func _physics_process(delta: float) -> void:

@@ -5,7 +5,7 @@
 
 [node name="Marker" type="Area2D" unique_id=1183166109]
 visible = false
-z_index = 1001
+z_index = 1004
 collision_mask = 0
 monitoring = false
 monitorable = false

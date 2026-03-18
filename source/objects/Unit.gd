@@ -17,12 +17,13 @@ var unit_model: String = ''
 
 var height: float = 0
 var speed: float = 0
+var mass: float
 
-
-signal died
+signal died(unit: Unit)
 
 
 func _ready() -> void:
+	died.connect(Global.scenario._on_unit_died)
 	unit_type = statblock.type
 	unit_model = statblock.model
 	if "subtype" in statblock:
@@ -38,6 +39,6 @@ func _ready() -> void:
 
 
 func kill() -> void:
-	emit_signal("died")
+	emit_signal("died", self)
 	get_parent().remove_child(self)
 	queue_free()

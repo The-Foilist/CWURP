@@ -33,7 +33,7 @@ func _ready() -> void:
 func liftoff() -> void:
 	airborne_mover.air_speed = air_speed
 	airborne_mover.target_speed = INF
-	airborne_mover.target_altitude = INF
+	airborne_mover.target_pitch = 5
 	airborne_mover.velocity = ground_speed * -unit.global_transform.y
 	switch_mover(airborne_mover)
 	if runway:
@@ -46,7 +46,6 @@ func liftoff() -> void:
 func move(delta: float) -> void:
 	if runway:
 		unit.height = runway.height
-		pass
 	else:
 		if pos_data['terrain'] not in allowed_terrains:
 			unit.kill()

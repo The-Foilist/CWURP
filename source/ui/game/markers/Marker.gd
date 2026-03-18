@@ -13,7 +13,7 @@ func _ready() -> void:
 	Global.world.ui_layer.add_child.call_deferred(self)
 
 
-func _on_unit_died() -> void:
+func _on_unit_died(unit) -> void:
 	get_parent().remove_child(self)
 	queue_free()
 

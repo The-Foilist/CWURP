@@ -16,8 +16,13 @@ var recipient: Node
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(\"interface_message\"):
-		$Recipient.focus_mode = Control.FOCUS_ALL
-		$Recipient.edit()
+		if !Global.local_controller.player.selection:
+			$Recipient.focus_mode = Control.FOCUS_ALL
+			$Recipient.edit()
+			return
+		$Recipient.focus_mode = Control.FOCUS_CLICK
+		$Message.focus_mode = Control.FOCUS_ALL
+		$Message.edit()
 
 
 func _on_recipient_text_submitted(new_text) -> void:
@@ -87,16 +92,20 @@ layout_mode = 2
 script = SubResource("GDScript_77e2e")
 
 [node name="Recipient" type="LineEdit" parent="MarginContainer/VBoxContainer/MessageInput" unique_id=1698978969]
-custom_minimum_size = Vector2(84, 0)
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-focus_mode = 0
+focus_neighbor_right = NodePath("../Message")
+focus_next = NodePath("../Message")
+focus_mode = 1
 placeholder_text = "Recipient"
 expand_to_text_length = true
 
 [node name="Message" type="LineEdit" parent="MarginContainer/VBoxContainer/MessageInput" unique_id=431379863]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
+focus_neighbor_left = NodePath("../Recipient")
+focus_previous = NodePath("../Recipient")
+focus_mode = 1
 placeholder_text = "Type message here"
 
 [node name="FilterButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=690266813]

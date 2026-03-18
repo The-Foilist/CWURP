@@ -3,7 +3,7 @@ extends Mover
 
 @export var taxi_mover: MoverTaxi
 
-var airspeed_min: float
+var stall_speed: float
 var airspeed_max: float
 var acceleration: float
 var climb_rate: float
@@ -12,17 +12,18 @@ var turn_rate: float
 
 var air_speed: float
 var velocity: Vector2
+var pitch_angle: float
 var runway: Unit
 
 @export var target_speed: float
 @export var target_heading: float
-@export var target_altitude: float
+@export var target_pitch: float
 
 
 func _ready() -> void:
 	super()
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
-	airspeed_min = unit.statblock.min_speed
+	stall_speed = unit.statblock.min_speed
 	airspeed_max = unit.statblock.max_speed
 	acceleration = unit.statblock.acceleration
 	climb_rate = unit.statblock.climb_rate
@@ -49,8 +50,22 @@ func land() -> void:
 
 
 func move(delta: float) -> void:
-	unit.height += clamp(target_altitude - unit.height, -climb_rate * delta, climb_rate * delta)
-	unit.height = min(unit.height, ceiling)
+	# If you go too slow, you start to fall
+	if air_speed < stall_speed:
+		if unit.speed == 0:
+			pitch_angle = -90
+		else:
+			pitch_angle -= rad_to_deg(atan(World.GRAVITY * delta / unit.speed))
+	else:
+		pitch_angle += clamp(target_pitch - pitch_angle, -turn_rate * delta, turn_rate * delta)
+	
+	# Gravity slows you down when you climb and speeds you up when you dive
+	var grav = World.GRAVITY * sin(deg_to_rad(pitch_angle))
+	air_speed += clamp(target_speed - air_speed, -(acceleration + grav) * delta, (acceleration - grav) * delta)
+	air_speed = clamp(air_speed, 0, airspeed_max)
+	
+	unit.height += air_speed * sin(deg_to_rad(pitch_angle)) * delta
+	
 	if unit.height < max(pos_data['height'], 0):
 		unit.kill()
 		return
@@ -58,10 +73,7 @@ func move(delta: float) -> void:
 	var heading_diff = fposmod(target_heading - unit.global_rotation_degrees + 180, 360) - 180
 	var out_rot = clamp(heading_diff, -turn_rate * delta, turn_rate * delta)
 	
-	air_speed += clamp(target_speed - air_speed, -acceleration * delta, acceleration * delta)
-	air_speed = clamp(air_speed, airspeed_min, airspeed_max)
-	
-	velocity = air_speed * -unit.global_transform.y + pos_data['wind']
+	velocity = air_speed * cos(deg_to_rad(pitch_angle)) * -unit.global_transform.y + pos_data['wind']
 	unit.speed = velocity.length()
 	
 	unit.rotate(deg_to_rad(out_rot))

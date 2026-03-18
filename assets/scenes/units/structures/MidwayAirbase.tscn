@@ -18,6 +18,10 @@ script = ExtResource("6_7onyu")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1460954005]
+scale = Vector2(10, 10)
+texture = ExtResource("2_34slg")
+
 [node name="Runway1" type="StaticBody2D" parent="." unique_id=961199835 node_paths=PackedStringArray("unit")]
 collision_layer = 3
 collision_mask = 0
@@ -27,6 +31,7 @@ unit = NodePath("..")
 metadata/_custom_type_script = "uid://bbgst0tsgctab"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway1" unique_id=9336512]
+visible = false
 polygon = PackedVector2Array(651, -137, 696, -4, -844, 507, -889, 380)
 
 [node name="Runway2" type="StaticBody2D" parent="." unique_id=405170214 node_paths=PackedStringArray("unit")]
@@ -38,6 +43,7 @@ unit = NodePath("..")
 metadata/_custom_type_script = "uid://bbgst0tsgctab"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway2" unique_id=1009383737]
+visible = false
 polygon = PackedVector2Array(429, -556, 533, -465, -435, 553, -533, 455)
 
 [node name="Runway3" type="StaticBody2D" parent="." unique_id=20198234 node_paths=PackedStringArray("unit")]
@@ -49,13 +55,9 @@ unit = NodePath("..")
 metadata/_custom_type_script = "uid://bbgst0tsgctab"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway3" unique_id=1095419138]
+visible = false
 polygon = PackedVector2Array(92, -380, 191, -478, 883, 235, 784, 330)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1460954005]
-scale = Vector2(10, 10)
-texture = ExtResource("2_34slg")
-
 [node name="Marker" parent="." unique_id=1183166109 node_paths=PackedStringArray("unit") instance=ExtResource("5_7xtov")]
-visible = true
 unit = NodePath("..")
 scale_threshold = 20.0

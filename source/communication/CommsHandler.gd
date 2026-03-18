@@ -14,7 +14,6 @@ signal message_logged(content: String)
 
 func _ready() -> void:
 	message_logged.connect(Global.local_controller.ui_message_log._add_message)
-	
 
 
 func wrap_name(object: Node) -> String:
@@ -29,6 +28,7 @@ func wrap_name(object: Node) -> String:
 
 
 func direct_message_player(player: Player, message: String):
+	message = '[timestamp][%s][/timestamp] ' % Global.world.time_str + message
 	player.message_log.append(message)
 	if Global.local_controller.player == player:
 		Global.local_controller.ui_message_log._add_message(message)
@@ -55,8 +55,6 @@ func transmit(message: Message):
 	logging_players.append(message.sender.unit.owning_player)
 	
 	if message.recipient:
-		message.recipient.receive(message)
-		
 		# If the sender and recipient are owned by the same player, don't log the message twice
 		if logging_players[0] != message.recipient.unit.owning_player:
 			logging_players.append(message.recipient.unit.owning_player)
@@ -65,3 +63,6 @@ func transmit(message: Message):
 		player.message_log.append(display_text)
 		if player == Global.local_controller.player:
 			emit_signal('message_logged', display_text)
+	
+	if message.recipient:
+		message.recipient.receive(message)

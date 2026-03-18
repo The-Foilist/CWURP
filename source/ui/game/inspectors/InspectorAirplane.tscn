@@ -20,19 +20,23 @@ func _process(delta) -> void:
 	if linked_object.active:
 		pos_data = linked_object.pos_data
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(linked_object.unit.global_rotation_degrees, 360)
-		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/PitchReadout.text = \"%.1f °\" % linked_object.pitch_angle
+		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
-		$GridContainer/MSLReadout.text = \"%.0f \" % (taxi_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-		$GridContainer/AGLReadout.text = \"0 \" + PlayerSettings.altitude_units
 		$GridContainer/TASReadout.text = \"%.1f \" % (taxi_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (taxi_mover.ground_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/PitchReadout.text = \"0.0 °\"
+		$GridContainer/MSLReadout.text = \"%.0f \" % (taxi_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$GridContainer/AGLReadout.text = \"0 \" + PlayerSettings.altitude_units
 "
 
 [node name="InspectorAirplane" type="VBoxContainer" unique_id=1676557818]
+offset_right = 298.0
+offset_bottom = 117.0
 size_flags_horizontal = 3
 script = SubResource("GDScript_lnjdq")
 
@@ -81,6 +85,17 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
+[node name="PitchLabel" type="Label" parent="GridContainer" unique_id=1534425186]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Pitch: "
+horizontal_alignment = 2
+
+[node name="PitchReadout" type="Label" parent="GridContainer" unique_id=1557782271]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
 [node name="AGLLabel" type="Label" parent="GridContainer" unique_id=211403183]
 layout_mode = 2
 size_flags_vertical = 6
@@ -99,17 +114,6 @@ text = "MSL: "
 horizontal_alignment = 2
 
 [node name="MSLReadout" type="Label" parent="GridContainer" unique_id=464781691]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-
-[node name="VSLabel" type="Label" parent="GridContainer" unique_id=1534425186]
-layout_mode = 2
-size_flags_vertical = 6
-text = "VS:  "
-horizontal_alignment = 2
-
-[node name="VSReadout" type="Label" parent="GridContainer" unique_id=1557782271]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
