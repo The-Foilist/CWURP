@@ -14,17 +14,24 @@ signal message_logged(content: String)
 
 func _ready() -> void:
 	message_logged.connect(Global.local_controller.ui_message_log._add_message)
+	
 
 
 func wrap_name(object: Node) -> String:
 	if object is UnitComponent:
 		object = object.unit
-	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.display_name]
+	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.name]
 	if object is Player:
 		out_string = '[color=#%s]%s[/color]' % [object.color.to_html(false), out_string]
-	if (object is Unit):
+	if object is Unit:
 		out_string = '[color=#%s]%s[/color]' % [object.owning_player.color.to_html(false), out_string]
 	return out_string
+
+
+func direct_message_player(player: Player, message: String):
+	player.message_log.append(message)
+	if Global.local_controller.player == player:
+		Global.local_controller.ui_message_log._add_message(message)
 
 
 func transmit(message: Message):
