@@ -8,6 +8,7 @@ extends Node
 @export var players: Array[Player]
 var units = []
 
+
 func _ready() -> void:
 	for player in players:
 		var out_str = "Welcome to Carter's Weird Unnamed RTS Project. You are playing as %s." % comms_handler.wrap_name(player)

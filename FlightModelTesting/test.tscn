@@ -8,11 +8,13 @@ script/source = "extends GridContainer
 @export var plane: Sprite2D
 
 
-func _process(delta):
+func _process(_delta):
 	$ALTReadout.text = \"%.0f \" % (plane.altitude / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-	$PitchReadout.text = \"%.1f °\" % plane.pitch_angle
+	$PitchReadout.text = \"%.2f °\" % plane.pitch_angle
 	$TASReadout.text = \"%.1f \" % (plane.tas / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-	$VAngleReadout.text = \"%.1f °\" % plane.vel_angle
+	$VAngleReadout.text = \"%.2f °\" % plane.vel_angle
+	$AOAReadout.text = \"%.2f °\" % plane.angle_of_attack
+	$ThrustReadout.text = \"%.1f\" % (plane.engine_power * plane.power_setting)
 "
 
 [sub_resource type="GDScript" id="GDScript_ktm03"]
@@ -20,56 +22,65 @@ script/source = "extends Sprite2D
 
 const GRAVITY: float = 9.81
 
+
+@export var pitch_slider: VSlider
+@export var power_slider: VSlider
+
 @export var mass: float
-@export var engine_power: float
-@export var drag_coef: float
+@export var twr: float
+@export var wing_area: float
+@export var zero_lift_drag_coef: float
+@export var induced_drag_coef: float
+@export var lift_coef: float
+@export var max_aoa: float
+@export var max_pitch_change: float
 
 var power_setting: float = 1
 
 var facing: Vector2 = Vector2(1,0)
 var up: Vector2 = Vector2(0,1)
-var velocity: Vector2 = Vector2(100,0)
-var altitude: float = 1000
+var velocity: Vector2 = Vector2(124.2771,0)
+var altitude: float = 0
 var pitch_angle: float = 0
 var vel_angle: float = 0
 var tas: float = 0
-
-
-func get_air_density_at_height(altitude: float) -> float:
-	return pow(0.847, altitude / 1524)
-
+var angle_of_attack: float = 0
+@onready var engine_power: float = twr * GRAVITY * mass
 
 func _physics_process(delta):
-	var air_density = get_air_density_at_height(altitude)
+	var air_density = 1.225 * pow(0.847, altitude / 1524)
+
+	var vel = velocity
 	
 	# Weight pulls you down
 	velocity += Vector2(0,-1) * GRAVITY * delta
-
+	
 	# Engine pushes you forward
 	velocity += facing * engine_power * power_setting * air_density / mass * delta
 	
 	# Lift pushes you up
-	velocity += up * GRAVITY * delta
+	var cl = max(0, lift_coef * angle_of_attack)
+	if angle_of_attack <= max_aoa:
+		velocity += up * vel.length_squared() * cl * air_density * wing_area * 0.5 / mass * delta
 	
 	# Drag pulls you backward
-	velocity -= velocity * velocity.length() * drag_coef * air_density / mass * delta
+	var cd = max(0, zero_lift_drag_coef + induced_drag_coef * cl**2)
+	velocity -= vel * vel.length() * cd * air_density * wing_area * 0.5 / mass * delta
 	
 	altitude += velocity.y * delta
-	
 	
 	pitch_angle = rad_to_deg(atan(facing.y/facing.x))
 	vel_angle = rad_to_deg(atan(velocity.y/velocity.x))
 	tas = velocity.length()
+	angle_of_attack = pitch_angle - vel_angle
 	
 	rotation_degrees = -pitch_angle
-	print(facing)
-	print(pitch_angle)
 
 
 func _on_v_slider_value_changed(value):
 	pitch_angle = value * 90
 	facing = Vector2(cos(deg_to_rad(pitch_angle)), sin(deg_to_rad(pitch_angle)))
-	up = Vector2(-sin(deg_to_rad(pitch_angle)), cos(deg_to_rad(pitch_angle)))
+	up = Vector2(-sin(deg_to_rad(vel_angle)), cos(deg_to_rad(vel_angle)))
 
 
 func _on_v_slider_2_value_changed(value):
@@ -79,20 +90,25 @@ func _on_v_slider_2_value_changed(value):
 [node name="Test" type="Node2D" unique_id=1126413375]
 
 [node name="HBoxContainer" type="PanelContainer" parent="." unique_id=1398713572]
-offset_right = 244.0
-offset_bottom = 228.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = 675.0
+offset_right = 377.0
+offset_bottom = 1080.0
+grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer" unique_id=173903664]
 layout_mode = 2
 
-[node name="VSlider" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=558678541]
+[node name="Pitch" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=558678541]
 layout_mode = 2
 size_flags_horizontal = 1
 min_value = -1.0
 max_value = 1.0
 step = 0.0
 
-[node name="VSlider2" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=106802948]
+[node name="Power" type="VSlider" parent="HBoxContainer/HBoxContainer" unique_id=106802948]
 layout_mode = 2
 size_flags_horizontal = 1
 max_value = 1.0
@@ -106,16 +122,6 @@ columns = 4
 script = SubResource("GDScript_itwft")
 plane = NodePath("../../../Plane")
 
-[node name="ALTLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=304999264]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "ALT: "
-horizontal_alignment = 2
-
-[node name="ALTReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=987773242]
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="PitchLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=2115146270]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -126,13 +132,13 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TASLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=403333953]
+[node name="ThrustLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=1466019824]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "TAS: "
+text = "Thrust: "
 horizontal_alignment = 2
 
-[node name="TASReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=1022576132]
+[node name="ThrustReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=526798030]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -146,14 +152,49 @@ horizontal_alignment = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Plane" type="Sprite2D" parent="." unique_id=453081256]
+[node name="TASLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=403333953]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TAS: "
+horizontal_alignment = 2
+
+[node name="TASReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=1022576132]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AOALabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=669290173]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AOA: "
+horizontal_alignment = 2
+
+[node name="AOAReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=1156959287]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ALTLabel" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=304999264]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ALT: "
+horizontal_alignment = 2
+
+[node name="ALTReadout" type="Label" parent="HBoxContainer/HBoxContainer/GridContainer" unique_id=987773242]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Plane" type="Sprite2D" parent="." unique_id=453081256 node_paths=PackedStringArray("pitch_slider", "power_slider")]
 position = Vector2(950, 484)
-rotation = -1.1082841
 texture = ExtResource("1_ktm03")
 script = SubResource("GDScript_ktm03")
-mass = 2423.0
-engine_power = 15376.0
-drag_coef = 1.0
+pitch_slider = NodePath("../HBoxContainer/HBoxContainer/Pitch")
+power_slider = NodePath("../HBoxContainer/HBoxContainer/Power")
+mass = 3127.519
+twr = 0.15
+wing_area = 24.15479
+zero_lift_drag_coef = 0.0200415
+induced_drag_coef = 0.0054897999999999995
+lift_coef = 0.1201249
+max_aoa = 18.0
 
-[connection signal="value_changed" from="HBoxContainer/HBoxContainer/VSlider" to="Plane" method="_on_v_slider_value_changed"]
-[connection signal="value_changed" from="HBoxContainer/HBoxContainer/VSlider2" to="Plane" method="_on_v_slider_2_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer/Pitch" to="Plane" method="_on_v_slider_value_changed"]
+[connection signal="value_changed" from="HBoxContainer/HBoxContainer/Power" to="Plane" method="_on_v_slider_2_value_changed"]

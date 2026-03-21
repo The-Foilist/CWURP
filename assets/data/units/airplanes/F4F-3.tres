@@ -5,12 +5,13 @@
 [resource]
 script = ExtResource("1_je6hn")
 subtype = "Fighter"
-min_speed = 50.0
-max_speed = 100.0
-acceleration = 5.0
-climb_rate = 2.0
-turn_rate = 10.0
-ceiling = 5000.0
+engine_thrust = 4602.0
+wing_area = 24.15479
+lift_coef = 0.1201249
+zero_lift_drag_coef = 0.0200415
+induced_drag_coef = 0.0054897999999999995
+max_angle_of_attack = 15.0
+roll_rate = 70.0
 taxi_speed = 5.0
 takeoff_speed = 60.0
 taxi_turn_rate = 10.0

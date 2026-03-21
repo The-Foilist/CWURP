@@ -79,7 +79,7 @@ func get_data_at_position(point: Vector2) -> Dictionary:
 
 
 func get_air_density_at_height(height: float) -> float:
-	return pow(0.847, height / 1524)
+	return 1.225 * pow(0.847, height / 1524)
 
 
 func _physics_process(delta: float) -> void:

@@ -27,8 +27,23 @@ func wrap_name(object: Node) -> String:
 	return out_string
 
 
+func parse_objects(text: String) -> String:
+	var regex = RegEx.create_from_string('\\[(.*?)\\]')
+	for result in regex.search_all(text):
+		var obj_name = result.get_string().lstrip('[').rstrip(']')
+		for unit in get_tree().get_nodes_in_group('units'):
+			if unit.name == obj_name:
+				text = text.replace(result.get_string(), wrap_name(unit))
+				break
+	return text
+
+
+func add_timestamp(text: String) -> String:
+	return '[timestamp][%s][/timestamp] ' % Global.world.time_str + text
+
+
 func direct_message_player(player: Player, message: String):
-	message = '[timestamp][%s][/timestamp] ' % Global.world.time_str + message
+	message = add_timestamp(message)
 	player.message_log.append(message)
 	if Global.local_controller.player == player:
 		Global.local_controller.ui_message_log._add_message(message)
@@ -38,6 +53,8 @@ func transmit(message: Message):
 	if message.content == '':
 		return
 	
+	message.content = parse_objects(message.content)
+	
 	# Format the message for logging
 	var front_text = '[sender]%s[/sender]: ' % wrap_name(message.sender.unit)
 	
@@ -46,7 +63,7 @@ func transmit(message: Message):
 		front_text = '[receiver]%s[/receiver] from ' % wrap_name(message.recipient.unit) + front_text
 	
 	# Add timestamp
-	front_text = '[timestamp][%s][/timestamp] ' % Global.world.time_str + front_text
+	front_text = add_timestamp(front_text)
 	
 	var display_text = front_text + message.content
 	

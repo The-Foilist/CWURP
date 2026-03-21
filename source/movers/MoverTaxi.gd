@@ -1,7 +1,7 @@
 class_name MoverTaxi
 extends Mover
 
-@export var airborne_mover: MoverAirplane
+@export var airborne_mover: MoverAirplane2
 
 var takeoff_speed: float
 var acceleration: float
@@ -11,6 +11,7 @@ var allowed_terrains: Array[int]
 
 var runway: Runway
 var ground_speed: float = 0
+var airspeed_vec: Vector2
 var air_speed: float = 0
 var crosswind: float = 0
 @export var target_speed: float
@@ -31,10 +32,7 @@ func _ready() -> void:
 
 
 func liftoff() -> void:
-	airborne_mover.air_speed = air_speed
-	airborne_mover.target_speed = INF
-	airborne_mover.target_pitch = 5
-	airborne_mover.velocity = ground_speed * -unit.global_transform.y
+	airborne_mover.start(airspeed_vec)
 	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
@@ -61,7 +59,7 @@ func move(delta: float) -> void:
 	# Translation
 	ground_speed += clamp(target_speed - ground_speed, -deceleration * delta, acceleration * delta)
 	var out_vel = ground_speed * -unit.global_transform.y
-	var airspeed_vec = (out_vel - pos_data['wind'])
+	airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:
 		airspeed_vec += runway.velocity
 	if out_vel.length_squared() == 0:

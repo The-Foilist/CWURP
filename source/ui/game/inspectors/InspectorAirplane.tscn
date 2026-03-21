@@ -12,19 +12,21 @@ func _ready() -> void:
 
 func _process(delta) -> void:
 	super(delta)
-	if not(linked_object is MoverAirplane):
+	if not(linked_object is MoverAirplane2):
 		get_parent().remove_child(self)
 		queue_free()
 		return
 	var pos_data: Dictionary
 	if linked_object.active:
-		pos_data = linked_object.pos_data
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(linked_object.unit.global_rotation_degrees, 360)
-		$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
 		$GridContainer/PitchReadout.text = \"%.1f °\" % linked_object.pitch_angle
+		$GridContainer/AOAReadout.text = \"%.1f °\" % linked_object.angle_of_attack
+		$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.true_airspeed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.vertical_speed / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
 		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(linked_object.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
 		$GridContainer/TASReadout.text = \"%.1f \" % (taxi_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
@@ -74,6 +76,28 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
+[node name="MSLLabel" type="Label" parent="GridContainer" unique_id=452847721]
+layout_mode = 2
+size_flags_vertical = 6
+text = "MSL: "
+horizontal_alignment = 2
+
+[node name="MSLReadout" type="Label" parent="GridContainer" unique_id=464781691]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="TrackLabel" type="Label" parent="GridContainer" unique_id=485800382]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Track: "
+horizontal_alignment = 2
+
+[node name="TrackReadout" type="Label" parent="GridContainer" unique_id=1050290163]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
 [node name="GSLabel" type="Label" parent="GridContainer" unique_id=1114451215]
 layout_mode = 2
 size_flags_vertical = 6
@@ -81,17 +105,6 @@ text = "GS: "
 horizontal_alignment = 2
 
 [node name="GSReadout" type="Label" parent="GridContainer" unique_id=168370529]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-
-[node name="PitchLabel" type="Label" parent="GridContainer" unique_id=1534425186]
-layout_mode = 2
-size_flags_vertical = 6
-text = "Pitch: "
-horizontal_alignment = 2
-
-[node name="PitchReadout" type="Label" parent="GridContainer" unique_id=1557782271]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
@@ -107,13 +120,35 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
-[node name="MSLLabel" type="Label" parent="GridContainer" unique_id=452847721]
+[node name="PitchLabel" type="Label" parent="GridContainer" unique_id=1534425186]
 layout_mode = 2
 size_flags_vertical = 6
-text = "MSL: "
+text = "Pitch: "
 horizontal_alignment = 2
 
-[node name="MSLReadout" type="Label" parent="GridContainer" unique_id=464781691]
+[node name="PitchReadout" type="Label" parent="GridContainer" unique_id=1557782271]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="AOALabel" type="Label" parent="GridContainer" unique_id=937761409]
+layout_mode = 2
+size_flags_vertical = 6
+text = "AOA: "
+horizontal_alignment = 2
+
+[node name="AOAReadout" type="Label" parent="GridContainer" unique_id=359921725]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+
+[node name="VSLabel" type="Label" parent="GridContainer" unique_id=322890415]
+layout_mode = 2
+size_flags_vertical = 6
+text = "VS: "
+horizontal_alignment = 2
+
+[node name="VSReadout" type="Label" parent="GridContainer" unique_id=1053277640]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6

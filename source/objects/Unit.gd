@@ -26,6 +26,7 @@ func _ready() -> void:
 	died.connect(Global.scenario._on_unit_died)
 	unit_type = statblock.type
 	unit_model = statblock.model
+	mass = statblock.mass
 	if "subtype" in statblock:
 		unit_subtype = statblock.subtype
 	if statblock.display_name == '':

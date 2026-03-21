@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_f1trn"]
 [ext_resource type="Resource" uid="uid://7uylju2qcagk" path="res://assets/data/units/airplanes/F4F-3.tres" id="2_maftt"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="3_maftt"]
-[ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="3_wonmq"]
 [ext_resource type="Script" uid="uid://dbnu2g6ljgmdh" path="res://source/ai/Actor.gd" id="3_x7nmy"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]
+[ext_resource type="Script" uid="uid://x2tyyu8xk8or" path="res://source/movers/MoverAirplane2.gd" id="5_x7nmy"]
 [ext_resource type="PackedScene" uid="uid://cy5uplhmkyf20" path="res://source/ui/game/markers/MarkerAirplane.tscn" id="6_dplwq"]
 
 [node name="Unit" type="AnimatableBody2D" unique_id=1560698402 node_paths=PackedStringArray("active_mover", "comms")]
@@ -35,15 +35,15 @@ unit = NodePath("..")
 actor = NodePath("../Pilot")
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
-[node name="MoverAirplane" type="Node" parent="." unique_id=609073092 node_paths=PackedStringArray("taxi_mover", "unit")]
-script = ExtResource("3_wonmq")
+[node name="MoverAirplane2" type="Node" parent="." unique_id=1882527911 node_paths=PackedStringArray("taxi_mover", "unit")]
+script = ExtResource("5_x7nmy")
 taxi_mover = NodePath("../MoverTaxi")
 unit = NodePath("..")
-metadata/_custom_type_script = "uid://dphobtg6r2gmu"
+metadata/_custom_type_script = "uid://x2tyyu8xk8or"
 
 [node name="MoverTaxi" type="Node" parent="." unique_id=595992666 node_paths=PackedStringArray("airborne_mover", "unit")]
 script = ExtResource("4_xsxjf")
-airborne_mover = NodePath("../MoverAirplane")
+airborne_mover = NodePath("../MoverAirplane2")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://b755tkehedofv"
 
