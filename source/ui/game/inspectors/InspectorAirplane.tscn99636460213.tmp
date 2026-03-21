@@ -18,7 +18,7 @@ func _process(delta) -> void:
 		return
 	var pos_data: Dictionary
 	if linked_object.active:
-		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(round(linked_object.unit.global_rotation_degrees), 360)
+		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(linked_object.unit.global_rotation_degrees, 360)
 		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
 		$GridContainer/PitchReadout.text = \"%.1f °\" % rad_to_deg(linked_object.pitch_angle)
 		$GridContainer/AOAReadout.text = \"%.1f °\" % rad_to_deg(linked_object.angle_of_attack)

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_je6hn")
 subtype = "Fighter"
-engine_thrust = 4602.0
+engine_thrust = 3756.7346939
 wing_area = 24.15479
 lift_coef = 0.1201249
 zero_lift_drag_coef = 0.0200415

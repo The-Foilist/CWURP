@@ -3,7 +3,6 @@ extends Mover
 
 @export var airborne_mover: MoverAirplane2
 
-var takeoff_speed: float
 var acceleration: float
 var deceleration: float
 var turn_rate: float
@@ -21,7 +20,6 @@ var crosswind: float = 0
 func _ready() -> void:
 	super()
 	target_heading = fposmod(unit.global_rotation_degrees, 360)
-	takeoff_speed = unit.statblock.takeoff_speed
 	acceleration = unit.statblock.taxi_acceleration
 	deceleration = unit.statblock.taxi_deceleration
 	turn_rate = unit.statblock.taxi_turn_rate
@@ -31,8 +29,14 @@ func _ready() -> void:
 		unit.height = runway.height
 
 
+func takeoff_speed(air_density, aoa) -> float:
+	var num = 2 * (unit.mass * world.GRAVITY - airborne_mover.engine_thrust * air_density * sin(aoa))
+	var denom = airborne_mover.lift_coef * rad_to_deg(aoa) * air_density * airborne_mover.wing_area
+	return sqrt(num/denom)
+
+
 func liftoff() -> void:
-	airborne_mover.start(airspeed_vec)
+	airborne_mover.start(airspeed_vec, airborne_mover.aoa_max * 0.5)
 	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
@@ -73,5 +77,5 @@ func move(delta: float) -> void:
 	unit.rotate(deg_to_rad(out_rot))
 	unit.translate(out_vel * delta)
 	
-	if air_speed >= takeoff_speed:
+	if air_speed >= takeoff_speed(pos_data['air_density'], airborne_mover.aoa_max * 0.5):
 		liftoff()

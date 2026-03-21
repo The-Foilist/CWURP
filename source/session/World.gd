@@ -62,24 +62,25 @@ func get_terrain_at_position(point: Vector2) -> int:
 	return 0
 
 
+func get_air_density_at_height(height: float) -> float:
+	return 1.225 * pow(0.847, height / 1524)
+
+
 # Get all data at once
-func get_data_at_position(point: Vector2) -> Dictionary:
+func get_data_at_position(point: Vector2, height: float) -> Dictionary:
 	var out_dict = {
 		'coords': Vector2(0,0),
 		'height': -INF,
 		'terrain': 'water',
 		'wind': wind,
-		'sea_state': sea_state
+		'air_density': 1.225
 	}
 	
 	out_dict['coords'] = get_coords_at_position(point)
 	out_dict['height'] = get_height_at_position(point)
 	out_dict['terrain'] = get_terrain_at_position(point)
+	out_dict['air_density'] = get_air_density_at_height(height)
 	return out_dict
-
-
-func get_air_density_at_height(height: float) -> float:
-	return 1.225 * pow(0.847, height / 1524)
 
 
 func _physics_process(delta: float) -> void:
