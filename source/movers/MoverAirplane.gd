@@ -3,7 +3,7 @@ extends Mover
 
 @export var taxi_mover: MoverTaxi
 
-var stall_speed: float
+var stall_speed: float = 10
 var airspeed_max: float
 var acceleration: float
 var climb_rate: float
@@ -23,17 +23,13 @@ var runway: Unit
 func _ready() -> void:
 	super()
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
-	stall_speed = unit.statblock.min_speed
-	airspeed_max = unit.statblock.max_speed
-	acceleration = unit.statblock.acceleration
-	climb_rate = unit.statblock.climb_rate
-	ceiling = unit.statblock.ceiling
-	turn_rate = unit.statblock.turn_rate
+	#stall_speed = unit.statblock.min_speed
+	#airspeed_max = unit.statblock.max_speed
+	#acceleration = unit.statblock.acceleration
+	#climb_rate = unit.statblock.climb_rate
+	#ceiling = unit.statblock.ceiling
+	#turn_rate = unit.statblock.turn_rate
 	active = false
-	if unit.starting_data:
-		if unit.starting_data['movement_type']:
-			if unit.starting_data['movement_type'] == Global.MovementTypes.Air:
-				active = true
 
 
 func land() -> void:

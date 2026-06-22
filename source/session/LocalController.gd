@@ -17,12 +17,13 @@ var hovered_object: Unit
 
 func _init() -> void:
 	Global.local_controller = self
-	player = Global.scenario.players[Global.player_slot]
 	mouse_intersect_params = PhysicsPointQueryParameters2D.new()
 	mouse_intersect_params.collide_with_areas = true
 	mouse_intersect_params.collision_mask = 1
 
-func _ready() -> void:
+
+func _on_start(scenario) -> void:
+	player = scenario.players[Global.player_slot]
 	cam.global_position = player.host_unit.global_position
 	player.selection_updated.connect(ui_selection._on_object_selected)
 	player.selection_updated.connect(ui_message_input._on_object_selected)

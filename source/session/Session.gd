@@ -2,14 +2,13 @@ class_name Session
 extends Node
 
 
-func _init() -> void:
-	Global.session = self
+func _ready() -> void:
 	var scenario = Global.scenario_scene.instantiate()
+	Global.local_controller = $LocalController
+	Global.session = self
 	Global.scenario = scenario
 	Global.world = scenario.world
-
-
-func _ready() -> void:
+	$LocalController._on_start(scenario)
 	add_child(Global.scenario)
 
 

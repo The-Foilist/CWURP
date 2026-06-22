@@ -1,7 +1,7 @@
 class_name MoverTaxi
 extends Mover
 
-@export var airborne_mover: MoverAirplane2
+@export var airborne_mover: MoverAirplane
 
 var acceleration: float
 var deceleration: float
@@ -29,14 +29,7 @@ func _ready() -> void:
 		unit.height = runway.height
 
 
-func takeoff_speed(air_density, aoa) -> float:
-	var num = 2 * (unit.mass * world.GRAVITY - airborne_mover.engine_thrust * air_density * sin(aoa))
-	var denom = airborne_mover.lift_coef * rad_to_deg(aoa) * air_density * airborne_mover.wing_area
-	return sqrt(num/denom)
-
-
 func liftoff() -> void:
-	airborne_mover.start(airspeed_vec, airborne_mover.aoa_max * 0.5)
 	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
@@ -77,5 +70,5 @@ func move(delta: float) -> void:
 	unit.rotate(deg_to_rad(out_rot))
 	unit.translate(out_vel * delta)
 	
-	if air_speed >= takeoff_speed(pos_data['air_density'], airborne_mover.aoa_max * 0.5):
+	if air_speed >= airborne_mover.stall_speed:
 		liftoff()

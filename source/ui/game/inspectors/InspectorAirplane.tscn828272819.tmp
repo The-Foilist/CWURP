@@ -19,13 +19,13 @@ func _process(delta) -> void:
 	var pos_data: Dictionary
 	if linked_object.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(round(linked_object.unit.global_rotation_degrees), 360)
-		#$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
+		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
 		$GridContainer/PitchReadout.text = \"%.1f °\" % rad_to_deg(linked_object.pitch_angle)
-		#$GridContainer/AOAReadout.text = \"%.1f °\" % rad_to_deg(linked_object.angle_of_attack)
-		#$GridContainer/RollReadout.text = \"%.1f °\" % rad_to_deg(linked_object.roll_angle)
-		#$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.true_airspeed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/AOAReadout.text = \"%.1f °\" % rad_to_deg(linked_object.angle_of_attack)
+		$GridContainer/RollReadout.text = \"%.1f °\" % rad_to_deg(linked_object.roll_angle)
+		$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.true_airspeed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		#$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.vertical_speed / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
+		$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.vertical_speed / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
 		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(linked_object.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
