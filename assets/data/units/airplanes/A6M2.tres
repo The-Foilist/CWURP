@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StatblockAirplane" format=3 uid="uid://bnb3j23ju0qd0"]
+
+[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_tilxb"]
+
+[resource]
+script = ExtResource("1_tilxb")
+subtype = "Fighter"
+engine_thrust = 4117.22
+drag_coef = 0.2
+taxi_speed = 5.0
+takeoff_speed = 60.0
+taxi_turn_rate = 10.0
+taxi_acceleration = 2.83
+taxi_deceleration = 10.0
+taxi_terrains = Array[int]([5, 4, 2])
+type = 3
+model = "A6M2"
+movement_types = Array[int]([0, 3])
+mass = 1652.0
+scene_path = "uid://bmwfl3ovf43li"
+metadata/_custom_type_script = "uid://gh7ubuiirsg0"

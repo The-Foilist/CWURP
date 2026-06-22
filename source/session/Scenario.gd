@@ -6,7 +6,6 @@ extends Node
 @export var world: World
 @export var comms_handler: CommsHandler
 @export var players: Array[Player]
-var units = []
 
 
 func _ready() -> void:
@@ -18,6 +17,5 @@ func _ready() -> void:
 
 
 func _on_unit_died(unit: Unit) -> void:
-	units.erase(unit)
 	var out_str = "%s has died." % comms_handler.wrap_name(unit)
 	comms_handler.direct_message_player(unit.owning_player, out_str)

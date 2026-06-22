@@ -12,12 +12,12 @@ var flight_time: float
 
 
 func move(delta: float) -> void:
-	var pos_data = world.get_data_at_position(unit.global_position)
+	var pos_data = world.get_data_at_position(unit.global_position, unit.height)
 	
 	velocity.y -= 9.81 * delta
 	
 	air_speed = velocity.length()
-	angle = atan(velocity.y/velocity.x)
+	angle = velocity.angle()
 	
 	var drag = drag_coef_linear + drag_coef_quadratic * air_speed
 	velocity -= velocity * drag * delta

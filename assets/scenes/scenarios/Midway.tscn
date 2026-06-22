@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/F4F-3.tscn" id="5_nwdgp"]
 [ext_resource type="PackedScene" uid="uid://b4gbc3qhygee" path="res://assets/scenes/units/structures/MidwayAirbase.tscn" id="9_ro32k"]
 
-[node name="Scenario" type="Node" unique_id=1136243973 node_paths=PackedStringArray("world", "comms_handler", "players") groups=["units"]]
+[node name="Scenario" type="Node" unique_id=1136243973 node_paths=PackedStringArray("world", "comms_handler", "players")]
 script = ExtResource("1_d3jhq")
 data = ExtResource("2_hyi82")
 world = NodePath("World")

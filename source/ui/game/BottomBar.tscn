@@ -17,24 +17,20 @@ var recipient: Node
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(\"interface_message\"):
 		if !Global.local_controller.player.selection:
-			$Recipient.focus_mode = Control.FOCUS_ALL
+			$Recipient.grab_focus()
 			$Recipient.edit()
 			return
-		$Recipient.focus_mode = Control.FOCUS_CLICK
-		$Message.focus_mode = Control.FOCUS_ALL
+		$Message.grab_focus()
 		$Message.edit()
 
 
 func _on_recipient_text_submitted(new_text) -> void:
-	$Recipient.focus_mode = Control.FOCUS_CLICK
-	$Message.focus_mode = Control.FOCUS_ALL
+	$Message.grab_focus()
 	$Message.edit()
 
 
 func _on_message_text_submitted(new_text) -> void:
 	$Message.clear()
-	$Recipient.focus_mode = Control.FOCUS_CLICK
-	$Message.focus_mode = Control.FOCUS_CLICK
 	if recipient:
 		Global.local_controller.player.host_unit.comms.send(recipient.comms, new_text)
 	else:
@@ -44,8 +40,6 @@ func _on_message_text_submitted(new_text) -> void:
 func _on_editing_toggled(_toggled_on) -> void:
 	if $Recipient.is_editing() || $Message.is_editing():
 		return
-	$Recipient.focus_mode = Control.FOCUS_CLICK
-	$Message.focus_mode = Control.FOCUS_CLICK
 
 
 func _on_object_selected(object: Node) -> void:

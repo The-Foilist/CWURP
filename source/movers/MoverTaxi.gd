@@ -30,6 +30,11 @@ func _ready() -> void:
 
 
 func liftoff() -> void:
+	airborne_mover.velocity.x = air_speed
+	airborne_mover.velocity.y = 0
+	airborne_mover.target_altitude = INF
+	airborne_mover.target_speed = INF
+	airborne_mover.target_heading = unit.global_rotation_degrees
 	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
@@ -39,6 +44,7 @@ func liftoff() -> void:
 
 
 func move(delta: float) -> void:
+	pos_data = world.get_data_at_position(unit.global_position, unit.height)
 	if runway:
 		unit.height = runway.height
 	else:
@@ -59,16 +65,11 @@ func move(delta: float) -> void:
 	airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:
 		airspeed_vec += runway.velocity
-	if out_vel.length_squared() == 0:
-		air_speed = 0
-		crosswind = 0
-	else:
-		var out_vel_norm = out_vel.normalized()
-		air_speed = airspeed_vec.project(out_vel_norm).length()
-		crosswind = airspeed_vec.slide(out_vel_norm).length()
+	air_speed = airspeed_vec.project(-unit.global_transform.y).length()
+	crosswind = airspeed_vec.slide(-unit.global_transform.y).length()
 	
 	unit.rotate(deg_to_rad(out_rot))
 	unit.translate(out_vel * delta)
 	
-	if air_speed >= airborne_mover.stall_speed:
+	if air_speed > airborne_mover.stall_speed * 1.225 / pos_data['air_density']:
 		liftoff()

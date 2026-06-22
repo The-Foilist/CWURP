@@ -19,23 +19,30 @@ func _process(delta) -> void:
 	var pos_data: Dictionary
 	if linked_object.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(round(linked_object.unit.global_rotation_degrees), 360)
-		#$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
+		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
 		$GridContainer/PitchReadout.text = \"%.1f °\" % rad_to_deg(linked_object.pitch_angle)
-		#$GridContainer/AOAReadout.text = \"%.1f °\" % rad_to_deg(linked_object.angle_of_attack)
-		#$GridContainer/RollReadout.text = \"%.1f °\" % rad_to_deg(linked_object.roll_angle)
-		#$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.true_airspeed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		if linked_object.stall:
+			$GridContainer/TASReadout.text = \"stall\"
+		else:
+			$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		#$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.vertical_speed / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
+		$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.velocity.y / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
 		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(linked_object.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
+		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
+		$GridContainer/PitchReadout.text = \"0.0 °\"
 		$GridContainer/TASReadout.text = \"%.1f \" % (taxi_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (taxi_mover.ground_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$GridContainer/PitchReadout.text = \"0.0 °\"
+		$GridContainer/VSReadout.text = \"0 \" + PlayerSettings.vertical_speed_units
 		$GridContainer/MSLReadout.text = \"%.0f \" % (taxi_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$GridContainer/AGLReadout.text = \"0 \" + PlayerSettings.altitude_units
 "
+
+[sub_resource type="LabelSettings" id="LabelSettings_joj2l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ue3kv"]
 
 [node name="InspectorAirplane" type="VBoxContainer" unique_id=1676557818]
 offset_right = 298.0
@@ -70,6 +77,7 @@ size_flags_vertical = 6
 layout_mode = 2
 size_flags_vertical = 6
 text = "TAS: "
+label_settings = SubResource("LabelSettings_joj2l")
 horizontal_alignment = 2
 
 [node name="TASReadout" type="Label" parent="GridContainer" unique_id=1202229684]
@@ -132,17 +140,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
-[node name="AOALabel" type="Label" parent="GridContainer" unique_id=937761409]
-layout_mode = 2
-size_flags_vertical = 6
-text = "AOA: "
-horizontal_alignment = 2
-
-[node name="AOAReadout" type="Label" parent="GridContainer" unique_id=359921725]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 6
-
 [node name="VSLabel" type="Label" parent="GridContainer" unique_id=322890415]
 layout_mode = 2
 size_flags_vertical = 6
@@ -155,13 +152,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 
-[node name="RollLabel" type="Label" parent="GridContainer" unique_id=1823978847]
+[node name="GridContainer2" type="GridContainer" parent="." unique_id=1057163442]
+layout_mode = 2
+columns = 4
+
+[node name="ThrottleLabel" type="Label" parent="GridContainer2" unique_id=1474527615]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Roll: "
+text = "POW:"
+label_settings = SubResource("LabelSettings_ue3kv")
 horizontal_alignment = 2
 
-[node name="RollReadout" type="Label" parent="GridContainer" unique_id=1744336256]
+[node name="ThrottleReadout" type="Label" parent="GridContainer2" unique_id=57470454]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 6
+text = "0.0 %"
+horizontal_alignment = 2

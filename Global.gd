@@ -64,7 +64,7 @@ var world: World
 
 
 func vec_to_br(vec: Vector2) -> Vector2:
-	return Vector2(fposmod(rad_to_deg(atan(vec.x / -vec.y)), 360), vec.length())
+	return Vector2(fposmod(rad_to_deg(vec.angle()) + 90, 360), vec.length())
 
 
 func br_to_vec(br: Vector2) -> Vector2:
