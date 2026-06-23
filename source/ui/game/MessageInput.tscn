@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://br838ibweh2j3"]
+
+[sub_resource type="GDScript" id="GDScript_77e2e"]
+script/source = "extends HBoxContainer
+
+var recipient: Node
+
+
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"interface_message\"):
+		if !Global.local_controller.player.selection:
+			$Recipient.grab_focus()
+			$Recipient.edit()
+			return
+		$Message.grab_focus()
+		$Message.edit()
+
+
+func _on_recipient_text_submitted(new_text) -> void:
+	$Message.grab_focus()
+	$Message.edit()
+
+
+func _on_message_text_submitted(new_text) -> void:
+	$Message.clear()
+	if recipient:
+		Global.local_controller.player.host_unit.comms.send(recipient.comms, new_text)
+	else:
+		Global.local_controller.player.host_unit.comms.send(null, new_text)
+
+
+func _on_editing_toggled(_toggled_on) -> void:
+	if $Recipient.is_editing() || $Message.is_editing():
+		return
+
+
+func _on_object_selected(object: Node) -> void:
+	recipient = object
+	if !recipient:
+		$Recipient.clear()
+		return
+	$Recipient.text = object.display_name
+"
+
+[node name="MessageInput" type="HBoxContainer" unique_id=783838697]
+script = SubResource("GDScript_77e2e")
+
+[node name="Recipient" type="LineEdit" parent="." unique_id=2087466173]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+focus_neighbor_right = NodePath("../Message")
+focus_next = NodePath("../Message")
+focus_mode = 1
+placeholder_text = "Recipient"
+expand_to_text_length = true
+
+[node name="Message" type="LineEdit" parent="." unique_id=1409146992]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Recipient")
+focus_previous = NodePath("../Recipient")
+focus_mode = 1
+placeholder_text = "Type message here"
+
+[connection signal="editing_toggled" from="Recipient" to="." method="_on_editing_toggled"]
+[connection signal="text_submitted" from="Recipient" to="." method="_on_recipient_text_submitted"]
+[connection signal="editing_toggled" from="Message" to="." method="_on_editing_toggled"]
+[connection signal="text_submitted" from="Message" to="." method="_on_message_text_submitted"]

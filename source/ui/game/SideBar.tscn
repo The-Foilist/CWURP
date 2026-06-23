@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://maw0wgexhjj6"]
 
+[ext_resource type="Script" uid="uid://byl3cr2sh8x8" path="res://source/ui/game/UnitTree.gd" id="1_6nrbg"]
 [ext_resource type="PackedScene" uid="uid://cgn3nu2ch7e0y" path="res://source/ui/game/Selection.tscn" id="1_jx6vb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l2vu"]
@@ -88,10 +89,12 @@ size_flags_vertical = 3
 current_tab = 1
 tab_focus_mode = 0
 
-[node name="Units" type="Tree" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=837101850]
+[node name="Units" type="Tree" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=125168720]
 visible = false
 layout_mode = 2
 focus_mode = 0
+script = ExtResource("1_6nrbg")
+metadata/_custom_type_script = "uid://byl3cr2sh8x8"
 metadata/_tab_index = 0
 
 [node name="Selection" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=1404051474 instance=ExtResource("1_jx6vb")]
@@ -136,3 +139,5 @@ size_flags_horizontal = 3
 focus_mode = 0
 text = "+"
 script = SubResource("GDScript_kqm7q")
+
+[connection signal="item_mouse_selected" from="MarginContainer/VBoxContainer/TabContainer/Units" to="MarginContainer/VBoxContainer/TabContainer/Units" method="_on_item_mouse_selected"]

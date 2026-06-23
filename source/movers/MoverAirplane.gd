@@ -50,7 +50,7 @@ func move(delta: float) -> void:
 	var vel_norm = velocity.normalized()
 	
 	var thrust_target = clamp(pos_data['air_density'] * drag_coef * target_speed**2, 0, thrust_max)
-	var alt_diff = (target_altitude - unit.height)/(air_speed * delta)
+	var alt_diff = (target_altitude - unit.height)/(100 * air_speed * delta)
 	var pitch_target = asin(clamp(alt_diff, -thrust_target / (unit.mass * 9.8), 2 * thrust_target / (3 * unit.mass * 9.8)))
 	var heading_diff = fposmod(target_heading - unit.global_rotation_degrees + 180, 360) - 180
 	var out_rot = clamp(deg_to_rad(heading_diff), -turn_rate * delta, turn_rate * delta)

@@ -8,8 +8,8 @@ func _ready() -> void:
 	Global.session = self
 	Global.scenario = scenario
 	Global.world = scenario.world
-	$LocalController._on_start(scenario)
 	add_child(Global.scenario)
+	$LocalController._on_start(scenario)
 
 
 # Quit back to main menu

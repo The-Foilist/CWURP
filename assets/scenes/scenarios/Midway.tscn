@@ -8,6 +8,7 @@
 [ext_resource type="TileSet" uid="uid://cckahy4pq6bhu" path="res://assets/terrain/height_tile_set.tres" id="3_xxyv6"]
 [ext_resource type="TileSet" uid="uid://84dmuv6hxlnj" path="res://assets/terrain/terrain_tile_set.tres" id="4_82s1o"]
 [ext_resource type="Texture2D" uid="uid://17u3anddocft" path="res://assets/art/maps/Midway 10.png" id="4_d3jhq"]
+[ext_resource type="Script" uid="uid://b0t0cwjpn1kpj" path="res://source/session/UnitGroup.gd" id="5_1mma1"]
 [ext_resource type="PackedScene" uid="uid://bmwfl3ovf43li" path="res://assets/scenes/units/airplanes/F4F-3.tscn" id="5_nwdgp"]
 [ext_resource type="PackedScene" uid="uid://b4gbc3qhygee" path="res://assets/scenes/units/structures/MidwayAirbase.tscn" id="9_ro32k"]
 
@@ -29,11 +30,17 @@ script = ExtResource("2_nwdgp")
 color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
 
-[node name="USA" type="Node" parent="Players" unique_id=1020354510 node_paths=PackedStringArray("host_unit")]
+[node name="USA" type="Node" parent="Players" unique_id=1020354510 node_paths=PackedStringArray("unit_groups", "host_unit")]
 script = ExtResource("2_nwdgp")
 color = Color(0, 0, 1, 1)
+unit_groups = [NodePath("VMF-221")]
 host_unit = NodePath("../../World/Object Layer/Midway Airbase")
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
+
+[node name="VMF-221" type="Node" parent="Players/USA" unique_id=1752840168 node_paths=PackedStringArray("units")]
+script = ExtResource("5_1mma1")
+units = [NodePath("../../../World/Object Layer/Midway Airbase/Runway3/VMF-221-1"), NodePath("../../../World/Object Layer/Midway Airbase/Runway3/VMF-221-2"), NodePath("../../../World/Object Layer/Midway Airbase/Runway3/VMF-221-3"), NodePath("../../../World/Object Layer/Midway Airbase/Runway3/VMF-221-4")]
+metadata/_custom_type_script = "uid://b0t0cwjpn1kpj"
 
 [node name="Japan" type="Node" parent="Players" unique_id=971008793]
 script = ExtResource("2_nwdgp")

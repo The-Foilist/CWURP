@@ -14,8 +14,21 @@ func parse_order(message: String) -> void:
 	elif unit.active_mover is MoverAirplane:
 		match split_msg[0]:
 			'speed':
-				unit.active_mover.target_speed = float(split_msg[1]) * Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]
+				if split_msg[1] == 'max':
+					unit.active_mover.target_speed = INF
+				else:
+					unit.active_mover.target_speed = float(split_msg[1]) * Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]
 			'alt':
 				unit.active_mover.target_altitude = float(split_msg[1]) * Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]
 			'course':
-				unit.active_mover.target_heading = float(split_msg[1])
+				match split_msg[1]:
+					'north', 'n':
+						unit.active_mover.target_heading = 0
+					'east', 'e':
+						unit.active_mover.target_heading = 90
+					'south', 's':
+						unit.active_mover.target_heading = 180
+					'west', 'w':
+						unit.active_mover.target_heading = 270
+					_:
+						unit.active_mover.target_heading = float(split_msg[1])

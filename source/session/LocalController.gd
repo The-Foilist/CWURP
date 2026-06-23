@@ -11,8 +11,9 @@ var hovered_object: Unit
 
 @onready var cam: LocalCamera = $HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
 @onready var ui_selection: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection
+@onready var ui_unit_tree: UnitTree = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Units
 @onready var ui_message_input: Control = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageInput
-@onready var ui_message_log: MessageLog = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/RichTextLabel
+@onready var ui_message_log: MessageLog = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageLog
 
 
 func _init() -> void:
@@ -25,8 +26,10 @@ func _init() -> void:
 func _on_start(scenario) -> void:
 	player = scenario.players[Global.player_slot]
 	cam.global_position = player.host_unit.global_position
-	player.selection_updated.connect(ui_selection._on_object_selected)
 	player.selection_updated.connect(ui_message_input._on_object_selected)
+	player.selection_updated.connect(ui_selection._on_object_selected)
+	player.selection_updated.connect(ui_unit_tree._on_object_selected)
+	ui_unit_tree.update()
 
 
 func sort_by_z(a, b) -> bool:

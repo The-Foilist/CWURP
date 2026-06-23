@@ -21,14 +21,12 @@ func _process(delta) -> void:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(round(linked_object.unit.global_rotation_degrees), 360)
 		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
 		$GridContainer/PitchReadout.text = \"%.1f °\" % rad_to_deg(linked_object.pitch_angle)
-		if linked_object.stall:
-			$GridContainer/TASReadout.text = \"stall\"
-		else:
-			$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$GridContainer/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$GridContainer/VSReadout.text = \"%.0f \" %  (linked_object.velocity.y / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
 		$GridContainer/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$GridContainer/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(linked_object.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$GridContainer2/ThrottleReadout.text = \"%.0f %%\" % (linked_object.power_setting * 100)
 	elif taxi_mover.active:
 		$GridContainer/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
 		$GridContainer/TrackReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
@@ -159,12 +157,12 @@ columns = 4
 [node name="ThrottleLabel" type="Label" parent="GridContainer2" unique_id=1474527615]
 layout_mode = 2
 size_flags_vertical = 6
-text = "POW:"
+text = "Power: "
 label_settings = SubResource("LabelSettings_ue3kv")
 horizontal_alignment = 2
 
 [node name="ThrottleReadout" type="Label" parent="GridContainer2" unique_id=57470454]
 layout_mode = 2
 size_flags_vertical = 6
-text = "0.0 %"
+text = "0 %"
 horizontal_alignment = 2

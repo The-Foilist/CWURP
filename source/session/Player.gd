@@ -3,10 +3,12 @@ extends Node
 
 
 @export var color: Color
+@export var unit_groups: Array[UnitGroup]
 @export var host_unit: Unit
 
 var selection: Unit
 var message_log: Array[String]
+
 
 signal selection_updated(selection: Node)
 
