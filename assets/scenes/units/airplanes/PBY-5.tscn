@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cpqqgc674d5r4"]
+
+[ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_6fljg"]
+[ext_resource type="Resource" uid="uid://bt2n10h4dsv5o" path="res://assets/data/units/airplanes/PBY-5.tres" id="2_6fljg"]
+[ext_resource type="Script" uid="uid://dbnu2g6ljgmdh" path="res://source/ai/Actor.gd" id="3_mhd0l"]
+[ext_resource type="Script" uid="uid://5ali0xos08c1" path="res://source/objects/AircraftEngine.gd" id="4_6xykj"]
+[ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="4_7at47"]
+[ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="5_vwr5i"]
+[ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="6_ovekh"]
+[ext_resource type="Texture2D" uid="uid://dhg5isiu2yx3h" path="res://assets/art/airplanes/PBY.png" id="7_dwt4y"]
+[ext_resource type="PackedScene" uid="uid://cq4xh705e6vyf" path="res://source/ui/game/markers/MarkerFlyingBoat.tscn" id="8_6fljg"]
+
+[node name="Unit" type="AnimatableBody2D" unique_id=1560698402 node_paths=PackedStringArray("active_mover", "comms")]
+z_index = 1
+collision_layer = 3
+collision_mask = 2
+sync_to_physics = false
+script = ExtResource("1_6fljg")
+statblock = ExtResource("2_6fljg")
+active_mover = NodePath("MoverTaxi")
+comms = NodePath("Comms")
+metadata/_custom_type_script = "uid://bndthe27a56xh"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
+polygon = PackedVector2Array(1, -10, 3, -5, 16, -4, 16, -1, 6, 0, 2, 0, 1, 6, 4, 7, 4, 9, -4, 9, -4, 7, -1, 6, -2, 0, -6, 0, -16, -1, -16, -4, -3, -5, -1, -10)
+
+[node name="Pilot" type="Node" parent="." unique_id=509528187 node_paths=PackedStringArray("unit", "comms")]
+script = ExtResource("3_mhd0l")
+unit = NodePath("..")
+comms = NodePath("../Comms")
+metadata/_custom_type_script = "uid://dbnu2g6ljgmdh"
+
+[node name="AircraftEngines" type="Node" parent="." unique_id=943624797 node_paths=PackedStringArray("unit")]
+script = ExtResource("4_6xykj")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://5ali0xos08c1"
+
+[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actor")]
+script = ExtResource("4_7at47")
+unit = NodePath("..")
+actor = NodePath("../Pilot")
+metadata/_custom_type_script = "uid://dutu1guoeph0j"
+
+[node name="MoverAirplane" type="Node" parent="." unique_id=1342360798 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
+script = ExtResource("5_vwr5i")
+taxi_mover = NodePath("../MoverTaxi")
+engine = NodePath("../AircraftEngines")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://dphobtg6r2gmu"
+
+[node name="MoverTaxi" type="Node" parent="." unique_id=595992666 node_paths=PackedStringArray("airborne_mover", "engine", "unit")]
+script = ExtResource("6_ovekh")
+airborne_mover = NodePath("../MoverAirplane")
+engine = NodePath("../AircraftEngines")
+unit = NodePath("..")
+metadata/_custom_type_script = "uid://b755tkehedofv"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=382117071]
+scale = Vector2(0.0244028, 0.0244028)
+texture = ExtResource("7_dwt4y")
+
+[node name="Marker" parent="." unique_id=1183166109 node_paths=PackedStringArray("unit") instance=ExtResource("8_6fljg")]
+visible = false
+unit = NodePath("..")
+scale_threshold = 0.25

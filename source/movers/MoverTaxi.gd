@@ -2,6 +2,7 @@ class_name MoverTaxi
 extends Mover
 
 @export var airborne_mover: MoverAirplane
+@export var engine: AircraftEngine
 
 var acceleration: float
 var deceleration: float
@@ -51,7 +52,7 @@ func move(delta: float) -> void:
 		if pos_data['terrain'] not in allowed_terrains:
 			unit.kill()
 			return
-		if abs(pos_data['height'] - unit.height) >= 1:
+		if abs(max(pos_data['height'], 0) - unit.height) >= 1:
 			unit.kill()
 			return
 	
@@ -60,7 +61,8 @@ func move(delta: float) -> void:
 	var out_rot = clamp(heading_diff, -turn_rate * delta, turn_rate * delta)
 	
 	# Translation
-	ground_speed += clamp(target_speed - ground_speed, -deceleration * delta, acceleration * delta)
+	engine.set_power((target_speed - ground_speed) / acceleration)
+	ground_speed += clamp(target_speed - ground_speed, -deceleration * delta, acceleration * engine.power_setting * delta)
 	var out_vel = ground_speed * -unit.global_transform.y
 	airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:

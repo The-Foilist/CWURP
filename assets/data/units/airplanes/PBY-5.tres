@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="StatblockAirplane" format=3 uid="uid://bt2n10h4dsv5o"]
+
+[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_qtga7"]
+
+[resource]
+script = ExtResource("1_qtga7")
+subtype = "Flying Boat"
+num_engines = 2
+engine_thrust = 3093.331649
+fuel_max = 6586.617
+drag_coef = 1.0
+stall_speed = 32.0
+turn_rate = 0.0872665
+taxi_speed = 5.0
+takeoff_speed = 60.0
+taxi_turn_rate = 5.0
+taxi_acceleration = 0.9142857
+taxi_deceleration = 10.0
+taxi_terrains = Array[int]([0])
+type = 3
+model = "PBY-5"
+movement_types = Array[int]([0, 3, 1])
+mass = 9485.0
+scene_path = "uid://bmwfl3ovf43li"
+metadata/_custom_type_script = "uid://gh7ubuiirsg0"

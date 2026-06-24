@@ -9,7 +9,6 @@ enum FuseType {
 }
 
 @export_group('Movement')
-@export var mass: float
 @export var linear_drag_coef: float
 @export var quadratic_drag_coef: float
 

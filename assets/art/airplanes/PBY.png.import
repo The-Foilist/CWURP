@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://er6evgulwjdw"
-path="res://.godot/imported/icon_airplane.png-be6f90ac30cc3e6f808d9a558c4be7e8.ctex"
+uid="uid://dhg5isiu2yx3h"
+path="res://.godot/imported/PBY.png-d7298f11b1a6862ed0589fdd76f40022.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/icons/icon_airplane.png"
-dest_files=["res://.godot/imported/icon_airplane.png-be6f90ac30cc3e6f808d9a558c4be7e8.ctex"]
+source_file="res://assets/art/airplanes/PBY.png"
+dest_files=["res://.godot/imported/PBY.png-d7298f11b1a6862ed0589fdd76f40022.ctex"]
 
 [params]
 

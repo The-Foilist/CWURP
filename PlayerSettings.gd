@@ -24,6 +24,7 @@ var ship_speed_units: String		= 'kt'
 var aircraft_speed_units: String	= 'kt'
 var vertical_speed_units: String	= 'fpm'
 var munition_speed_units: String	= 'fps'
+var volume_units: String			= 'gal'
 
 
 func save() -> void:
@@ -43,6 +44,7 @@ func save() -> void:
 	config.set_value("Units", "aircraft_speed_units", aircraft_speed_units)
 	config.set_value("Units", "vertical_speed_units", vertical_speed_units)
 	config.set_value("Units", "munition_speed_units", munition_speed_units)
+	config.set_value("Units", "volume_units", volume_units)
 	config.save("user://settings.ini")
 
 
@@ -66,3 +68,4 @@ func _ready() -> void:
 	aircraft_speed_units = config.get_value("Units", "aircraft_speed_units")
 	vertical_speed_units = config.get_value("Units", "vertical_speed_units")
 	munition_speed_units = config.get_value("Units", "munition_speed_units")
+	volume_units = config.get_value("Units", "volume_units")

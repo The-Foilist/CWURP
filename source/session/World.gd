@@ -71,7 +71,7 @@ func get_data_at_position(point: Vector2, height: float) -> Dictionary:
 	var out_dict = {
 		'coords': Vector2(0,0),
 		'height': -INF,
-		'terrain': 'water',
+		'terrain': 0,
 		'wind': wind,
 		'air_density': 1.225
 	}

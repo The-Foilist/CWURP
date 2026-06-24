@@ -5,14 +5,13 @@ func build_tree(parent_node: UnitGroup, parent_tree_item: TreeItem) -> void:
 	var child = create_item(parent_tree_item)
 	child.set_text(0, parent_node.name)
 	child.set_metadata(0, parent_node)
+	for unit in parent_node.units:
+		var child2 = create_item(child)
+		child2.set_text(0, unit.display_name)
+		child2.set_metadata(0, unit)
 	if parent_node.groups.size() > 0:
 		for n in parent_node.groups:
 			build_tree(n, child)
-	else:
-		for unit in parent_node.units:
-			var child2 = create_item(child)
-			child2.set_text(0, unit.display_name)
-			child2.set_metadata(0, unit)
 
 
 func check_tree(item: TreeItem, object: Node) -> void:

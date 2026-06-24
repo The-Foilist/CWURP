@@ -149,7 +149,7 @@ visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_bottom = 0.0
-offset_bottom = 0.0
+offset_bottom = 600.0
 grow_vertical = 1
 
 [node name="GameSelect" type="VBoxContainer" parent="." unique_id=154683897]

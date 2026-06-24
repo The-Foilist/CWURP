@@ -29,6 +29,9 @@ const VOLUME_CONVERSION = {
 	"L": 1.0,
 	"gal": 3.78541,
 }
+const DENSITY = {
+	'av_gas': 0.72
+}
 
 enum UnitTypes {
 	None = 0,

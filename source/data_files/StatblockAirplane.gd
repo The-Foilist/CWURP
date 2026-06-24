@@ -14,8 +14,15 @@ extends StatblockUnit
 ) var subtype: String
 
 
-@export_group("Movement - Airborne")
+@export_group("Engine")
+@export var num_engines: int
 @export var engine_thrust: float
+@export var fuel_max: float
+@export var fuel_burn_rate: float
+@export var idle_setting: float
+
+
+@export_group("Movement - Airborne")
 @export var drag_coef: float
 @export var stall_speed: float
 @export var turn_rate: float

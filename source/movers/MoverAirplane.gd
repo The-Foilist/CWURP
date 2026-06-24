@@ -2,6 +2,7 @@ class_name MoverAirplane
 extends Mover
 
 @export var taxi_mover: MoverTaxi
+@export var engine: AircraftEngine
 
 var stall_speed: float
 var thrust_max: float
@@ -49,32 +50,32 @@ func move(delta: float) -> void:
 	pos_data = world.get_data_at_position(unit.global_position, unit.height)
 	var vel_norm = velocity.normalized()
 	
-	var thrust_target = clamp(pos_data['air_density'] * drag_coef * target_speed**2, 0, thrust_max)
+	var thrust_target = clamp(pos_data['air_density'] * drag_coef * target_speed**2, 0, engine.thrust_max * engine.active_engines)
 	var alt_diff = (target_altitude - unit.height)/(100 * air_speed * delta)
 	var pitch_target = asin(clamp(alt_diff, -thrust_target / (unit.mass * 9.8), 2 * thrust_target / (3 * unit.mass * 9.8)))
 	var heading_diff = fposmod(target_heading - unit.global_rotation_degrees + 180, 360) - 180
 	var out_rot = clamp(deg_to_rad(heading_diff), -turn_rate * delta, turn_rate * delta)
 	
-	power_setting = clamp((thrust_target + unit.mass * 9.8 * sin(pitch_target)) / thrust_max, 0, 1)
-	velocity = velocity.rotated(clamp(pitch_target - pitch_angle, -turn_rate * delta, turn_rate * delta))
+	engine.set_thrust(thrust_target + unit.mass * 9.8 * sin(pitch_target))
 	
 	# Engine pulls you forward, drag pushes you back
-	var thrust = thrust_max * power_setting * vel_norm
+	var thrust = engine.thrust * vel_norm
 	var drag = drag_coef * pos_data['air_density'] * velocity.length_squared() * -vel_norm
 	
 	# Weight pulls you down if stalled, otherwise adjusts your velocity based on pitch
 	var weight: Vector2
 	if velocity.length() < stall_speed * 1.225 / pos_data['air_density']:
 		stall = true
-		velocity += 9.8 * Vector2.UP
+		velocity += 9.8 * Vector2(0,-1)
 	else:
 		stall = false
 		weight = 9.8 * -vel_norm.y * vel_norm
 	
+	velocity = velocity.rotated(clamp(pitch_target - pitch_angle, -turn_rate * delta, turn_rate * delta))
 	velocity += ((thrust + drag) / unit.mass + weight) * delta
 	
-	air_speed = velocity.length()
 	pitch_angle = velocity.angle()
+	air_speed = velocity.length()
 	
 	unit.height += velocity.y * delta
 	if unit.height < max(0, pos_data['height']):

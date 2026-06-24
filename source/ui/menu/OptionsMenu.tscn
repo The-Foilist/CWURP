@@ -7,13 +7,14 @@ script/source = "extends VBoxContainer
 var config = ConfigFile.new()
 
 
-@onready var distance_select = $TabContainer/Measures/DistanceSelect
-@onready var range_select = $TabContainer/Measures/RangeSelect
-@onready var altitude_select = $TabContainer/Measures/AltitudeSelect
-@onready var ship_speed_select = $TabContainer/Measures/ShipSpeedSelect
-@onready var aircraft_speed_select = $TabContainer/Measures/AircraftSpeedSelect
-@onready var vertical_speed_select = $TabContainer/Measures/VerticalSpeedSelect
-@onready var munition_speed_select = $TabContainer/Measures/MunitionSpeedSelect
+@onready var distance_select = $TabContainer/Measurements/DistanceSelect
+@onready var range_select = $TabContainer/Measurements/RangeSelect
+@onready var altitude_select = $TabContainer/Measurements/AltitudeSelect
+@onready var ship_speed_select = $TabContainer/Measurements/ShipSpeedSelect
+@onready var aircraft_speed_select = $TabContainer/Measurements/AircraftSpeedSelect
+@onready var vertical_speed_select = $TabContainer/Measurements/VerticalSpeedSelect
+@onready var munition_speed_select = $TabContainer/Measurements/MunitionSpeedSelect
+@onready var volume_select = $TabContainer/Measurements/VolumeSelect
 
 
 func get_selected_text(option: OptionButton) -> String:
@@ -45,6 +46,7 @@ func _ready() -> void:
 	select_from_text(aircraft_speed_select, PlayerSettings.aircraft_speed_units)
 	select_from_text(vertical_speed_select, PlayerSettings.vertical_speed_units)
 	select_from_text(munition_speed_select, PlayerSettings.munition_speed_units)
+	select_from_text(volume_select, PlayerSettings.volume_units)
 
 
 func _on_save_pressed() -> void:
@@ -62,6 +64,7 @@ func _on_save_pressed() -> void:
 	PlayerSettings.aircraft_speed_units = get_selected_text(aircraft_speed_select)
 	PlayerSettings.vertical_speed_units = get_selected_text(vertical_speed_select)
 	PlayerSettings.munition_speed_units = get_selected_text(munition_speed_select)
+	PlayerSettings.volume_units = get_selected_text(volume_select)
 	PlayerSettings.save()
 "
 
@@ -77,7 +80,7 @@ script = SubResource("GDScript_i26rj")
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1475429681]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 2
 tab_focus_mode = 0
 
 [node name="Video" type="GridContainer" parent="TabContainer" unique_id=577639214]
@@ -96,6 +99,7 @@ layout_mode = 2
 button_pressed = true
 
 [node name="Interface" type="GridContainer" parent="TabContainer" unique_id=1780849365]
+visible = false
 layout_mode = 2
 columns = 2
 metadata/_tab_index = 1
@@ -172,8 +176,7 @@ size_flags_horizontal = 0
 tooltip_text = "Enables dragging of the side bar and bottom bar to resize them."
 button_pressed = true
 
-[node name="Measures" type="GridContainer" parent="TabContainer" unique_id=1582141196]
-visible = false
+[node name="Measurements" type="GridContainer" parent="TabContainer" unique_id=1582141196]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -182,13 +185,13 @@ theme_override_constants/v_separation = 4
 columns = 2
 metadata/_tab_index = 2
 
-[node name="Distance" type="Label" parent="TabContainer/Measures" unique_id=1787369411]
+[node name="Distance" type="Label" parent="TabContainer/Measurements" unique_id=1787369411]
 layout_mode = 2
 text = "Distance"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DistanceSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1625409248]
+[node name="DistanceSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=1625409248]
 layout_mode = 2
 tooltip_text = "Units for general distance measurements"
 focus_mode = 0
@@ -207,13 +210,13 @@ popup/item_4/id = 0
 popup/item_5/text = "nautical miles (nm)"
 popup/item_5/id = 0
 
-[node name="Range" type="Label" parent="TabContainer/Measures" unique_id=141371566]
+[node name="Range" type="Label" parent="TabContainer/Measurements" unique_id=141371566]
 layout_mode = 2
 text = "Weapon Range"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="RangeSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=638102671]
+[node name="RangeSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=638102671]
 layout_mode = 2
 tooltip_text = "Units for weapon range measurements"
 focus_mode = 0
@@ -232,13 +235,13 @@ popup/item_4/id = 0
 popup/item_5/text = "nautical miles (nm)"
 popup/item_5/id = 0
 
-[node name="Altitude" type="Label" parent="TabContainer/Measures" unique_id=211884296]
+[node name="Altitude" type="Label" parent="TabContainer/Measurements" unique_id=211884296]
 layout_mode = 2
 text = "Altitude"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="AltitudeSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1233300251]
+[node name="AltitudeSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=1233300251]
 layout_mode = 2
 tooltip_text = "Units for vertical distance measurements"
 focus_mode = 0
@@ -249,13 +252,13 @@ popup/item_0/id = 0
 popup/item_1/text = "meters (m)"
 popup/item_1/id = 0
 
-[node name="ShipSpeed" type="Label" parent="TabContainer/Measures" unique_id=166536250]
+[node name="ShipSpeed" type="Label" parent="TabContainer/Measurements" unique_id=166536250]
 layout_mode = 2
 text = "Ship Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="ShipSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1320739082]
+[node name="ShipSpeedSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=1320739082]
 layout_mode = 2
 tooltip_text = "Units for ship speed measurements"
 focus_mode = 0
@@ -272,13 +275,13 @@ popup/item_3/id = 0
 popup/item_4/text = "kilometers per hour (kph)"
 popup/item_4/id = 0
 
-[node name="AircraftSpeed" type="Label" parent="TabContainer/Measures" unique_id=475063877]
+[node name="AircraftSpeed" type="Label" parent="TabContainer/Measurements" unique_id=475063877]
 layout_mode = 2
 text = "Aircraft Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="AircraftSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1181765799]
+[node name="AircraftSpeedSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=1181765799]
 layout_mode = 2
 tooltip_text = "Units for aircraft speed measurements"
 focus_mode = 0
@@ -295,13 +298,13 @@ popup/item_3/id = 0
 popup/item_4/text = "kilometers per hour (kph)"
 popup/item_4/id = 0
 
-[node name="VerticalSpeed" type="Label" parent="TabContainer/Measures" unique_id=243050866]
+[node name="VerticalSpeed" type="Label" parent="TabContainer/Measurements" unique_id=243050866]
 layout_mode = 2
 text = "Vertical Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VerticalSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=132258199]
+[node name="VerticalSpeedSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=132258199]
 layout_mode = 2
 tooltip_text = "Units for aircraft climb/dive rate measurements"
 focus_mode = 0
@@ -316,13 +319,13 @@ popup/item_2/id = 0
 popup/item_3/text = "feet per minute (fpm)"
 popup/item_3/id = 0
 
-[node name="MunitionSpeed" type="Label" parent="TabContainer/Measures" unique_id=115874429]
+[node name="MunitionSpeed" type="Label" parent="TabContainer/Measurements" unique_id=115874429]
 layout_mode = 2
 text = "Munition Speed"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MunitionSpeedSelect" type="OptionButton" parent="TabContainer/Measures" unique_id=1087682820]
+[node name="MunitionSpeedSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=1087682820]
 layout_mode = 2
 tooltip_text = "Units for flight speed of shells and bombs"
 focus_mode = 0
@@ -338,6 +341,23 @@ popup/item_3/text = "feet per second (fps)"
 popup/item_3/id = 0
 popup/item_4/text = "kilometers per hour (kph)"
 popup/item_4/id = 0
+
+[node name="Volume" type="Label" parent="TabContainer/Measurements" unique_id=1523530173]
+layout_mode = 2
+text = "Volume"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VolumeSelect" type="OptionButton" parent="TabContainer/Measurements" unique_id=70561086]
+layout_mode = 2
+tooltip_text = "Units for flight speed of shells and bombs"
+focus_mode = 0
+selected = 0
+item_count = 2
+popup/item_0/text = "gallons (gal)"
+popup/item_0/id = 0
+popup/item_1/text = "liters (L)"
+popup/item_1/id = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=479745137]
 layout_mode = 2

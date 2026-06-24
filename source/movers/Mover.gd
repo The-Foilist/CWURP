@@ -1,7 +1,6 @@
 class_name Mover
-extends Node
+extends UnitComponentEthereal
 
-@export var unit: Unit
 
 var world: World
 var inspector: PackedScene
