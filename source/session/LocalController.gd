@@ -21,6 +21,7 @@ func _init() -> void:
 	mouse_intersect_params = PhysicsPointQueryParameters2D.new()
 	mouse_intersect_params.collide_with_areas = true
 	mouse_intersect_params.collision_mask = 1
+	#$Menu/KeybindsMenu/HBoxContainer/Save.pressed.connect()
 
 
 func _on_start(_scenario) -> void:

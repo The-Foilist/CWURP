@@ -2,9 +2,38 @@
 
 [ext_resource type="Script" uid="uid://byl3cr2sh8x8" path="res://source/ui/game/UnitTree.gd" id="1_6nrbg"]
 [ext_resource type="PackedScene" uid="uid://cgn3nu2ch7e0y" path="res://source/ui/game/Selection.tscn" id="1_jx6vb"]
+[ext_resource type="Texture2D" uid="uid://bjquslgcq155c" path="res://assets/art/compass_rose.png" id="3_6k7pi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l2vu"]
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+
+[sub_resource type="GDScript" id="GDScript_6k7pi"]
+script/source = "extends TabContainer
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"tab_units\"):
+		current_tab = 0
+	if event.is_action_pressed(\"tab_selection\"):
+		current_tab = 1
+	if event.is_action_pressed(\"tab_map\"):
+		current_tab = 2
+"
+
+[sub_resource type="GDScript" id="GDScript_texa1"]
+script/source = "extends TextureRect
+
+
+func _process(delta):
+	offset_transform_rotation = -Global.local_controller.cam.rotation
+
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				Global.local_controller.cam.rotation = 0
+"
 
 [sub_resource type="GDScript" id="GDScript_qfoon"]
 script/source = "extends Label
@@ -33,33 +62,43 @@ func _process(_delta) -> void:
 		visible = Global.world.pause
 "
 
-[sub_resource type="GDScript" id="GDScript_hpug2"]
+[sub_resource type="GDScript" id="GDScript_fv76v"]
 script/source = "extends Button
 
 
 func _pressed():
 	Global.world.change_time_scale(0.5)
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"interface_slow_time\"):
+		_pressed()
 "
 
-[sub_resource type="GDScript" id="GDScript_vx13l"]
+[sub_resource type="GDScript" id="GDScript_ok2yh"]
 script/source = "extends Button
 
 
-func _pressed():
-	if Global.world:
-		Global.world.toggle_pause(!Global.world.pause)
-		if Global.world.pause:
-			text = 'Resume'
-		else:
-			text = 'Pause'
+func _toggled(toggled_on):
+	Global.world.toggle_pause(toggled_on)
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"interface_pause\"):
+		button_pressed = !Global.world.pause
 "
 
-[sub_resource type="GDScript" id="GDScript_kqm7q"]
+[sub_resource type="GDScript" id="GDScript_n0yxd"]
 script/source = "extends Button
 
 
 func _pressed():
 	Global.world.change_time_scale(2)
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"interface_speed_time\"):
+		_pressed()
 "
 
 [node name="SideBar" type="PanelContainer" unique_id=550890192]
@@ -86,10 +125,12 @@ layout_mode = 2
 [node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer" unique_id=191787555]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 0
+current_tab = 2
 tab_focus_mode = 0
+script = SubResource("GDScript_6k7pi")
 
 [node name="Units" type="Tree" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=125168720]
+visible = false
 layout_mode = 2
 focus_mode = 0
 script = ExtResource("1_6nrbg")
@@ -99,6 +140,20 @@ metadata/_tab_index = 0
 [node name="Selection" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=1404051474 instance=ExtResource("1_jx6vb")]
 visible = false
 layout_mode = 2
+
+[node name="Map" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=476803513]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="CompassRose" type="TextureRect" parent="MarginContainer/VBoxContainer/TabContainer/Map" unique_id=950808721]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_transform_enabled = true
+mouse_filter = 0
+texture = ExtResource("3_6k7pi")
+expand_mode = 1
+stretch_mode = 5
+script = SubResource("GDScript_texa1")
 
 [node name="Time" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1954978784]
 layout_mode = 2
@@ -119,25 +174,30 @@ script = SubResource("GDScript_bmslg")
 [node name="TimeControls" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=458527709]
 layout_mode = 2
 
-[node name="SlowTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1238571197]
+[node name="SlowTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1777436370]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "-"
-script = SubResource("GDScript_hpug2")
+script = SubResource("GDScript_fv76v")
 
-[node name="PauseButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1547794174]
+[node name="PauseButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1902753794]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
+toggle_mode = true
 text = "PAUSE"
-script = SubResource("GDScript_vx13l")
+script = SubResource("GDScript_ok2yh")
 
-[node name="SpeedTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1004590611]
+[node name="SpeedTimeButton" type="Button" parent="MarginContainer/VBoxContainer/TimeControls" unique_id=1002692088]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "+"
-script = SubResource("GDScript_kqm7q")
+script = SubResource("GDScript_n0yxd")
 
 [connection signal="item_mouse_selected" from="MarginContainer/VBoxContainer/TabContainer/Units" to="MarginContainer/VBoxContainer/TabContainer/Units" method="_on_item_mouse_selected"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/TabContainer/Map/CompassRose" to="MarginContainer/VBoxContainer/TabContainer/Map/CompassRose" method="_on_gui_input"]

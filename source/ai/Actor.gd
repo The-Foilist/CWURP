@@ -3,7 +3,7 @@ extends UnitComponentEthereal
 
 
 @export var comms: Comms
-@export var behaviors: Array[OrderData]
+@export var behaviors: Array[DataOrder]
 
 var inspector: PackedScene
 var behavior: Behavior
@@ -68,13 +68,13 @@ func parse_order(message: String) -> void:
 	# Iterate through the message
 	# If you see a behavior, store the previous behavior
 	# After encountering a behavior, assume the next words are either the param names and values, or the param values in order
-	var b: OrderData = null
+	var b: DataOrder = null
 	var param_dict: Dictionary = {}
 	var unused_params: Array[String] = []
 	var i: int = 0
 	
 	while i < arr.size():
-		if arr[i] is OrderData:
+		if arr[i] is DataOrder:
 			if b:
 				behavior = b.behavior_script.new(self, param_dict)
 			b = arr[i]

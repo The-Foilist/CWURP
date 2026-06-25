@@ -42,6 +42,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			following = null
 		else:
 			following = target
+	if event.is_action_pressed("camera_face_north"):
+		rotation = 0
 
 
 func _process(delta: float) -> void:

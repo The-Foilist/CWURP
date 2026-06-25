@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="3_32gmv"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="3_maftt"]
 [ext_resource type="Resource" uid="uid://ceexbh5kgf787" path="res://assets/data/orders/Orbit.tres" id="4_8d3ac"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/OrderData.gd" id="4_qgnpj"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="4_qgnpj"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
 [ext_resource type="Resource" uid="uid://3n683jxx36w5" path="res://assets/data/orders/Takeoff.tres" id="5_4dude"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]

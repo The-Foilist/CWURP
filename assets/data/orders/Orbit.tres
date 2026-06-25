@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="OrderData" format=3 uid="uid://ceexbh5kgf787"]
 
 [ext_resource type="Script" uid="uid://cs15p6c4vgoik" path="res://source/ai/BehaviorOrbit.gd" id="1_ys5yr"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/OrderData.gd" id="2_wsri2"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="2_wsri2"]
 
 [resource]
 resource_name = "orbit"

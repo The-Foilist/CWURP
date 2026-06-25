@@ -1,4 +1,4 @@
-class_name OrderData
+class_name DataOrder
 extends Resource
 
 
