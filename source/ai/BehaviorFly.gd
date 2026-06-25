@@ -39,15 +39,17 @@ func _init(in_actor: Actor, params: Dictionary):
 
 
 func _to_string():
+	if queued_for_deleteion:
+		return ''
 	var speed: String
 	if target_speed == INF:
 		speed = 'maximum speed'
 	else:
-		speed = 'speed %.0f ' % (target_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		speed = 'speed %.0f ' % (target_speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 	return "Flying heading %.0f at %s and altitude %.0f %s" % [
 		target_heading,
 		speed,
-		target_altitude / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units],
+		target_altitude / Global.UNIT_CONVERSION[PlayerSettings.altitude_units],
 		PlayerSettings.altitude_units
 	]
 

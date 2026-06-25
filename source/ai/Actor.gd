@@ -70,42 +70,36 @@ func parse_order(message: String) -> void:
 	# After encountering a behavior, assume the next words are either the param names and values, or the param values in order
 	var b: OrderData = null
 	var param_dict: Dictionary = {}
+	var unused_params: Array[String] = []
 	var i: int = 0
-	var j: int = 0
 	
 	while i < arr.size():
-		
-		if b and j >= b.params.size():
-			i += 1
-			continue
-		
 		if arr[i] is OrderData:
 			if b:
 				behavior = b.behavior_script.new(self, param_dict)
 			b = arr[i]
 			param_dict = {}
-			j = 0
+			unused_params = b.params.duplicate()
 			i += 1
 			continue
 		
 		if arr[i] in b.params:
-			param_dict[arr[i]] = arr[i+1]
-			i += 2
+			unused_params.erase(arr[i])
+			if i+2 < arr.size() and arr[i+2] in Global.UNIT_CONVERSION:
+				arr[i+1] = arr[i+1] * Global.UNIT_CONVERSION[arr[i+2]]
+				param_dict[arr[i]] = arr[i+1]
+				i += 3
+			else:
+				param_dict[arr[i]] = arr[i+1]
+				i += 2
 		else:
-			param_dict[b.params[j]] = arr[i]
-			i += 1
-			j += 1
+			if i+1 < arr.size() and arr[i+1] in Global.UNIT_CONVERSION:
+				arr[i] = arr[i] * Global.UNIT_CONVERSION[arr[i+1]]
+				param_dict[unused_params.pop_front()] = arr[i]
+				i += 2
+			else:
+				param_dict[unused_params.pop_front()] = arr[i]
+				i += 1
 	
 	if b:
-		match b.unit_type:
-			Global.UnitTypes.Airplane:
-				for k in param_dict:
-					match k:
-						"speed":
-							param_dict[k] = param_dict[k] * Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]
-						"altitude":
-							param_dict[k] = param_dict[k] * Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]
-						"range":
-							param_dict[k] = param_dict[k] * Global.DISTANCE_CONVERSION[PlayerSettings.distance_units]
-		
 		behavior = b.behavior_script.new(self, param_dict)

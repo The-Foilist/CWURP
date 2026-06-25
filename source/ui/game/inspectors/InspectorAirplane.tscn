@@ -34,23 +34,23 @@ func _process(delta) -> void:
 		$Nav/HeadingReadout.text = \"%03.0f °\" % fposmod(round(air_mover.unit.global_rotation_degrees), 360)
 		$Nav/TrackReadout.text = \"%03.0f °\" % fposmod(air_mover.track_heading, 360)
 		$Nav/PitchReadout.text = \"%.1f °\" % rad_to_deg(air_mover.pitch_angle)
-		$Nav/TASReadout.text = \"%.1f \" % (air_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$Nav/GSReadout.text = \"%.1f \" %  (air_mover.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$Nav/VSReadout.text = \"%.0f \" %  (air_mover.velocity.y / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
-		$Nav/MSLReadout.text = \"%.0f \" % (air_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-		$Nav/AGLReadout.text = \"%.0f \" % ((air_mover.unit.height - max(air_mover.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$Nav/TASReadout.text = \"%.1f \" % (air_mover.air_speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/GSReadout.text = \"%.1f \" %  (air_mover.unit.speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/VSReadout.text = \"%.0f \" %  (air_mover.velocity.y / Global.UNIT_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
+		$Nav/MSLReadout.text = \"%.0f \" % (air_mover.unit.height / Global.UNIT_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$Nav/AGLReadout.text = \"%.0f \" % ((air_mover.unit.height - max(air_mover.pos_data['height'], 0)) / Global.UNIT_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
 		$Nav/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
 		$Nav/TrackReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
 		$Nav/PitchReadout.text = \"0.0 °\"
-		$Nav/TASReadout.text = \"%.1f \" % (taxi_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$Nav/GSReadout.text = \"%.1f \" %  (taxi_mover.ground_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/TASReadout.text = \"%.1f \" % (taxi_mover.air_speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/GSReadout.text = \"%.1f \" %  (taxi_mover.ground_speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 		$Nav/VSReadout.text = \"0 \" + PlayerSettings.vertical_speed_units
-		$Nav/MSLReadout.text = \"%.0f \" % (taxi_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$Nav/MSLReadout.text = \"%.0f \" % (taxi_mover.unit.height / Global.UNIT_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 		$Nav/AGLReadout.text = \"0 \" + PlayerSettings.altitude_units
 	
 	$Engine/PowerReadout.text = \"%.0f %%\" % (engine.power_setting * 100)
-	$Engine/FuelReadout.text = \"%.0f \" % (engine.fuel / Global.VOLUME_CONVERSION[PlayerSettings.volume_units]) + PlayerSettings.volume_units
+	$Engine/FuelReadout.text = \"%.0f \" % (engine.fuel / Global.UNIT_CONVERSION[PlayerSettings.volume_units]) + PlayerSettings.volume_units
 	
 "
 

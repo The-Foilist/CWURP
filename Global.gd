@@ -2,15 +2,15 @@ extends Node
 
 
 # Measurement unit conversions
-const DISTANCE_CONVERSION = {
+const UNIT_CONVERSION = {
+	# Distance
 	"m": 1.0,
 	"nm": 1852,
 	"mi": 1609.34,
 	"km": 1000,
 	"ft": 0.3048,
 	"yd": 0.9144,
-}
-const SPEED_CONVERSION = {
+	# Speed
 	"m/s": 1.0,
 	"kt": 0.514444,
 	"mph": 0.44704,
@@ -18,17 +18,16 @@ const SPEED_CONVERSION = {
 	"fps": 0.3048,
 	"fpm": 0.00508,
 	"m/m": 0.0166667,
-}
-const MASS_CONVERSION = {
+	# Mass
 	"kg": 1.0,
 	"lb": 0.453592,
 	"tons": 1016.05,
 	"t": 1000,
-}
-const VOLUME_CONVERSION = {
+	# Volume
 	"L": 1.0,
 	"gal": 3.78541,
 }
+
 const DENSITY = {
 	'av_gas': 0.72
 }

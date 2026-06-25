@@ -59,23 +59,27 @@ func _init(in_actor: Actor, params: Dictionary):
 
 
 func _to_string() -> String:
+	if queued_for_deleteion:
+		return ''
 	var speed: String
 	if target_speed == INF:
 		speed = 'maximum speed'
 	else:
-		speed = 'speed %.0f ' % (target_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		speed = 'speed %.0f ' % (target_speed / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
 	return "Orbiting %s at range %.2f %s, %s, and altitude %.0f %s" % [
 		target.name,
-		target_distance / Global.DISTANCE_CONVERSION[PlayerSettings.distance_units],
+		target_distance / Global.UNIT_CONVERSION[PlayerSettings.distance_units],
 		PlayerSettings.distance_units,
 		speed,
-		target_altitude / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units],
+		target_altitude / Global.UNIT_CONVERSION[PlayerSettings.altitude_units],
 		PlayerSettings.altitude_units
 	]
 
 
 func end() -> void:
 	super()
+	if not target:
+		return
 	if not target is Unit:
 		target.get_parent().remove_child(target)
 		target.queue_free()

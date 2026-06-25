@@ -1,8 +1,5 @@
 [gd_scene format=3 uid="uid://dbe6xhfbyuo4s"]
 
-[ext_resource type="RichTextEffect" uid="uid://cu7kmhs4xtot5" path="res://source/communication/MessageSender.tres" id="1_4ke8n"]
-[ext_resource type="RichTextEffect" uid="uid://br30fchj1qyx7" path="res://source/communication/MessageReceiver.tres" id="2_0lfpp"]
-[ext_resource type="RichTextEffect" uid="uid://7qs4odf4ttma" path="res://source/communication/MessageTimestamp.tres" id="3_2en8x"]
 [ext_resource type="Script" uid="uid://djb85sd0vnpx4" path="res://source/ui/game/MessageLog.gd" id="4_4ke8n"]
 [ext_resource type="PackedScene" uid="uid://br838ibweh2j3" path="res://source/ui/game/MessageInput.tscn" id="5_0lfpp"]
 
@@ -36,7 +33,6 @@ size_flags_vertical = 3
 focus_mode = 0
 bbcode_enabled = true
 scroll_following = true
-custom_effects = [ExtResource("1_4ke8n"), ExtResource("2_0lfpp"), ExtResource("3_2en8x")]
 meta_underlined = false
 script = ExtResource("4_4ke8n")
 metadata/_custom_type_script = "uid://djb85sd0vnpx4"
