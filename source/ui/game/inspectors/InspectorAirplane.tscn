@@ -3,31 +3,42 @@
 [sub_resource type="GDScript" id="GDScript_lnjdq"]
 script/source = "extends Inspector
 
+var air_mover: MoverAirplane
 var taxi_mover: MoverTaxi
 var engine: AircraftEngine
 
 
 func _ready() -> void:
-	taxi_mover = linked_object.taxi_mover
-	engine = linked_object.engine
+	if not(linked_object is Pilot):
+		get_parent().remove_child(self)
+		queue_free()
+		return
+	var unit = linked_object.unit
+	if unit.active_mover is MoverAirplane:
+		air_mover = unit.active_mover
+		taxi_mover = air_mover.taxi_mover
+	elif unit.active_mover is MoverTaxi:
+		taxi_mover = unit.active_mover
+		air_mover = taxi_mover.airborne_mover
+	engine = air_mover.engine
 
 
 func _process(delta) -> void:
 	super(delta)
-	if not(linked_object is MoverAirplane):
-		get_parent().remove_child(self)
-		queue_free()
-		return
-	var pos_data: Dictionary
-	if linked_object.active:
-		$Nav/HeadingReadout.text = \"%03.0f °\" % fposmod(round(linked_object.unit.global_rotation_degrees), 360)
-		$Nav/TrackReadout.text = \"%03.0f °\" % fposmod(linked_object.track_heading, 360)
-		$Nav/PitchReadout.text = \"%.1f °\" % rad_to_deg(linked_object.pitch_angle)
-		$Nav/TASReadout.text = \"%.1f \" % (linked_object.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$Nav/GSReadout.text = \"%.1f \" %  (linked_object.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
-		$Nav/VSReadout.text = \"%.0f \" %  (linked_object.velocity.y / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
-		$Nav/MSLReadout.text = \"%.0f \" % (linked_object.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
-		$Nav/AGLReadout.text = \"%.0f \" % ((linked_object.unit.height - max(linked_object.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+	if linked_object.behavior:
+		$StatusReadout.text = str(linked_object.behavior)
+	else:
+		$StatusReadout.text = 'No orders'
+	
+	if air_mover.active:
+		$Nav/HeadingReadout.text = \"%03.0f °\" % fposmod(round(air_mover.unit.global_rotation_degrees), 360)
+		$Nav/TrackReadout.text = \"%03.0f °\" % fposmod(air_mover.track_heading, 360)
+		$Nav/PitchReadout.text = \"%.1f °\" % rad_to_deg(air_mover.pitch_angle)
+		$Nav/TASReadout.text = \"%.1f \" % (air_mover.air_speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/GSReadout.text = \"%.1f \" %  (air_mover.unit.speed / Global.SPEED_CONVERSION[PlayerSettings.aircraft_speed_units]) + PlayerSettings.aircraft_speed_units
+		$Nav/VSReadout.text = \"%.0f \" %  (air_mover.velocity.y / Global.SPEED_CONVERSION[PlayerSettings.vertical_speed_units]) + PlayerSettings.vertical_speed_units
+		$Nav/MSLReadout.text = \"%.0f \" % (air_mover.unit.height / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
+		$Nav/AGLReadout.text = \"%.0f \" % ((air_mover.unit.height - max(air_mover.pos_data['height'], 0)) / Global.DISTANCE_CONVERSION[PlayerSettings.altitude_units]) + PlayerSettings.altitude_units
 	elif taxi_mover.active:
 		$Nav/HeadingReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
 		$Nav/TrackReadout.text = \"%03.0f °\" % fposmod(taxi_mover.unit.global_rotation_degrees, 360)
@@ -51,10 +62,23 @@ offset_bottom = 117.0
 size_flags_horizontal = 3
 script = SubResource("GDScript_lnjdq")
 
-[node name="HSeparator" type="HSeparator" parent="." unique_id=1214223509]
+[node name="HSeparator" type="HSeparator" parent="." unique_id=799773739]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="." unique_id=1513454676]
+[node name="StatusLabel" type="Label" parent="." unique_id=1224148151]
+layout_mode = 2
+text = "STATUS"
+horizontal_alignment = 1
+
+[node name="StatusReadout" type="RichTextLabel" parent="." unique_id=1832315076]
+layout_mode = 2
+fit_content = true
+scroll_active = false
+
+[node name="HSeparator2" type="HSeparator" parent="." unique_id=313304510]
+layout_mode = 2
+
+[node name="NavLabel" type="Label" parent="." unique_id=1513454676]
 layout_mode = 2
 text = "NAVIGATION"
 horizontal_alignment = 1

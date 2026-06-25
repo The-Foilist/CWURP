@@ -5,6 +5,7 @@ extends Node
 func _ready() -> void:
 	var scenario = Global.scenario_scene.instantiate()
 	Global.local_controller = $LocalController
+	Global.local_controller.player = scenario.players[Global.player_slot]
 	Global.session = self
 	Global.scenario = scenario
 	Global.world = scenario.world

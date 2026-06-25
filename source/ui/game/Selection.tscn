@@ -41,7 +41,7 @@ func _on_object_selected(object: Unit) -> void:
 	update_coords(connected_object.world.get_coords_at_position(connected_object.global_position))
 	
 	for child in connected_object.get_children():
-		if child is Mover:
+		if child is Actor:
 			if child.inspector:
 				var new_inspector = child.inspector.instantiate()
 				new_inspector.linked_object = child

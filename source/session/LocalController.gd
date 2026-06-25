@@ -23,8 +23,7 @@ func _init() -> void:
 	mouse_intersect_params.collision_mask = 1
 
 
-func _on_start(scenario) -> void:
-	player = scenario.players[Global.player_slot]
+func _on_start(_scenario) -> void:
 	cam.global_position = player.host_unit.global_position
 	player.selection_updated.connect(ui_message_input._on_object_selected)
 	player.selection_updated.connect(ui_selection._on_object_selected)

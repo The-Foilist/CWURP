@@ -6,7 +6,7 @@ var num_engines: int
 var thrust_max: float
 var fuel_max: float
 var fuel_burn_rate: float
-var idle_setting: float
+var fuel_burn_idle: float
 
 var active_engines: int
 var out_of_gas: bool
@@ -21,7 +21,7 @@ func _ready() -> void:
 	fuel_max = unit.statblock.fuel_max
 	thrust_max = unit.statblock.engine_thrust
 	fuel_burn_rate = unit.statblock.fuel_burn_rate
-	idle_setting = unit.statblock.idle_setting
+	fuel_burn_idle = unit.statblock.fuel_burn_idle
 	
 	if !unit.starting_data:
 		fuel = fuel_max
@@ -37,12 +37,12 @@ func set_thrust(setting: float) -> void:
 		return
 	
 	power_setting = setting / (thrust_max * active_engines)
-	power_setting = clamp(power_setting, idle_setting, 1)
+	power_setting = clamp(power_setting, 0, 1)
 	thrust = thrust_max * power_setting * active_engines
 
 
 func set_power(setting: float) -> void:
-	power_setting = setting
+	power_setting = clamp(setting, 0, 1)
 	thrust = thrust_max * power_setting * active_engines
 
 
@@ -58,6 +58,6 @@ func _physics_process(delta):
 		thrust = 0
 		return
 	
-	var fuel_drain = power_setting * fuel_burn_rate * active_engines * delta
+	var fuel_drain = (power_setting * fuel_burn_rate + fuel_burn_idle) * active_engines * delta
 	fuel -= fuel_drain
 	unit.mass -= fuel_drain / Global.DENSITY['av_gas']

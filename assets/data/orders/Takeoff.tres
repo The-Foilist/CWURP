@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BehaviorData" format=3 uid="uid://3n683jxx36w5"]
+
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/OrderData.gd" id="1_l82bj"]
+[ext_resource type="Script" uid="uid://bmdrgcf4a7mus" path="res://source/ai/BehaviorTakeoff.gd" id="2_l82bj"]
+
+[resource]
+resource_name = "takeoff"
+script = ExtResource("1_l82bj")
+unit_type = 3
+script_file = ExtResource("2_l82bj")
+metadata/_custom_type_script = "uid://cl4a1nex7gy8"

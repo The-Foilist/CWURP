@@ -26,12 +26,12 @@ script = ExtResource("3_mnf8x")
 
 [node name="Players" type="Node" parent="." unique_id=1017854366]
 
-[node name="Neutral" type="Node" parent="Players" unique_id=2140398106 groups=["players"]]
+[node name="Neutral" type="Node" parent="Players" unique_id=2140398106]
 script = ExtResource("2_nwdgp")
 color = Color(1, 1, 1, 1)
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"
 
-[node name="USA" type="Node" parent="Players" unique_id=1020354510 node_paths=PackedStringArray("unit_groups", "host_unit") groups=["players"]]
+[node name="USA" type="Node" parent="Players" unique_id=1020354510 node_paths=PackedStringArray("unit_groups", "host_unit")]
 script = ExtResource("2_nwdgp")
 color = Color(0, 0, 1, 1)
 unit_groups = [NodePath("Midway Garrison")]
@@ -54,7 +54,7 @@ script = ExtResource("5_1mma1")
 units = [NodePath("../../../../World/Object Layer/PBY 1"), NodePath("../../../../World/Object Layer/PBY 2"), NodePath("../../../../World/Object Layer/PBY 3"), NodePath("../../../../World/Object Layer/PBY 4")]
 metadata/_custom_type_script = "uid://b0t0cwjpn1kpj"
 
-[node name="Japan" type="Node" parent="Players" unique_id=971008793 groups=["players"]]
+[node name="Japan" type="Node" parent="Players" unique_id=971008793]
 script = ExtResource("2_nwdgp")
 color = Color(1, 0, 0, 1)
 metadata/_custom_type_script = "uid://bftrxfdpnmoc1"

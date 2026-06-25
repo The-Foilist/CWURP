@@ -9,6 +9,7 @@ num_engines = 1
 engine_thrust = 6128.38
 fuel_max = 416.3953
 fuel_burn_rate = 0.1376968
+fuel_burn_idle = 0.01
 drag_coef = 0.323913
 stall_speed = 33.0
 turn_rate = 0.1745329

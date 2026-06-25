@@ -14,17 +14,19 @@ var ground_speed: float = 0
 var airspeed_vec: Vector2
 var air_speed: float = 0
 var crosswind: float = 0
-@export var target_speed: float
-@export var target_heading: float
+var heading_target: float
 
 
 func _ready() -> void:
 	super()
-	target_heading = fposmod(unit.global_rotation_degrees, 360)
+	heading_target = fposmod(unit.global_rotation_degrees, 360)
 	acceleration = unit.statblock.taxi_acceleration
 	deceleration = unit.statblock.taxi_deceleration
 	turn_rate = unit.statblock.taxi_turn_rate
 	allowed_terrains = unit.statblock.taxi_terrains
+	
+	if unit.starting_data and unit.starting_data['airborne'] == true:
+		active = false
 	if unit.get_parent() is Runway:
 		runway = unit.get_parent()
 		unit.height = runway.height
@@ -33,19 +35,18 @@ func _ready() -> void:
 func liftoff() -> void:
 	airborne_mover.velocity.x = air_speed
 	airborne_mover.velocity.y = 0
-	airborne_mover.target_altitude = INF
-	airborne_mover.target_speed = INF
-	airborne_mover.target_heading = unit.global_rotation_degrees
+	airborne_mover.heading_target = unit.global_rotation_degrees
 	switch_mover(airborne_mover)
 	if runway:
 		var pos = unit.global_position
 		runway.remove_child(unit)
 		unit.global_position = pos
-		world.object_layer.add_child(unit)
+		unit.world.object_layer.add_child(unit)
+		runway = null
 
 
-func move(delta: float) -> void:
-	pos_data = world.get_data_at_position(unit.global_position, unit.height)
+func process_session_time(delta: float) -> void:
+	super(delta)
 	if runway:
 		unit.height = runway.height
 	else:
@@ -57,12 +58,11 @@ func move(delta: float) -> void:
 			return
 	
 	# Rotation
-	var heading_diff = fposmod(target_heading - unit.global_rotation_degrees + 180, 360) - 180
+	var heading_diff = fposmod(heading_target - unit.global_rotation_degrees + 180, 360) - 180
 	var out_rot = clamp(heading_diff, -turn_rate * delta, turn_rate * delta)
 	
 	# Translation
-	engine.set_power((target_speed - ground_speed) / acceleration)
-	ground_speed += clamp(target_speed - ground_speed, -deceleration * delta, acceleration * engine.power_setting * delta)
+	ground_speed += acceleration * engine.power_setting * delta
 	var out_vel = ground_speed * -unit.global_transform.y
 	airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:

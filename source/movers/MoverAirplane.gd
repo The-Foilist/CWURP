@@ -18,19 +18,30 @@ var ground_speed: float
 var track_heading: float
 var runway: Unit
 
-@export var target_speed: float
-@export var target_heading: float
-@export var target_altitude: float
+var pitch_target: float
+var heading_target: float
 
 
 func _ready() -> void:
 	super()
-	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
 	thrust_max = unit.statblock.engine_thrust
 	drag_coef = unit.statblock.drag_coef
 	stall_speed = unit.statblock.stall_speed
 	turn_rate = unit.statblock.turn_rate
-	active = false
+	if !unit.starting_data:
+		active = false
+	elif unit.starting_data['airborne'] == true:
+		active = true
+	else:
+		active = false
+
+
+func set_pitch_target(val: float):
+	pitch_target = clamp(val, -PI/2, PI/2)
+
+
+func set_heading_target(val: float):
+	heading_target = clamp(val, 0, 360)
 
 
 func land() -> void:
@@ -41,22 +52,14 @@ func land() -> void:
 	switch_mover(taxi_mover)
 	if runway:
 		var pos = unit.global_position
-		world.object_layer.remove_child(unit)
+		unit.world.object_layer.remove_child(unit)
 		unit.global_position = pos
 		runway.add_child(unit)
 
 
-func move(delta: float) -> void:
-	pos_data = world.get_data_at_position(unit.global_position, unit.height)
+func process_session_time(delta: float) -> void:
+	super(delta)
 	var vel_norm = velocity.normalized()
-	
-	var thrust_target = clamp(pos_data['air_density'] * drag_coef * target_speed**2, 0, engine.thrust_max * engine.active_engines)
-	var alt_diff = (target_altitude - unit.height)/(100 * air_speed * delta)
-	var pitch_target = asin(clamp(alt_diff, -thrust_target / (unit.mass * 9.8), 2 * thrust_target / (3 * unit.mass * 9.8)))
-	var heading_diff = fposmod(target_heading - unit.global_rotation_degrees + 180, 360) - 180
-	var out_rot = clamp(deg_to_rad(heading_diff), -turn_rate * delta, turn_rate * delta)
-	
-	engine.set_thrust(thrust_target + unit.mass * 9.8 * sin(pitch_target))
 	
 	# Engine pulls you forward, drag pushes you back
 	var thrust = engine.thrust * vel_norm
@@ -82,7 +85,10 @@ func move(delta: float) -> void:
 		unit.kill()
 		return
 	
+	var heading_diff = fposmod(heading_target - unit.global_rotation_degrees + 180, 360) - 180
+	var out_rot = clamp(deg_to_rad(heading_diff), -turn_rate * delta, turn_rate * delta)
 	var out_vel = velocity.x * -unit.global_transform.y + pos_data['wind']
+	
 	unit.speed = out_vel.length()
 	track_heading = rad_to_deg(out_vel.angle()) + 90
 	

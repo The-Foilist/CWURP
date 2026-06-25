@@ -16,7 +16,7 @@ func _unhandled_input(event) -> void:
 		$Message.edit()
 
 
-func _on_recipient_text_submitted(new_text) -> void:
+func _on_recipient_text_submitted(_new_text) -> void:
 	$Message.grab_focus()
 	$Message.edit()
 

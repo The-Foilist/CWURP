@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BehaviorData" format=3 uid="uid://dplasgc4ea4w6"]
+
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/OrderData.gd" id="1_av8uq"]
+[ext_resource type="Script" uid="uid://c3wp5u72uwdwk" path="res://source/ai/BehaviorFly.gd" id="2_av8uq"]
+
+[resource]
+resource_name = "fly"
+script = ExtResource("1_av8uq")
+unit_type = 3
+script_file = ExtResource("2_av8uq")
+params = Array[String](["heading", "speed", "altitude"])
+metadata/_custom_type_script = "uid://cl4a1nex7gy8"

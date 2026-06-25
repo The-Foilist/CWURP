@@ -19,7 +19,7 @@ extends StatblockUnit
 @export var engine_thrust: float
 @export var fuel_max: float
 @export var fuel_burn_rate: float
-@export var idle_setting: float
+@export var fuel_burn_idle: float
 
 
 @export_group("Movement - Airborne")

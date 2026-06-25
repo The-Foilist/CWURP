@@ -16,34 +16,18 @@ func _ready() -> void:
 	message_logged.connect(Global.local_controller.ui_message_log._add_message)
 
 
-func wrap_name(object: Node) -> String:
-	if object is UnitComponent:
-		object = object.unit
-	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.name]
-	if object is Player:
-		out_string = '[color=#%s]%s[/color]' % [object.color.to_html(false), out_string]
-	if object is Unit:
-		out_string = '[color=#%s]%s[/color]' % [object.owning_player.color.to_html(false), out_string]
-	return out_string
-
-
 func parse_objects(text: String) -> String:
 	var regex = RegEx.create_from_string('\\[(.*?)\\]')
 	for result in regex.search_all(text):
 		var obj_name = result.get_string().lstrip('[').rstrip(']')
-		for unit in get_tree().get_nodes_in_group('units'):
-			if unit.name == obj_name:
-				text = text.replace(result.get_string(), wrap_name(unit))
-				break
+		var obj = Global.scenario.get_object_by_name(obj_name)
+		if obj:
+			text = text.replace(result.get_string(), '[%d]' % obj.get_instance_id())
 	return text
 
 
-func add_timestamp(text: String) -> String:
-	return '[timestamp][%s][/timestamp] ' % Global.world.time_str + text
-
-
 func direct_message_player(player: Player, message: String):
-	message = add_timestamp(message)
+	message = Global.world.time_str + ' ' + message
 	player.message_log.append(message)
 	if Global.local_controller.player == player:
 		Global.local_controller.ui_message_log._add_message(message)
@@ -55,18 +39,6 @@ func transmit(message: Message):
 	
 	message.content = parse_objects(message.content)
 	
-	# Format the message for logging
-	var front_text = '[sender]%s[/sender]: ' % wrap_name(message.sender.unit)
-	
-	# Add sender and/or recipient, if present
-	if message.recipient:
-		front_text = '[receiver]%s[/receiver] from ' % wrap_name(message.recipient.unit) + front_text
-	
-	# Add timestamp
-	front_text = add_timestamp(front_text)
-	
-	var display_text = front_text + message.content
-	
 	# Log messages with owning players of sender and receiver
 	var logging_players: Array[Player] = []
 	logging_players.append(message.sender.unit.owning_player)
@@ -77,9 +49,9 @@ func transmit(message: Message):
 			logging_players.append(message.recipient.unit.owning_player)
 	
 	for player in logging_players:
-		player.message_log.append(display_text)
+		player.message_log.append(str(message))
 		if player == Global.local_controller.player:
-			emit_signal('message_logged', display_text)
+			emit_signal('message_logged', str(message))
 	
 	if message.recipient:
 		message.recipient.receive(message)

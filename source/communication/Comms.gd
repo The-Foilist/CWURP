@@ -7,6 +7,7 @@ extends Node
 
 
 func send(recipient: Comms = null, message: String = ''):
+	message = message.replace('@', '')
 	var new_message = Message.new(self, recipient, message)
 	new_message.handler.transmit(new_message)
 
