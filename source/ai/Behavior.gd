@@ -17,5 +17,6 @@ func process(_delta) -> void:
 
 
 func end() -> void:
-	queued_for_deleteion = true
 	actor.behavior = null
+	queued_for_deleteion = true
+	actor.next_order()

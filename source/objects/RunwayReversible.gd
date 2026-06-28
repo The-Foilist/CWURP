@@ -22,6 +22,5 @@ func reverse() -> void:
 	end_point = reverse_end_point
 	reverse_touchdown_point = td_temp
 	reverse_end_point = end_temp
-	heading = fposmod(heading + 180, 360)
-	print(heading)
+	start_heading = fposmod(start_heading + 180, 360)
 	name = 'Runway ' + str(posmod(18 + num, 36))

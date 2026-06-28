@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="1_axcdm"]
 [ext_resource type="Script" uid="uid://bmdrgcf4a7mus" path="res://source/ai/BehaviorTakeoff.gd" id="1_xekkb"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="3_em1hp"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/Order.gd" id="3_em1hp"]
 
 [resource]
 resource_name = "takeoff"

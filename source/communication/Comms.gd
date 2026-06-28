@@ -35,16 +35,15 @@ const WORD_REPLACEMENTS = {
 @export var actors: Array[Actor]
 
 
-func send(recipient: Comms = null, message: String = ''):
-	message = message.replace('@', '')
-	var new_message = Message.new(self, recipient, message)
+func send(recipient: Comms = null, content: String = ''):
+	var new_message = Message.new(self, recipient, content)
 	new_message.handler.transmit(new_message)
 
 
-func distribute_order(order: DataOrder, param_dict: Dictionary):
+func distribute_order(order: Order, param_dict: Dictionary):
 	for actor in actors:
-		if order in actor.orders:
-			order.execute(actor, param_dict)
+		if order in actor.allowed_orders:
+			order.issue(actor, order.Priority.LAST, param_dict)
 
 
 func receive(message: Message):
@@ -73,7 +72,7 @@ func receive(message: Message):
 					for actor in actors:
 						if is_break:
 							break
-						for b in actor.orders:
+						for b in actor.allowed_orders:
 							if arr[i].to_lower() == b.resource_name.to_lower():
 								arr[i] = b
 								is_break = true
@@ -84,13 +83,13 @@ func receive(message: Message):
 			# If you see a param name for the last seen order, assume the next word is its associated value
 			# If you see a value and the next word is a measurement unit, assume it is associated with the value that came before it
 			# If you're not sure, assume the word is the value for the next parameter for the last seen order that hasn't already been assigned a value
-			var b: DataOrder = null
+			var b: Order = null
 			var param_dict: Dictionary = {}
 			var unused_params: Array[String] = []
 			var i: int = 0
 			
 			while i < arr.size():
-				if arr[i] is DataOrder:
+				if arr[i] is Order:
 					if b:
 						distribute_order(b, param_dict)
 					b = arr[i]

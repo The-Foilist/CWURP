@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DataOrder" format=3 uid="uid://c1fij187onkge"]
+
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/Order.gd" id="1_vs16t"]
+[ext_resource type="Script" uid="uid://bujslbndxrq1s" path="res://source/ai/FlightController.gd" id="1_wke7y"]
+[ext_resource type="Script" uid="uid://v1ii0vkf75mo" path="res://source/ai/BehaviorLaunch.gd" id="2_mdqk6"]
+
+[resource]
+resource_name = "launch"
+script = ExtResource("1_vs16t")
+actor_types = Array[GDScript]([ExtResource("1_wke7y")])
+behavior_script = ExtResource("2_mdqk6")
+params = Array[String](["interval"])
+metadata/_custom_type_script = "uid://cl4a1nex7gy8"

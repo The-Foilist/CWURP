@@ -21,8 +21,9 @@ unit = NodePath("..")
 actors = [NodePath("../FlightController")]
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
-[node name="FlightController" type="Node" parent="." unique_id=891016018 node_paths=PackedStringArray("active_runway", "comms", "unit")]
+[node name="FlightController" type="Node" parent="." unique_id=891016018 node_paths=PackedStringArray("runways", "active_runway", "comms", "unit")]
 script = ExtResource("4_xw5m2")
+runways = [NodePath("../Runway 07"), NodePath("../Runway 04"), NodePath("../Runway 14")]
 active_runway = NodePath("../Runway 14")
 comms = NodePath("../Comms")
 unit = NodePath("..")

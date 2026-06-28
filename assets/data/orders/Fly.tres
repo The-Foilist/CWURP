@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3wp5u72uwdwk" path="res://source/ai/BehaviorFly.gd" id="1_ctlcl"]
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="1_sjyaa"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="3_t5v4i"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/Order.gd" id="3_t5v4i"]
 
 [resource]
 resource_name = "fly"

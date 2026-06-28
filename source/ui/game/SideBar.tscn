@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byl3cr2sh8x8" path="res://source/ui/game/UnitTree.gd" id="1_6nrbg"]
 [ext_resource type="PackedScene" uid="uid://cgn3nu2ch7e0y" path="res://source/ui/game/Selection.tscn" id="1_jx6vb"]
-[ext_resource type="Texture2D" uid="uid://bjquslgcq155c" path="res://assets/art/compass_rose.png" id="3_6k7pi"]
+[ext_resource type="Texture2D" uid="uid://com65b4gk0xo8" path="res://assets/art/compass_rose_sm.png" id="3_6k7pi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l2vu"]
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
@@ -20,15 +20,21 @@ func _unhandled_input(event):
 		current_tab = 2
 "
 
-[sub_resource type="GDScript" id="GDScript_texa1"]
-script/source = "extends TextureRect
+[sub_resource type="GDScript" id="GDScript_x634r"]
+script/source = "extends VBoxContainer
 
 
 func _process(_delta):
-	offset_transform_rotation = -Global.local_controller.cam.rotation
+	$CenterContainer/CompassRose.offset_transform_rotation = -Global.local_controller.cam.rotation
+	$GridContainer/WindReadout.text = \"%03.0f° @ %.1f %s\" % [
+		Global.vec_to_br(Global.world.wind).x,
+		Global.world.wind.length() / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units],
+		PlayerSettings.aircraft_speed_units
+	]
+	$GridContainer/SeaStateReadout.text = \"%.1f\" % Global.world.sea_state
 
 
-func _on_gui_input(event):
+func _on_compassrose_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
@@ -143,17 +149,43 @@ layout_mode = 2
 
 [node name="Map" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer" unique_id=476803513]
 layout_mode = 2
+script = SubResource("GDScript_x634r")
 metadata/_tab_index = 2
 
-[node name="CompassRose" type="TextureRect" parent="MarginContainer/VBoxContainer/TabContainer/Map" unique_id=950808721]
-custom_minimum_size = Vector2(300, 300)
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/TabContainer/Map" unique_id=477518527]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+
+[node name="CompassRose" type="TextureRect" parent="MarginContainer/VBoxContainer/TabContainer/Map/CenterContainer" unique_id=950808721]
+custom_minimum_size = Vector2(240, 240)
 layout_mode = 2
 offset_transform_enabled = true
 mouse_filter = 0
 texture = ExtResource("3_6k7pi")
 expand_mode = 1
 stretch_mode = 5
-script = SubResource("GDScript_texa1")
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/TabContainer/Map" unique_id=2143043029]
+layout_mode = 2
+columns = 4
+
+[node name="WindLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Map/GridContainer" unique_id=202094010]
+layout_mode = 2
+text = "Wind:"
+horizontal_alignment = 2
+
+[node name="WindReadout" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Map/GridContainer" unique_id=940435238]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SeaStateLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Map/GridContainer" unique_id=1220468417]
+layout_mode = 2
+text = "Sea State:"
+horizontal_alignment = 2
+
+[node name="SeaStateReadout" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/Map/GridContainer" unique_id=1923185508]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Time" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1954978784]
 layout_mode = 2
@@ -200,4 +232,4 @@ text = "+"
 script = SubResource("GDScript_n0yxd")
 
 [connection signal="item_mouse_selected" from="MarginContainer/VBoxContainer/TabContainer/Units" to="MarginContainer/VBoxContainer/TabContainer/Units" method="_on_item_mouse_selected"]
-[connection signal="gui_input" from="MarginContainer/VBoxContainer/TabContainer/Map/CompassRose" to="MarginContainer/VBoxContainer/TabContainer/Map/CompassRose" method="_on_gui_input"]
+[connection signal="gui_input" from="MarginContainer/VBoxContainer/TabContainer/Map/CenterContainer/CompassRose" to="MarginContainer/VBoxContainer/TabContainer/Map" method="_on_compassrose_gui_input"]

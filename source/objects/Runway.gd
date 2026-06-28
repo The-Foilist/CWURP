@@ -9,6 +9,8 @@ extends UnitComponentPhysical
 var velocity: Vector2 = Vector2(0,0)
 var height: float
 var heading: float
+var clear_takeoff: bool = true
+var clear_landing: bool = true
 
 
 func _init() -> void:
@@ -18,3 +20,4 @@ func _init() -> void:
 
 func _physics_process(_delta) -> void:
 	height = start_height + unit.height
+	heading = fposmod(start_heading + unit.global_rotation_degrees, 360)
