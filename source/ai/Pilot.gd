@@ -9,7 +9,10 @@ var target_altitude: float
 
 func _ready():
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
-
-
-func parse_order(message: String) -> void:
-	super(message)
+	orders = [
+		load("res://assets/data/orders/Taxi.tres"),
+		load("res://assets/data/orders/Takeoff.tres"),
+		load("res://assets/data/orders/Land.tres"),
+		load("res://assets/data/orders/Fly.tres"),
+		load("res://assets/data/orders/Orbit.tres")
+	]

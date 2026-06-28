@@ -21,7 +21,6 @@ func _init() -> void:
 	mouse_intersect_params = PhysicsPointQueryParameters2D.new()
 	mouse_intersect_params.collide_with_areas = true
 	mouse_intersect_params.collision_mask = 1
-	#$Menu/KeybindsMenu/HBoxContainer/Save.pressed.connect()
 
 
 func _on_start(_scenario) -> void:
@@ -49,7 +48,7 @@ func get_object_under_mouse():
 				return result[i].collider
 			elif result[i].collider is Marker and result[0].collider.input_pickable:
 				return result[i].collider.unit
-			elif result[i].collider is UnitComponent:
+			elif result[i].collider is UnitComponentPhysical:
 				return result[i].collider.unit
 
 

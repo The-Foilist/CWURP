@@ -19,6 +19,7 @@ var height: float = 0
 var speed: float = 0
 var mass: float
 
+
 signal died(unit: Unit)
 
 

@@ -2,13 +2,6 @@ class_name CommsHandler
 extends Node
 
 
-enum ComMedium {
-	Visual = 0,
-	Wired = 1,
-	Radio = 2
-}
-
-
 signal message_logged(content: String)
 
 

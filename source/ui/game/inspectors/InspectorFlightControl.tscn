@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dkmmudqm6s1vq"]
+
+[sub_resource type="GDScript" id="GDScript_lnjdq"]
+script/source = "extends Inspector
+
+
+func _ready() -> void:
+	if not(linked_object is FlightController):
+		get_parent().remove_child(self)
+		queue_free()
+		return
+
+
+func _process(delta) -> void:
+	super(delta)
+	if linked_object.behavior:
+		$StatusReadout.text = str(linked_object.behavior)
+	else:
+		$StatusReadout.text = 'No orders'
+	
+	$Readouts/ActiveRunwayReadout.text = linked_object.active_runway.name
+	
+"
+
+[node name="InspectorAirplane" type="VBoxContainer" unique_id=1676557818]
+offset_right = 298.0
+offset_bottom = 117.0
+size_flags_horizontal = 3
+script = SubResource("GDScript_lnjdq")
+
+[node name="HSeparator" type="HSeparator" parent="." unique_id=799773739]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1224148151]
+layout_mode = 2
+text = "STATUS"
+horizontal_alignment = 1
+
+[node name="StatusReadout" type="RichTextLabel" parent="." unique_id=1832315076]
+layout_mode = 2
+fit_content = true
+scroll_active = false
+
+[node name="HSeparator2" type="HSeparator" parent="." unique_id=313304510]
+layout_mode = 2
+
+[node name="NavLabel" type="Label" parent="." unique_id=1513454676]
+layout_mode = 2
+text = "FLIGHT CONTROL"
+horizontal_alignment = 1
+
+[node name="Readouts" type="GridContainer" parent="." unique_id=1824013417]
+layout_mode = 2
+columns = 6
+
+[node name="ActiveRunewayLabel" type="Label" parent="Readouts" unique_id=708865392]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Active: "
+horizontal_alignment = 2
+
+[node name="ActiveRunwayReadout" type="Label" parent="Readouts" unique_id=379185019]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6

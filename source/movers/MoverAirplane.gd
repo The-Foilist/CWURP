@@ -88,8 +88,8 @@ func process_session_time(delta: float) -> void:
 	var heading_diff = fposmod(heading_target - unit.global_rotation_degrees + 180, 360) - 180
 	var out_rot = clamp(deg_to_rad(heading_diff), -turn_rate * delta, turn_rate * delta)
 	var out_vel = velocity.x * -unit.global_transform.y + pos_data['wind']
-	
-	unit.speed = out_vel.length()
+	ground_speed = out_vel.length()
+	unit.speed = ground_speed
 	track_heading = rad_to_deg(out_vel.angle()) + 90
 	
 	unit.rotate(out_rot)

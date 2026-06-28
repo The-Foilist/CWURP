@@ -184,7 +184,7 @@ columns = 6
 [node name="PowerLabel" type="Label" parent="Engine" unique_id=708865392]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Power:  "
+text = "Power: "
 horizontal_alignment = 2
 
 [node name="PowerReadout" type="Label" parent="Engine" unique_id=379185019]

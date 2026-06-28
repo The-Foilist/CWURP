@@ -19,7 +19,7 @@ func _init(in_actor: Actor, params: Dictionary):
 func _to_string() -> String:
 	var out_str = "Taking off"
 	if mover.runway:
-		out_str += " from " + mover.runway.unit.name
+		out_str += " from %s %s" % [mover.runway.unit.name, mover.runway.name]
 	return out_str
 
 
@@ -27,11 +27,16 @@ func process(_delta) -> void:
 	if queued_for_deleteion:
 		return
 	if not mover.active:
+		actor.target_altitude = 1000
+		actor.target_heading = mover.heading_target
+		actor.target_speed = INF
 		end()
 		return
-	#if mover.runway:
-		#mover.heading_target = mover.runway.heading
-	if fposmod(mover.heading_target - unit.global_rotation_degrees + 180, 360) - 180 < 1:
+	if mover.runway:
+		mover.heading_target = mover.runway.heading
+	if abs(fposmod(mover.heading_target - unit.global_rotation_degrees, 360)) < 0.1:
+		mover.set_brake(0)
 		engine.set_power(1)
 	else:
-		engine.set_power(engine.idle_setting)
+		mover.set_brake(1)
+		engine.set_power(0)

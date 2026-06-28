@@ -4,12 +4,14 @@ extends Mover
 @export var airborne_mover: MoverAirplane
 @export var engine: AircraftEngine
 
-var acceleration: float
+var taxi_speed: float
+var accel_coef: float
 var deceleration: float
 var turn_rate: float
 var allowed_terrains: Array[int]
 
 var runway: Runway
+var brake: float = 0
 var ground_speed: float = 0
 var airspeed_vec: Vector2
 var air_speed: float = 0
@@ -20,8 +22,9 @@ var heading_target: float
 func _ready() -> void:
 	super()
 	heading_target = fposmod(unit.global_rotation_degrees, 360)
-	acceleration = unit.statblock.taxi_acceleration
-	deceleration = unit.statblock.taxi_deceleration
+	taxi_speed = unit.statblock.taxi_speed
+	accel_coef = unit.statblock.taxi_accel_coef
+	deceleration = unit.statblock.taxi_brake_decel
 	turn_rate = unit.statblock.taxi_turn_rate
 	allowed_terrains = unit.statblock.taxi_terrains
 	
@@ -45,6 +48,10 @@ func liftoff() -> void:
 		runway = null
 
 
+func set_brake(value: float) -> void:
+	brake = clamp(value, 0, 1)
+
+
 func process_session_time(delta: float) -> void:
 	super(delta)
 	if runway:
@@ -62,7 +69,8 @@ func process_session_time(delta: float) -> void:
 	var out_rot = clamp(heading_diff, -turn_rate * delta, turn_rate * delta)
 	
 	# Translation
-	ground_speed += acceleration * engine.power_setting * delta
+	ground_speed += engine.thrust * accel_coef / unit.mass * delta
+	ground_speed -= min(ground_speed, brake * deceleration * delta)
 	var out_vel = ground_speed * -unit.global_transform.y
 	airspeed_vec = (out_vel - pos_data['wind'])
 	if runway:

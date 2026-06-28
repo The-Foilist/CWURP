@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="OrderData" format=3 uid="uid://dplasgc4ea4w6"]
+[gd_resource type="Resource" script_class="DataOrder" format=3 uid="uid://dplasgc4ea4w6"]
 
 [ext_resource type="Script" uid="uid://c3wp5u72uwdwk" path="res://source/ai/BehaviorFly.gd" id="1_ctlcl"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="2_sjyaa"]
+[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="1_sjyaa"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="3_t5v4i"]
 
 [resource]
 resource_name = "fly"
-script = ExtResource("2_sjyaa")
-unit_type = 3
+script = ExtResource("3_t5v4i")
+actor_types = Array[GDScript]([ExtResource("1_sjyaa")])
 behavior_script = ExtResource("1_ctlcl")
-params = Array[String](["heading", "speed", "altitude"])
+params = Array[String](["heading", "speed", "altitude", "distance"])
 metadata/_custom_type_script = "uid://cl4a1nex7gy8"

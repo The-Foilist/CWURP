@@ -24,7 +24,7 @@ func _unhandled_input(event):
 script/source = "extends TextureRect
 
 
-func _process(delta):
+func _process(_delta):
 	offset_transform_rotation = -Global.local_controller.cam.rotation
 
 

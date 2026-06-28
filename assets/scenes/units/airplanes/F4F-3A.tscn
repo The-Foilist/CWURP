@@ -4,13 +4,9 @@
 [ext_resource type="Resource" uid="uid://7uylju2qcagk" path="res://assets/data/units/airplanes/F4F-3A.tres" id="2_maftt"]
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="3_32gmv"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="3_maftt"]
-[ext_resource type="Resource" uid="uid://ceexbh5kgf787" path="res://assets/data/orders/Orbit.tres" id="4_8d3ac"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="4_qgnpj"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
-[ext_resource type="Resource" uid="uid://3n683jxx36w5" path="res://assets/data/orders/Takeoff.tres" id="5_4dude"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]
 [ext_resource type="Script" uid="uid://5ali0xos08c1" path="res://source/objects/AircraftEngine.gd" id="5_32gmv"]
-[ext_resource type="Resource" uid="uid://dplasgc4ea4w6" path="res://assets/data/orders/Fly.tres" id="5_qgnpj"]
 [ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="5_x7nmy"]
 [ext_resource type="Script" uid="uid://dnbvwmo8t6wc0" path="res://source/ui/game/markers/Marker.gd" id="9_gw58t"]
 [ext_resource type="Texture2D" uid="uid://i341nki6d5me" path="res://assets/art/icons/icon_fighter.png" id="10_xf7t0"]
@@ -32,7 +28,6 @@ polygon = PackedVector2Array(-1, -4, 1, -4, 6, -2, 6, -1, 2, 4, 0, 4, -2, 4, -6,
 [node name="Pilot" type="Node" parent="." unique_id=1558305938 node_paths=PackedStringArray("comms", "unit")]
 script = ExtResource("3_32gmv")
 comms = NodePath("../Comms")
-behaviors = Array[ExtResource("4_qgnpj")]([ExtResource("5_4dude"), ExtResource("5_qgnpj"), ExtResource("4_8d3ac")])
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://2fk71kmwdwfj"
 
@@ -41,10 +36,10 @@ script = ExtResource("5_32gmv")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://5ali0xos08c1"
 
-[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actor")]
+[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actors")]
 script = ExtResource("3_maftt")
 unit = NodePath("..")
-actor = NodePath("../Pilot")
+actors = [NodePath("../Pilot")]
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
 [node name="MoverAirplane" type="Node" parent="." unique_id=1342360798 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
@@ -62,6 +57,7 @@ unit = NodePath("..")
 metadata/_custom_type_script = "uid://b755tkehedofv"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=382117071]
+position = Vector2(2.3841858e-07, 6.556511e-07)
 scale = Vector2(0.0263, 0.0263)
 texture = ExtResource("5_17b7k")
 

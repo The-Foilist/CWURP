@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="OrderData" format=3 uid="uid://ceexbh5kgf787"]
+[gd_resource type="Resource" script_class="DataOrder" format=3 uid="uid://ceexbh5kgf787"]
 
+[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="1_wsri2"]
 [ext_resource type="Script" uid="uid://cs15p6c4vgoik" path="res://source/ai/BehaviorOrbit.gd" id="1_ys5yr"]
-[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="2_wsri2"]
+[ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/DataOrder.gd" id="3_xcnl8"]
 
 [resource]
 resource_name = "orbit"
-script = ExtResource("2_wsri2")
-unit_type = 3
+script = ExtResource("3_xcnl8")
+actor_types = Array[GDScript]([ExtResource("1_wsri2")])
 behavior_script = ExtResource("1_ys5yr")
 params = Array[String](["target", "range", "direction", "speed", "altitude"])
 metadata/_custom_type_script = "uid://cl4a1nex7gy8"

@@ -5,7 +5,7 @@ extends RichTextLabel
 func wrap_name(object: Node) -> String:
 	if !object:
 		return ''
-	if object is UnitComponent:
+	if object is UnitComponentPhysical:
 		object = object.unit
 	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.name]
 	if object is Player:

@@ -21,7 +21,6 @@ extends StatblockUnit
 @export var fuel_burn_rate: float
 @export var fuel_burn_idle: float
 
-
 @export_group("Movement - Airborne")
 @export var drag_coef: float
 @export var stall_speed: float
@@ -31,6 +30,6 @@ extends StatblockUnit
 @export var taxi_speed: float
 @export var takeoff_speed: float
 @export var taxi_turn_rate: float
-@export var taxi_acceleration: float
-@export var taxi_deceleration: float
+@export var taxi_accel_coef: float
+@export var taxi_brake_decel: float
 @export var taxi_terrains: Array[Global.Terrains]

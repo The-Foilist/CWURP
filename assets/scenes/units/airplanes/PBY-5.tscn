@@ -36,10 +36,10 @@ script = ExtResource("4_6xykj")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://5ali0xos08c1"
 
-[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actor")]
+[node name="Comms" type="Node" parent="." unique_id=1852452314 node_paths=PackedStringArray("unit", "actors")]
 script = ExtResource("4_7at47")
 unit = NodePath("..")
-actor = NodePath("../Pilot")
+actors = [NodePath("../Pilot")]
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
 [node name="MoverAirplane" type="Node" parent="." unique_id=1342360798 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
