@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://dad8jy2k7wdo1"]
+
+[ext_resource type="Texture2D" uid="uid://com65b4gk0xo8" path="res://assets/art/compass_rose_sm.png" id="1_bxqal"]
+[ext_resource type="Texture2D" uid="uid://c0d0c28nrm5td" path="res://assets/art/icons/eye.png" id="3_shhvm"]
+
+[sub_resource type="GDScript" id="GDScript_x634r"]
+script/source = "extends VBoxContainer
+
+
+func _process(_delta):
+	$CenterContainer/CompassRose.offset_transform_rotation = -Global.local_controller.cam.rotation
+	$Info/WindReadout.text = \"%03.0f° @ %.1f %s\" % [
+		Global.vec_to_br(Global.world.wind).x,
+		Global.world.wind.length() / Global.UNIT_CONVERSION[PlayerSettings.aircraft_speed_units],
+		PlayerSettings.aircraft_speed_units
+	]
+	$Info/SeaStateReadout.text = \"%.0f\" % Global.world.sea_state
+
+
+func _on_compassrose_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				Global.local_controller.cam.rotation = 0
+"
+
+[sub_resource type="GDScript" id="GDScript_texa1"]
+script/source = "extends Button
+
+
+func _ready() -> void:
+	for event in InputMap.action_get_events(\"interface_toggle_map_ui\"):
+		if event is InputEventKey:
+			$Label.text = event.as_text_physical_keycode()
+			break
+
+
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"interface_toggle_map_ui\"):
+		button_pressed = !button_pressed
+		_on_toggled(button_pressed)
+
+
+func _on_toggled(toggled_on):
+	Global.world.ui_layer.visible = !toggled_on
+"
+
+[node name="Map" type="VBoxContainer" unique_id=596525395]
+script = SubResource("GDScript_x634r")
+metadata/_tab_index = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1400641994]
+custom_minimum_size = Vector2(0, 260)
+layout_mode = 2
+
+[node name="CompassRose" type="TextureRect" parent="CenterContainer" unique_id=38553500]
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 2
+offset_transform_enabled = true
+mouse_filter = 0
+texture = ExtResource("1_bxqal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Info" type="GridContainer" parent="." unique_id=1276673830]
+layout_mode = 2
+columns = 4
+
+[node name="WindLabel" type="Label" parent="Info" unique_id=2065119902]
+layout_mode = 2
+text = "Wind:"
+horizontal_alignment = 2
+
+[node name="WindReadout" type="Label" parent="Info" unique_id=1789520753]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SeaStateLabel" type="Label" parent="Info" unique_id=1840626100]
+layout_mode = 2
+text = "Sea State:"
+horizontal_alignment = 2
+
+[node name="SeaStateReadout" type="Label" parent="Info" unique_id=310754599]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Buttons" type="GridContainer" parent="." unique_id=103547698]
+layout_mode = 2
+columns = 4
+
+[node name="Button" type="Button" parent="Buttons" unique_id=1914956742]
+custom_minimum_size = Vector2(80, 80)
+custom_maximum_size = Vector2(80, 80)
+layout_mode = 2
+tooltip_text = "Toggle visibility of UI elements on the map"
+toggle_mode = true
+script = SubResource("GDScript_texa1")
+
+[node name="TextureRect" type="TextureRect" parent="Buttons/Button" unique_id=1054529671]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_shhvm")
+
+[node name="Label" type="Label" parent="Buttons/Button" unique_id=1406902315]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="gui_input" from="CenterContainer/CompassRose" to="." method="_on_compassrose_gui_input"]
+[connection signal="toggled" from="Buttons/Button" to="Buttons/Button" method="_on_toggled"]

@@ -34,6 +34,8 @@ func process(_delta) -> void:
 		return
 	if mover.runway:
 		mover.heading_target = mover.runway.heading
+	else:
+		mover.heading_target = unit.global_rotation_degrees
 	if abs(fposmod(mover.heading_target - unit.global_rotation_degrees, 360)) < 0.1:
 		mover.set_brake(0)
 		engine.set_power(1)

@@ -19,7 +19,6 @@ func _process(delta) -> void:
 		$StatusReadout.text = 'No orders'
 	
 	$Readouts/ActiveRunwayReadout.text = linked_object.active_runway.name
-	
 "
 
 [node name="InspectorAirplane" type="VBoxContainer" unique_id=1676557818]

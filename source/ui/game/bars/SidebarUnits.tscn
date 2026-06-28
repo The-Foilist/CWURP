@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://d0rctb5hhm8c7"]
+
+[sub_resource type="GDScript" id="GDScript_31rex"]
+script/source = "extends VBoxContainer
+
+
+@onready var tree = $Tree
+
+
+func build_tree(parent_node: UnitGroup, parent_tree_item: TreeItem) -> void:
+	var child = tree.create_item(parent_tree_item)
+	child.set_text(0, parent_node.name)
+	child.set_metadata(0, parent_node)
+	for unit in parent_node.units:
+		var child2 = tree.create_item(child)
+		child2.set_text(0, unit.display_name)
+		child2.set_metadata(0, unit)
+	if parent_node.groups.size() > 0:
+		for n in parent_node.groups:
+			build_tree(n, child)
+
+
+func check_tree(item: TreeItem, object: Node) -> void:
+	if item.get_metadata(0) == object:
+		item.select(0)
+	else:
+		item.deselect(0)
+	for child in item.get_children():
+		check_tree(child, object)
+
+
+func update() -> void:
+	tree.clear()
+	for group in Global.local_controller.player.unit_groups:
+		build_tree(group, null)
+
+
+func _on_item_mouse_selected(mouse_position, _mouse_button_index) -> void:
+	if !tree.get_item_at_position(mouse_position):
+		return
+	var obj = tree.get_item_at_position(mouse_position).get_metadata(0)
+	if obj is Unit:
+		Global.local_controller.player.select(obj)
+
+
+func _on_object_selected(selection: Unit) -> void:
+	check_tree(tree.get_root(), selection)
+"
+
+[node name="Units" type="VBoxContainer" unique_id=1291123848]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource("GDScript_31rex")
+metadata/_tab_index = 0
+
+[node name="Tree" type="Tree" parent="." unique_id=796992511]
+layout_mode = 2
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
+[connection signal="item_mouse_selected" from="Tree" to="." method="_on_item_mouse_selected"]

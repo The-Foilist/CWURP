@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjquslgcq155c"
-path="res://.godot/imported/compass_rose.png-0d7191a2f495f5ac35436d684741f897.ctex"
+uid="uid://c0d0c28nrm5td"
+path="res://.godot/imported/eye.png-f3e41f1cccf2fb92cf940ce79b1920f9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/compass_rose.png"
-dest_files=["res://.godot/imported/compass_rose.png-0d7191a2f495f5ac35436d684741f897.ctex"]
+source_file="res://assets/art/icons/eye.png"
+dest_files=["res://.godot/imported/eye.png-f3e41f1cccf2fb92cf940ce79b1920f9.ctex"]
 
 [params]
 

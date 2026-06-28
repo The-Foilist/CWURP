@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://c437vps7u0ua1" path="res://source/session/Session.gd" id="1_dnh0r"]
 [ext_resource type="Script" uid="uid://8uwqme7pkmsx" path="res://source/session/LocalController.gd" id="2_0iic4"]
 [ext_resource type="Script" uid="uid://v7ypfn8833d2" path="res://source/session/LocalCamera.gd" id="3_p5y0i"]
-[ext_resource type="PackedScene" uid="uid://dbe6xhfbyuo4s" path="res://source/ui/game/BottomBar.tscn" id="4_r32dp"]
-[ext_resource type="PackedScene" uid="uid://maw0wgexhjj6" path="res://source/ui/game/SideBar.tscn" id="5_rbw6o"]
+[ext_resource type="PackedScene" uid="uid://dbe6xhfbyuo4s" path="res://source/ui/game/bars/BottomBar.tscn" id="4_r32dp"]
+[ext_resource type="PackedScene" uid="uid://maw0wgexhjj6" path="res://source/ui/game/bars/Sidebar.tscn" id="5_rbw6o"]
 [ext_resource type="PackedScene" uid="uid://pmjbct4h3cpe" path="res://source/ui/menu/PauseMenu.tscn" id="6_hv0mt"]
 
 [sub_resource type="GDScript" id="GDScript_mrvir"]

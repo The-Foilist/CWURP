@@ -29,7 +29,7 @@ func end() -> void:
 	super()
 
 
-func process(delta):
+func process(_delta):
 	if queued_for_deleteion:
 		return
 	

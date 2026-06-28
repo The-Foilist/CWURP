@@ -52,9 +52,7 @@ func _physics_process(delta):
 		return
 	
 	if fuel <= 0:
-		if !out_of_gas:
-			
-			out_of_gas = true
+		out_of_gas = true
 		thrust = 0
 		return
 	

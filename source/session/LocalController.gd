@@ -11,7 +11,7 @@ var hovered_object: Unit
 
 @onready var cam: LocalCamera = $HSplitContainer/VSplitContainer/Overlay/SubViewportContainer/SubViewport/LocalCamera
 @onready var ui_selection: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection
-@onready var ui_unit_tree: UnitTree = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Units
+@onready var ui_unit_tree: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Units
 @onready var ui_message_input: Control = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageInput
 @onready var ui_message_log: MessageLog = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageLog
 

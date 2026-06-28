@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dbe6xhfbyuo4s"]
 
-[ext_resource type="Script" uid="uid://djb85sd0vnpx4" path="res://source/ui/game/MessageLog.gd" id="4_4ke8n"]
-[ext_resource type="PackedScene" uid="uid://br838ibweh2j3" path="res://source/ui/game/MessageInput.tscn" id="5_0lfpp"]
+[ext_resource type="Script" uid="uid://djb85sd0vnpx4" path="res://source/ui/game/bars/MessageLog.gd" id="4_4ke8n"]
+[ext_resource type="PackedScene" uid="uid://br838ibweh2j3" path="res://source/ui/game/bars/MessageInput.tscn" id="5_0lfpp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfoon"]
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)

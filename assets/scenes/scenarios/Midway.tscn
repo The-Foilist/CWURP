@@ -112,28 +112,28 @@ starting_data = {
 "height": 1.0
 }
 
-[node name="VMF-221-1" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 957479619) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
+[node name="VMF-221-1" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
 position = Vector2(307, 321)
 rotation = -0.7853982
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
-[node name="VMF-221-2" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 957479619) index="2" unique_id=1560698402 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
+[node name="VMF-221-2" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="2" unique_id=1560698402 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
 position = Vector2(307, 340)
 rotation = -0.7853982
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
-[node name="VMF-221-3" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 957479619) index="3" unique_id=25809494 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
+[node name="VMF-221-3" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="3" unique_id=25809494 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
 position = Vector2(328, 321)
 rotation = -0.7853982
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
-[node name="VMF-221-4" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 957479619) index="4" unique_id=59028862 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
+[node name="VMF-221-4" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="4" unique_id=59028862 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
 position = Vector2(350, 321)
 rotation = -0.7853982
 collision_mask = 6
