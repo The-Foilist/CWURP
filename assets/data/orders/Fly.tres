@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="DataOrder" format=3 uid="uid://dplasgc4ea4w6"]
 
-[ext_resource type="Script" uid="uid://c3wp5u72uwdwk" path="res://source/ai/BehaviorFly.gd" id="1_ctlcl"]
-[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="1_sjyaa"]
+[ext_resource type="Script" uid="uid://c3wp5u72uwdwk" path="res://source/ai/behaviors/BehaviorFly.gd" id="1_ctlcl"]
+[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/actors/Pilot.gd" id="1_sjyaa"]
 [ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/Order.gd" id="3_t5v4i"]
 
 [resource]

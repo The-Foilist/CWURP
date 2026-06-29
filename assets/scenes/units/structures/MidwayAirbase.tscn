@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_whll3"]
 [ext_resource type="Texture2D" uid="uid://b6afdv8wmsnhh" path="res://assets/art/structures/Midway Airbase.png" id="2_34slg"]
 [ext_resource type="Resource" uid="uid://c1duuff8xsufq" path="res://assets/data/units/structures/MidwayAirbase.tres" id="2_j3265"]
-[ext_resource type="Script" uid="uid://bujslbndxrq1s" path="res://source/ai/FlightController.gd" id="4_xw5m2"]
+[ext_resource type="Script" uid="uid://bujslbndxrq1s" path="res://source/ai/actors/FlightController.gd" id="4_xw5m2"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="6_7onyu"]
 [ext_resource type="Script" uid="uid://bauaasn4qtjgf" path="res://source/objects/RunwayReversible.gd" id="6_54mfg"]
 [ext_resource type="Script" uid="uid://dnbvwmo8t6wc0" path="res://source/ui/game/markers/Marker.gd" id="6_fl8du"]

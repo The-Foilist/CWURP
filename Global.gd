@@ -27,7 +27,6 @@ const UNIT_CONVERSION = {
 	"L": 1.0,
 	"gal": 3.78541,
 }
-
 const DENSITY = {
 	'av_gas': 0.72
 }

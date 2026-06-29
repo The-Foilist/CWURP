@@ -1,9 +1,9 @@
 extends Behavior
 
-var interval: float
+var interval: float = 0
 var planes: Array[Unit]
 var next_plane: Unit
-#var timer: float = 0
+var timer: float = 0
 
 
 func _init(in_actor: Actor, params: Dictionary):
@@ -14,9 +14,7 @@ func _init(in_actor: Actor, params: Dictionary):
 			planes.append(child)
 	
 	if 'interval' in params:
-		self.interval = params['heading']
-	else:
-		interval = 10
+		self.interval = params['interval']
 
 
 func _to_string():
@@ -29,7 +27,7 @@ func end() -> void:
 	super()
 
 
-func process(_delta):
+func process(delta):
 	if queued_for_deleteion:
 		return
 	
@@ -37,6 +35,14 @@ func process(_delta):
 		if next_plane.active_mover is MoverAirplane:
 			end()
 		return
+	
+	if interval > 0:
+		if timer == 0:
+			next_plane = planes.pop_front()
+			actor.comms.send(next_plane.comms, "takeoff")
+		timer += delta
+		if timer >= interval:
+			timer = 0
 	
 	if !next_plane or next_plane.active_mover is MoverAirplane:
 		next_plane = planes.pop_front()

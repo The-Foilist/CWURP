@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_f1trn"]
 [ext_resource type="Resource" uid="uid://7uylju2qcagk" path="res://assets/data/units/airplanes/F4F-3A.tres" id="2_maftt"]
-[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="3_32gmv"]
+[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/actors/Pilot.gd" id="3_32gmv"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="3_maftt"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]
@@ -23,7 +23,7 @@ comms = NodePath("Comms")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
-polygon = PackedVector2Array(-1, -4, 1, -4, 6, -2, 6, -1, 2, 4, 0, 4, -2, 4, -6, -1, -6, -2)
+polygon = PackedVector2Array(0, -5, 6, -2, 6, -1, 2, 4, 0, 4, -2, 4, -6, -1, -6, -2)
 
 [node name="Pilot" type="Node" parent="." unique_id=1558305938 node_paths=PackedStringArray("comms", "unit")]
 script = ExtResource("3_32gmv")
@@ -57,7 +57,6 @@ unit = NodePath("..")
 metadata/_custom_type_script = "uid://b755tkehedofv"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=382117071]
-position = Vector2(2.3841858e-07, 6.556511e-07)
 scale = Vector2(0.0263, 0.0263)
 texture = ExtResource("5_17b7k")
 

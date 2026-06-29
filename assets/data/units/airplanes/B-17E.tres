@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="StatblockAirplane" format=3 uid="uid://bj07c15gr7ks1"]
+
+[ext_resource type="Script" uid="uid://gh7ubuiirsg0" path="res://source/data_files/StatblockAirplane.gd" id="1_q406p"]
+
+[resource]
+script = ExtResource("1_q406p")
+subtype = "Heavy Bomber"
+num_engines = 4
+engine_thrust = 4301.0
+fuel_max = 7950.0
+fuel_burn_rate = 0.1282025
+drag_coef = 1.3275809
+stall_speed = 40.23
+turn_rate = 0.0523599
+taxi_speed = 3.0
+takeoff_speed = 60.0
+taxi_turn_rate = 5.0
+taxi_accel_coef = 1.35819
+taxi_brake_decel = 2.0
+taxi_terrains = Array[int]([5, 4])
+type = 3
+model = "B-17E"
+movement_types = Array[int]([0, 3])
+mass = 18261.63
+scene_path = "uid://bmwfl3ovf43li"
+metadata/_custom_type_script = "uid://gh7ubuiirsg0"

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dljn2fy73v10o"]
 
 [ext_resource type="Script" uid="uid://bndthe27a56xh" path="res://source/objects/Unit.gd" id="1_sy0jv"]
-[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/Pilot.gd" id="3_fyd84"]
-[ext_resource type="Script" uid="uid://cs15p6c4vgoik" path="res://source/ai/BehaviorOrbit.gd" id="3_srxc8"]
-[ext_resource type="Script" uid="uid://bmdrgcf4a7mus" path="res://source/ai/BehaviorTakeoff.gd" id="4_fyd84"]
+[ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/actors/Pilot.gd" id="3_fyd84"]
+[ext_resource type="Script" uid="uid://cs15p6c4vgoik" path="res://source/ai/behaviors/BehaviorOrbit.gd" id="3_srxc8"]
+[ext_resource type="Script" uid="uid://bmdrgcf4a7mus" path="res://source/ai/behaviors/BehaviorTakeoff.gd" id="4_fyd84"]
 [ext_resource type="Script" uid="uid://5ali0xos08c1" path="res://source/objects/AircraftEngine.gd" id="4_v56lg"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="5_jm6a7"]
 [ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="6_xffq2"]
