@@ -52,12 +52,12 @@ metadata/_custom_type_script = "uid://b0t0cwjpn1kpj"
 
 [node name="VMF-221" type="Node" parent="Players/USA/Midway Garrison" unique_id=1752840168 node_paths=PackedStringArray("units")]
 script = ExtResource("5_1mma1")
-units = [NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-1"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-2"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-3"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-4")]
+units = [NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-1"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-2"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-3"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-4"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-5"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-6"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/VMF-221-7")]
 metadata/_custom_type_script = "uid://b0t0cwjpn1kpj"
 
 [node name="B-17 Group" type="Node" parent="Players/USA/Midway Garrison" unique_id=1458772240 node_paths=PackedStringArray("units")]
 script = ExtResource("5_1mma1")
-units = [NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 1"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 2"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 3"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 4"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 5"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 6"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 7"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 8"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 9"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 10"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 11"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 12"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 13"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 14"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 15"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 16"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 14/B-17 17")]
+units = [NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 1"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 2"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 3"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 4"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 5"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 6"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 7"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 8"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 9"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 10"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 11"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 12"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 13"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 14"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 15"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 16"), NodePath("../../../../World/Object Layer/Midway Airbase/Runway 04/B-17 17")]
 metadata/_custom_type_script = "uid://b0t0cwjpn1kpj"
 
 [node name="Japan" type="Node" parent="Players" unique_id=971008793 groups=["players"]]
@@ -118,154 +118,160 @@ starting_data = {
 "height": 1.0
 }
 
+[node name="End1" parent="World/Object Layer/Midway Airbase/Runway 07" parent_id_path=PackedInt32Array(360373803, 1607977646) index="1" unique_id=2135748036]
+rotation = 3.1415927
+
+[node name="Touchdown2" parent="World/Object Layer/Midway Airbase/Runway 07" parent_id_path=PackedInt32Array(360373803, 1607977646) index="4" unique_id=1706576010]
+rotation = 3.1415927
+
+[node name="B-17 1" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="1" unique_id=1594473790 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(39.477787, -535.13696)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 2" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="2" unique_id=835727917 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(12.912983, -547.15027)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 3" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="3" unique_id=1042020392 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-15.065487, -559.2004)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 4" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="4" unique_id=1812580132 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-43.08093, -569.8369)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 5" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="5" unique_id=166373755 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(40.440147, -571.89386)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 6" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="6" unique_id=1698589499 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(13.838413, -582.4933)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 7" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="7" unique_id=2005279244 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-13.451626, -593.8182)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 8" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="8" unique_id=1212823300 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-42.155445, -605.1801)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 9" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="9" unique_id=1391409609 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(40.714294, -609.37616)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 10" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="10" unique_id=1607365609 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(14.837931, -620.664)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 11" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="11" unique_id=264286082 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-12.452191, -631.9889)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 12" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="12" unique_id=720936650 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-40.430477, -644.0392)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 13" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="13" unique_id=1710243605 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(43.090485, -646.0961)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 14" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="14" unique_id=941171834 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(16.52594, -658.10944)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 15" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="15" unique_id=2110992303 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-10.764294, -669.43414)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 16" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="16" unique_id=1603195859 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(-38.7426, -681.4844)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
+[node name="B-17 17" parent="World/Object Layer/Midway Airbase/Runway 04" parent_id_path=PackedInt32Array(360373803, 931631488) index="17" unique_id=1493840122 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("12_ciu64")]
+position = Vector2(44.01605, -681.43933)
+rotation = 3.1415927
+world = NodePath("../../../..")
+owning_player = NodePath("../../../../../Players/USA")
+
 [node name="VMF-221-1" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="1" unique_id=1528469654 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(182, 192)
-rotation = -0.7853982
+position = Vector2(1.7212677, -387.58365)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-2" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="2" unique_id=1560698402 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(179, 217)
-rotation = -0.7853982
+position = Vector2(24.073784, -403.53247)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-3" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="3" unique_id=25809494 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(192, 204)
-rotation = -0.7853982
+position = Vector2(2.1198273, -405.2708)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-4" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="4" unique_id=59028862 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(207, 193)
-rotation = -0.7853982
+position = Vector2(-19.809536, -405.5954)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-5" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="5" unique_id=1697572497 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(191, 229)
-rotation = -0.7853982
+position = Vector2(22.338951, -421.88977)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-6" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="6" unique_id=1367236097 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(203, 217)
-rotation = -0.7853982
+position = Vector2(0.40968323, -422.2141)
+rotation = 3.1415927
 collision_mask = 6
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 
 [node name="VMF-221-7" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="7" unique_id=613563313 node_paths=PackedStringArray("world", "owning_player") groups=["units"] instance=ExtResource("5_nwdgp")]
-position = Vector2(218, 205)
-rotation = -0.7853982
+position = Vector2(-18.691685, -422.58807)
+rotation = 3.1415927
 collision_mask = 6
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 1" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="12" unique_id=1594473790 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(201, 266)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 2" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="13" unique_id=835727917 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(231, 238)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 3" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="14" unique_id=1042020392 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(259, 211)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 4" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="15" unique_id=1812580132 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(220, 285)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 5" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="16" unique_id=166373755 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(250, 257)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 6" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="17" unique_id=1698589499 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(278, 230)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 7" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="18" unique_id=2005279244 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(241, 306)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 8" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="19" unique_id=1212823300 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(271, 278)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 9" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="20" unique_id=1391409609 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(299, 251)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 10" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="21" unique_id=1607365609 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(261, 325)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 11" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="22" unique_id=264286082 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(291, 297)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 12" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="23" unique_id=720936650 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(319, 270)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 13" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="24" unique_id=1710243605 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(280, 345)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 14" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="25" unique_id=941171834 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(310, 317)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 15" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="26" unique_id=2110992303 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(338, 290)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 16" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="27" unique_id=1603195859 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(318, 351)
-rotation = 5.497787
-world = NodePath("../../../..")
-owning_player = NodePath("../../../../../Players/USA")
-
-[node name="B-17 17" parent="World/Object Layer/Midway Airbase/Runway 14" parent_id_path=PackedInt32Array(360373803, 1308976783) index="28" unique_id=1493840122 node_paths=PackedStringArray("world", "owning_player") instance=ExtResource("12_ciu64")]
-position = Vector2(346, 324)
-rotation = 5.497787
 world = NodePath("../../../..")
 owning_player = NodePath("../../../../../Players/USA")
 

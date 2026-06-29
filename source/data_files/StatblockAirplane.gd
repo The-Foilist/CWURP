@@ -24,6 +24,7 @@ extends StatblockUnit
 @export_group("Movement - Airborne")
 @export var drag_coef: float
 @export var stall_speed: float
+@export var landing_speed: float
 @export var turn_rate: float
 
 @export_group("Movement - Taxi")

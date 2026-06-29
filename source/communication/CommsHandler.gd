@@ -19,14 +19,14 @@ func parse_objects(text: String) -> String:
 	return text
 
 
-func direct_message_player(player: Player, message: String):
+func direct_message_player(player: Player, message: String) -> void:
 	message = Global.world.time_str + ' ' + message
 	player.message_log.append(message)
 	if Global.local_controller.player == player:
 		Global.local_controller.ui_message_log._add_message(message)
 
 
-func transmit(message: Message):
+func transmit(message: Message) -> void:
 	if message.content == '':
 		return
 	

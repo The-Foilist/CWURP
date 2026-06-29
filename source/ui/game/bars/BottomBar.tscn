@@ -1,10 +1,48 @@
 [gd_scene format=3 uid="uid://dbe6xhfbyuo4s"]
 
-[ext_resource type="Script" uid="uid://djb85sd0vnpx4" path="res://source/ui/game/bars/MessageLog.gd" id="4_4ke8n"]
 [ext_resource type="PackedScene" uid="uid://br838ibweh2j3" path="res://source/ui/game/bars/MessageInput.tscn" id="5_0lfpp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfoon"]
 bg_color = Color(0.2509804, 0.2509804, 0.2509804, 1)
+
+[sub_resource type="GDScript" id="GDScript_spjv7"]
+script/source = "extends RichTextLabel
+
+
+func wrap_name(object: Node) -> String:
+	if !object:
+		return ''
+	if object is UnitComponentPhysical:
+		object = object.unit
+	var out_string: String = '[b][url=%s]%s[/url][/b]' % [object.get_instance_id(), object.name]
+	if object is Player:
+		out_string = '[color=#%s]%s[/color]' % [object.color.to_html(false), out_string]
+	if object is Unit:
+		out_string = '[color=#%s]%s[/color]' % [object.owning_player.color.to_html(false), out_string]
+	return out_string
+
+
+func parse_objects(content: String) -> String:
+	var regex = RegEx.create_from_string('\\\\[(.*?)\\\\]')
+	for result in regex.search_all(content):
+		var obj_id = int(result.get_string().lstrip('[').rstrip(']'))
+		content = content.replace(result.get_string(), wrap_name(instance_from_id(obj_id)))
+	return content
+
+
+func _add_message(content: String) -> void:
+	if content == '':
+		return
+	content = parse_objects(content)
+	newline()
+	append_text(content)
+
+
+func update() -> void:
+	clear()
+	for message in Global.local_controller.player.message_log:
+		_add_message(message)
+"
 
 [node name="BottomBar" type="PanelContainer" unique_id=544570086]
 custom_minimum_size = Vector2(0, 240)
@@ -34,8 +72,7 @@ focus_mode = 0
 bbcode_enabled = true
 scroll_following = true
 meta_underlined = false
-script = ExtResource("4_4ke8n")
-metadata/_custom_type_script = "uid://djb85sd0vnpx4"
+script = SubResource("GDScript_spjv7")
 
 [node name="MessageInput" parent="MarginContainer/VBoxContainer" unique_id=783838697 instance=ExtResource("5_0lfpp")]
 layout_mode = 2

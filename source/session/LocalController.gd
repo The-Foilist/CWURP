@@ -13,7 +13,7 @@ var hovered_object: Unit
 @onready var ui_selection: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Selection
 @onready var ui_unit_tree: Control = $HSplitContainer/SideBar/MarginContainer/VBoxContainer/TabContainer/Units
 @onready var ui_message_input: Control = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageInput
-@onready var ui_message_log: MessageLog = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageLog
+@onready var ui_message_log: Control = $HSplitContainer/VSplitContainer/BottomBar/MarginContainer/VBoxContainer/MessageLog
 
 
 func _init() -> void:
@@ -37,7 +37,7 @@ func sort_by_z(a, b) -> bool:
 	return false
 
 
-func get_object_under_mouse():
+func get_object_under_mouse() -> Node2D:
 	mouse_coords = cam.get_global_mouse_position()
 	mouse_intersect_params.position = mouse_coords
 	var result = cam.get_world_2d().direct_space_state.intersect_point(mouse_intersect_params)
@@ -50,6 +50,7 @@ func get_object_under_mouse():
 				return result[i].collider.unit
 			elif result[i].collider is UnitComponentPhysical:
 				return result[i].collider.unit
+	return null
 
 
 func _process(_delta) -> void:
@@ -72,7 +73,7 @@ func _unhandled_input(event) -> void:
 		player.select(player.host_unit)
 
 
-func _on_messages_meta_clicked(meta):
+func _on_messages_meta_clicked(meta) -> void:
 	if !meta:
 		return
 	var obj = instance_from_id(int(meta))

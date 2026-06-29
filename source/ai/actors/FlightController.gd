@@ -9,10 +9,6 @@ var takeoff_queue: Array[Unit]
 var landing_queue: Array[Unit]
 
 
-func _ready():
+func _ready() -> void:
 	inspector = load("res://source/ui/game/inspectors/InspectorFlightControl.tscn")
 	allowed_orders = [load("res://assets/data/orders/Launch.tres")]
-
-
-func switch_active_runway(new_runway):
-	active_runway = new_runway

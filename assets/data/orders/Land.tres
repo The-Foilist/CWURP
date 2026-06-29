@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="DataOrder" format=3 uid="uid://rerp13m3oa5r"]
+[gd_resource type="Resource" script_class="Order" format=3 uid="uid://rerp13m3oa5r"]
 
 [ext_resource type="Script" uid="uid://cl4a1nex7gy8" path="res://source/ai/Order.gd" id="1_f86mu"]
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/actors/Pilot.gd" id="1_j70y4"]
+[ext_resource type="Script" uid="uid://bkyy0wi3jhfg0" path="res://source/ai/behaviors/BehaviorLand.gd" id="2_l0vcc"]
 
 [resource]
+resource_name = "land"
 script = ExtResource("1_f86mu")
 actor_types = Array[GDScript]([ExtResource("1_j70y4")])
+behavior_script = ExtResource("2_l0vcc")
 params = Array[String](["target"])
 metadata/_custom_type_script = "uid://cl4a1nex7gy8"

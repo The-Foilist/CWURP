@@ -4,9 +4,9 @@
 [ext_resource type="Resource" uid="uid://bj07c15gr7ks1" path="res://assets/data/units/airplanes/B-17E.tres" id="2_4ish1"]
 [ext_resource type="Script" uid="uid://2fk71kmwdwfj" path="res://source/ai/actors/Pilot.gd" id="2_yguc3"]
 [ext_resource type="Script" uid="uid://5ali0xos08c1" path="res://source/objects/AircraftEngine.gd" id="5_juwq3"]
+[ext_resource type="Script" uid="uid://d23uxye5kcwgf" path="res://source/movers/MoverFlying.gd" id="6_4ish1"]
 [ext_resource type="Script" uid="uid://dutu1guoeph0j" path="res://source/communication/Comms.gd" id="6_yh4l7"]
 [ext_resource type="Texture2D" uid="uid://dgg3xr061er1h" path="res://assets/art/airplanes/B-17E.png" id="7_8c308"]
-[ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="7_ja1if"]
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="8_oj4lk"]
 [ext_resource type="Texture2D" uid="uid://cucpm3lxledut" path="res://assets/art/icons/icon_heavy_bomber.png" id="9_8c308"]
 [ext_resource type="Script" uid="uid://dnbvwmo8t6wc0" path="res://source/ui/game/markers/Marker.gd" id="9_wukh5"]
@@ -23,6 +23,7 @@ comms = NodePath("Comms")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
+visible = false
 polygon = PackedVector2Array(1, -11, 1, -10, 8, -9, 8, -6, 16, -5, 16, -2, 1, -1, 1, 6, 6, 7, 6, 9, 1, 9, 0, 11, -1, 9, -6, 9, -6, 7, -1, 6, -1, -1, -16, -2, -16, -5, -8, -6, -8, -9, -1, -10, -1, -11, 0, -12)
 
 [node name="Pilot" type="Node" parent="." unique_id=1558305938 node_paths=PackedStringArray("comms", "unit")]
@@ -42,12 +43,12 @@ unit = NodePath("..")
 actors = [NodePath("../Pilot")]
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
-[node name="MoverAirplane" type="Node" parent="." unique_id=1342360798 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
-script = ExtResource("7_ja1if")
+[node name="MoverAirplane" type="Node" parent="." unique_id=704809839 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
+script = ExtResource("6_4ish1")
 taxi_mover = NodePath("../MoverTaxi")
 engine = NodePath("../AircraftEngine")
 unit = NodePath("..")
-metadata/_custom_type_script = "uid://dphobtg6r2gmu"
+metadata/_custom_type_script = "uid://d23uxye5kcwgf"
 
 [node name="MoverTaxi" type="Node" parent="." unique_id=595992666 node_paths=PackedStringArray("airborne_mover", "engine", "unit")]
 script = ExtResource("8_oj4lk")

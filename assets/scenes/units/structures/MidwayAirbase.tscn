@@ -34,7 +34,8 @@ scale = Vector2(10, 10)
 texture = ExtResource("2_34slg")
 
 [node name="Runway 07" type="StaticBody2D" parent="." unique_id=1607977646 node_paths=PackedStringArray("reverse_touchdown_point", "reverse_end_point", "touchdown_point", "end_point", "unit")]
-position = Vector2(-89, 186)
+position = Vector2(-94, 186)
+rotation = 1.2479104
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("6_54mfg")
@@ -48,42 +49,60 @@ metadata/_custom_type_script = "uid://bauaasn4qtjgf"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway 07" unique_id=9336512]
 visible = false
-polygon = PackedVector2Array(742, -322, 787, -189, -753, 322, -798, 195)
+polygon = PackedVector2Array(-70, -810, 70, -810, 70, 810, -70, 810)
 
 [node name="End1" type="Node2D" parent="Runway 07" unique_id=2135748036]
-position = Vector2(764, -256)
+position = Vector2(0, -810)
 
 [node name="End2" type="Node2D" parent="Runway 07" unique_id=1300655765]
-position = Vector2(-775, 257)
+position = Vector2(0, 810)
 
 [node name="Touchdown1" type="Node2D" parent="Runway 07" unique_id=1072809204]
-position = Vector2(-662, 222)
+position = Vector2(0, 710)
 
 [node name="Touchdown2" type="Node2D" parent="Runway 07" unique_id=1706576010]
-position = Vector2(685, -228)
+position = Vector2(0, -710)
 
-[node name="Runway 04" type="StaticBody2D" parent="." unique_id=931631488 node_paths=PackedStringArray("unit")]
+[node name="Runway 04" type="StaticBody2D" parent="." unique_id=931631488 node_paths=PackedStringArray("reverse_touchdown_point", "reverse_end_point", "touchdown_point", "end_point", "unit")]
 position = Vector2(-2, -2)
+rotation = 0.7592182
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("6_54mfg")
+reverse_touchdown_point = NodePath("Touchdown2")
+reverse_end_point = NodePath("../Runway 07/End2")
 start_heading = 43.5
+touchdown_point = NodePath("Touchdown1")
+end_point = NodePath("End1")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://bauaasn4qtjgf"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway 04" unique_id=1009383737]
 visible = false
-polygon = PackedVector2Array(431, -553, 535, -462, -433, 556, -531, 458)
+polygon = PackedVector2Array(-70, -700, 70, -700, 70, 700, -71, 700)
+
+[node name="End1" type="Node2D" parent="Runway 04" unique_id=1687402700]
+position = Vector2(0, -700)
+
+[node name="End2" type="Node2D" parent="Runway 04" unique_id=107611882]
+position = Vector2(0, 700)
+
+[node name="Touchdown1" type="Node2D" parent="Runway 04" unique_id=1029327415]
+position = Vector2(0, 600)
+
+[node name="Touchdown2" type="Node2D" parent="Runway 04" unique_id=1856721006]
+position = Vector2(0, -600)
 
 [node name="Runway 14" type="StaticBody2D" parent="." unique_id=1308976783 node_paths=PackedStringArray("reverse_touchdown_point", "reverse_end_point", "touchdown_point", "end_point", "unit")]
-position = Vector2(487, -75)
+position = Vector2(487, -74)
+rotation = 2.3736477
 collision_layer = 3
 collision_mask = 0
 script = ExtResource("6_54mfg")
 reversed = true
 reverse_touchdown_point = NodePath("Touchdown2")
 reverse_end_point = NodePath("End2")
-start_heading = 135.5
+start_heading = 136.0
 touchdown_point = NodePath("Touchdown1")
 end_point = NodePath("End1")
 unit = NodePath("..")
@@ -91,19 +110,19 @@ metadata/_custom_type_script = "uid://bauaasn4qtjgf"
 
 [node name="Shape" type="CollisionPolygon2D" parent="Runway 14" unique_id=1095419138]
 visible = false
-polygon = PackedVector2Array(-395, -305, -296, -403, 396, 310, 297, 405)
+polygon = PackedVector2Array(-67, -497, 67, -497, 67, 497, -67, 496)
 
 [node name="End1" type="Node2D" parent="Runway 14" unique_id=1497275654]
-position = Vector2(350, 353)
+position = Vector2(0, -497)
 
 [node name="End2" type="Node2D" parent="Runway 14" unique_id=888695874]
-position = Vector2(-347, -352)
+position = Vector2(0, 497)
 
 [node name="Touchdown1" type="Node2D" parent="Runway 14" unique_id=1415400879]
-position = Vector2(-283, -298)
+position = Vector2(0, 417)
 
 [node name="Touchdown2" type="Node2D" parent="Runway 14" unique_id=1201114450]
-position = Vector2(295, 304)
+position = Vector2(0, -417)
 
 [node name="Marker" type="Area2D" parent="." unique_id=1183166109 node_paths=PackedStringArray("unit")]
 visible = false

@@ -2,7 +2,7 @@ extends Behavior
 
 
 var unit: Unit
-var mover: MoverAirplane
+var mover: MoverFlying
 var engine: AircraftEngine
 
 var target: Node2D
@@ -12,10 +12,10 @@ var target_altitude: float
 var target_speed: float
 
 
-func _init(in_actor: Actor, params: Dictionary):
+func _init(in_actor: Actor, params: Dictionary) -> void:
 	super(in_actor, params)
 	self.unit = actor.unit
-	if not unit.active_mover is MoverAirplane:
+	if not unit.active_mover is MoverFlying:
 		end()
 		return
 	self.mover = unit.active_mover
@@ -94,11 +94,15 @@ func process(delta) -> void:
 	var pitch_target = asin(clamp(alt_diff, -thrust_target / (unit.mass * 9.8), 2 * thrust_target / (3 * unit.mass * 9.8)))	
 	var target_br = Global.vec_to_br(target.global_position - unit.global_position)
 	var heading_target = target_br.x
-	var offset = rad_to_deg(asin(target_distance/max(target_distance, target_br.y)))
-	if left:
-		heading_target += offset
+	if target.br.y < target_distance:
+		heading_target += 180
 	else:
-		heading_target -= offset
+		var offset = rad_to_deg(asin(target_distance/target_br.y))
+		if left:
+			heading_target += offset
+		else:
+			heading_target -= offset
+	heading_target = fposmod(heading_target, 360)
 	
 	actor.target_heading = heading_target
 	engine.set_thrust(thrust_target + unit.mass * 9.8 * sin(pitch_target))

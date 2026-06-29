@@ -3,7 +3,7 @@
 [sub_resource type="GDScript" id="GDScript_lnjdq"]
 script/source = "extends Inspector
 
-var air_mover: MoverAirplane
+var air_mover: MoverFlying
 var taxi_mover: MoverTaxi
 var engine: AircraftEngine
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	var unit = linked_object.unit
-	if unit.active_mover is MoverAirplane:
+	if unit.active_mover is MoverFlying:
 		air_mover = unit.active_mover
 		taxi_mover = air_mover.taxi_mover
 	elif unit.active_mover is MoverTaxi:

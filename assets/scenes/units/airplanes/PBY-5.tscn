@@ -23,6 +23,7 @@ comms = NodePath("Comms")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
+visible = false
 polygon = PackedVector2Array(1, -10, 3, -5, 16, -4, 16, -1, 6, 0, 2, 0, 1, 6, 4, 7, 4, 9, -4, 9, -4, 7, -1, 6, -2, 0, -6, 0, -16, -1, -16, -4, -3, -5, -1, -10)
 
 [node name="Pilot" type="Node" parent="." unique_id=2092661919 node_paths=PackedStringArray("comms", "unit")]

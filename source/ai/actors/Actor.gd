@@ -10,7 +10,7 @@ var order_queue: Array[Dictionary]
 var behavior: Behavior
 
 
-func add_order(order: Order, priority: int, param_dict: Dictionary):
+func add_order(order: Order, priority: int, param_dict: Dictionary) -> void:
 	match priority:
 		order.Priority.OVERRIDE:
 			order_queue = [{'order': order, 'params': param_dict}]

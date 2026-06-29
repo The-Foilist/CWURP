@@ -6,7 +6,7 @@ var mover: MoverTaxi
 var engine: AircraftEngine
 
 
-func _init(in_actor: Actor, params: Dictionary):
+func _init(in_actor: Actor, params: Dictionary) -> void:
 	super(in_actor, params)
 	self.unit = actor.unit
 	if not unit.active_mover is MoverTaxi:
@@ -27,16 +27,20 @@ func process(_delta) -> void:
 	if queued_for_deleteion:
 		return
 	if not mover.active:
-		actor.target_altitude = 1000
-		actor.target_heading = mover.heading_target
-		actor.target_speed = INF
-		end()
+		if actor.order_queue.size() == 0:
+			actor.target_altitude = 1000
+			actor.target_heading = mover.heading_target
+			actor.target_speed = INF
+			end()
+			actor.add_order(load("res://assets/data/orders/Fly.tres"), 1, {'heading': mover.heading_target, 'altittude': 1000, 'speed': INF})
+		else:
+			end()
 		return
 	if mover.runway:
 		mover.heading_target = mover.runway.heading
 	else:
 		mover.heading_target = unit.global_rotation_degrees
-	if abs(fposmod(mover.heading_target - unit.global_rotation_degrees, 360)) < 0.1:
+	if abs(mover.heading_target - fposmod(unit.global_rotation_degrees, 360)) < 0.1:
 		mover.set_brake(0)
 		engine.set_power(1)
 	else:

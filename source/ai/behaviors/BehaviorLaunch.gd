@@ -6,7 +6,7 @@ var next_plane: Unit
 var timer: float = 0
 
 
-func _init(in_actor: Actor, params: Dictionary):
+func _init(in_actor: Actor, params: Dictionary) -> void:
 	super(in_actor, params)
 	
 	for child in actor.active_runway.get_children():
@@ -17,7 +17,7 @@ func _init(in_actor: Actor, params: Dictionary):
 		self.interval = params['interval']
 
 
-func _to_string():
+func _to_string() -> String:
 	if queued_for_deleteion:
 		return ''
 	return 'Launching aircraft'
@@ -27,12 +27,12 @@ func end() -> void:
 	super()
 
 
-func process(delta):
+func process(delta) -> void:
 	if queued_for_deleteion:
 		return
 	
 	if planes.size() == 0:
-		if next_plane.active_mover is MoverAirplane:
+		if next_plane.active_mover is MoverFlying:
 			end()
 		return
 	
@@ -44,6 +44,6 @@ func process(delta):
 		if timer >= interval:
 			timer = 0
 	
-	if !next_plane or next_plane.active_mover is MoverAirplane:
+	if !next_plane or next_plane.active_mover is MoverFlying:
 		next_plane = planes.pop_front()
 		actor.comms.send(next_plane.comms, "takeoff")

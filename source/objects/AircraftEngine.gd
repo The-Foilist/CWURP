@@ -46,7 +46,7 @@ func set_power(setting: float) -> void:
 	thrust = thrust_max * power_setting * active_engines
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if active_engines <= 0:
 		thrust = 0
 		return

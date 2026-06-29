@@ -8,7 +8,7 @@ var engine: AircraftEngine
 var target_point: Vector2
 
 
-func _init(in_actor: Actor, params: Dictionary):
+func _init(in_actor: Actor, params: Dictionary) -> void:
 	super(in_actor, params)
 	self.unit = actor.unit
 	if not unit.active_mover is MoverTaxi:
@@ -32,7 +32,7 @@ func _init(in_actor: Actor, params: Dictionary):
 		return
 
 
-func _to_string():
+func _to_string() -> String:
 	if queued_for_deleteion:
 		return ''
 	return "Taxiing to %s" % Global.world.get_coords_at_position(target_point)
@@ -42,7 +42,7 @@ func end() -> void:
 	super()
 
 
-func process(delta):
+func process(delta) -> void:
 	if queued_for_deleteion:
 		return
 	

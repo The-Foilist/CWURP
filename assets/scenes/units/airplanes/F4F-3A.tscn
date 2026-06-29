@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://b755tkehedofv" path="res://source/movers/MoverTaxi.gd" id="4_xsxjf"]
 [ext_resource type="Texture2D" uid="uid://cep4i0uiuvk26" path="res://assets/art/airplanes/F4F.png" id="5_17b7k"]
 [ext_resource type="Script" uid="uid://5ali0xos08c1" path="res://source/objects/AircraftEngine.gd" id="5_32gmv"]
-[ext_resource type="Script" uid="uid://dphobtg6r2gmu" path="res://source/movers/MoverAirplane.gd" id="5_x7nmy"]
+[ext_resource type="Script" uid="uid://d23uxye5kcwgf" path="res://source/movers/MoverFlying.gd" id="6_gw58t"]
 [ext_resource type="Script" uid="uid://dnbvwmo8t6wc0" path="res://source/ui/game/markers/Marker.gd" id="9_gw58t"]
 [ext_resource type="Texture2D" uid="uid://i341nki6d5me" path="res://assets/art/icons/icon_fighter.png" id="10_xf7t0"]
 
@@ -18,11 +18,15 @@ collision_mask = 2
 sync_to_physics = false
 script = ExtResource("1_f1trn")
 statblock = ExtResource("2_maftt")
+starting_data = {
+"fuel": 416.3953
+}
 active_mover = NodePath("MoverTaxi")
 comms = NodePath("Comms")
 metadata/_custom_type_script = "uid://bndthe27a56xh"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=305869803]
+visible = false
 polygon = PackedVector2Array(0, -5, 6, -2, 6, -1, 2, 4, 0, 4, -2, 4, -6, -1, -6, -2)
 
 [node name="Pilot" type="Node" parent="." unique_id=1558305938 node_paths=PackedStringArray("comms", "unit")]
@@ -42,16 +46,16 @@ unit = NodePath("..")
 actors = [NodePath("../Pilot")]
 metadata/_custom_type_script = "uid://dutu1guoeph0j"
 
-[node name="MoverAirplane" type="Node" parent="." unique_id=1342360798 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
-script = ExtResource("5_x7nmy")
+[node name="MoverFlying" type="Node" parent="." unique_id=1523692794 node_paths=PackedStringArray("taxi_mover", "engine", "unit")]
+script = ExtResource("6_gw58t")
 taxi_mover = NodePath("../MoverTaxi")
 engine = NodePath("../AircraftEngine")
 unit = NodePath("..")
-metadata/_custom_type_script = "uid://dphobtg6r2gmu"
+metadata/_custom_type_script = "uid://d23uxye5kcwgf"
 
 [node name="MoverTaxi" type="Node" parent="." unique_id=595992666 node_paths=PackedStringArray("airborne_mover", "engine", "unit")]
 script = ExtResource("4_xsxjf")
-airborne_mover = NodePath("../MoverAirplane")
+airborne_mover = NodePath("../MoverFlying")
 engine = NodePath("../AircraftEngine")
 unit = NodePath("..")
 metadata/_custom_type_script = "uid://b755tkehedofv"

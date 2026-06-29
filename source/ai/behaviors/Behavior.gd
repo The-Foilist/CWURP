@@ -7,7 +7,7 @@ var actor: Actor
 var queued_for_deleteion: bool = false
 
 
-func _init(in_actor: Actor, _params: Dictionary):
+func _init(in_actor: Actor, _params: Dictionary) -> void:
 	self.actor = in_actor
 
 

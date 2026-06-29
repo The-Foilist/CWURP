@@ -35,18 +35,18 @@ const WORD_REPLACEMENTS = {
 @export var actors: Array[Actor]
 
 
-func send(recipient: Comms = null, content: String = ''):
+func send(recipient: Comms = null, content: String = '') -> void:
 	var new_message = Message.new(self, recipient, content)
 	new_message.handler.transmit(new_message)
 
 
-func distribute_order(order: Order, param_dict: Dictionary):
+func distribute_order(order: Order, param_dict: Dictionary) -> void:
 	for actor in actors:
 		if order in actor.allowed_orders:
 			order.issue(actor, order.Priority.LAST, param_dict)
 
 
-func receive(message: Message):
+func receive(message: Message) -> void:
 	if message.content == 'die':
 		unit.kill()
 		return
@@ -98,7 +98,7 @@ func receive(message: Message):
 					i += 1
 					continue
 				
-				if arr[i] in b.params:
+				if arr[i] is String and b and arr[i] in b.params:
 					unused_params.erase(arr[i])
 					if i+2 < arr.size() and arr[i+2] in Global.UNIT_CONVERSION:
 						arr[i+1] = arr[i+1] * Global.UNIT_CONVERSION[arr[i+2]]
@@ -107,7 +107,7 @@ func receive(message: Message):
 					else:
 						param_dict[arr[i]] = arr[i+1]
 						i += 2
-				else:
+				elif unused_params.size() > 0:
 					if i+1 < arr.size() and arr[i+1] in Global.UNIT_CONVERSION:
 						arr[i] = arr[i] * Global.UNIT_CONVERSION[arr[i+1]]
 						param_dict[unused_params.pop_front()] = arr[i]
@@ -115,5 +115,7 @@ func receive(message: Message):
 					else:
 						param_dict[unused_params.pop_front()] = arr[i]
 						i += 1
+				else:
+					i += 1
 			if b:
 				distribute_order(b, param_dict)

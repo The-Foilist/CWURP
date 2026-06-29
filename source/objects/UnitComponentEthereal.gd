@@ -10,7 +10,7 @@ func process_session_time(_delta: float) -> void:
 	pass
 
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if unit.world.pause:
 		return
 	if !active:

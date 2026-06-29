@@ -7,7 +7,7 @@ var target_speed: float
 var target_altitude: float
 
 
-func _ready():
+func _ready() -> void:
 	inspector = load("res://source/ui/game/inspectors/InspectorAirplane.tscn")
 	allowed_orders = [
 		load("res://assets/data/orders/Taxi.tres"),

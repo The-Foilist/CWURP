@@ -55,7 +55,7 @@ metadata/_tab_index = 0
 
 [node name="Tree" type="Tree" parent="." unique_id=796992511]
 layout_mode = 2
+size_flags_vertical = 3
 scroll_horizontal_enabled = false
-scroll_vertical_enabled = false
 
 [connection signal="item_mouse_selected" from="Tree" to="." method="_on_item_mouse_selected"]
